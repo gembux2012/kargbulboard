@@ -1,0 +1,54 @@
+
+
+
+    <ul id="tree2">
+        {% if mode==0 %}
+        <li>
+            <a href="#"  onclick="content(6,1)" id="first">Все рубрики</a>
+        <ul>
+            {% endif %}
+        {% set level = items[0].__lvl %}
+        {% set count = 0 %}
+        {% if items.count %}
+
+        {% for key, item in items %}
+
+        {% set current = item.__lvl %}
+        {% if current == level %}
+        {% if count > 0 %}</li>{% endif %}
+        {% endif %}
+
+        {% if current > level %}
+
+        <ul >
+            {% set level = current %}
+            {% endif %}
+
+            {% if current < level %}
+            {{"</ul>"|repeat(level-current)|raw}}</li>
+        {% set level = current %}
+        {% endif %}
+
+        {% if mode==0 %}
+        <li>
+            <a href="#"  onclick="content({{item.Pk}},1)">{{item.title}}</a>
+            {% else %}
+        <li >
+            <a href="#" {% if not item.hasChildren %}   onclick="breadcrambs({{item.Pk}})" {% endif %}>{{item.title}}</a>
+
+            {% endif %}
+
+            {% set count = count + 1 %}
+            {% endfor %}
+
+            {{"</li></ul>"|repeat(current)|raw}}</li>
+
+</ul>
+{% endif %}
+{% if mode ==0 %}
+</ul></li>
+{% endif %}
+-->
+
+
+

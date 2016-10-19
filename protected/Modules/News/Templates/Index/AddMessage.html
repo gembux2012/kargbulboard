@@ -1,0 +1,117 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+<div class="no-gutter row">
+    <!-- left side column -->
+    <div class="col-md-3">
+        <div class="panel panel-default" id="sidebar">
+            <div class="panel-heading text-center" style="background-image:none;background-color:#888;color:#fff;">РУБРИКИ</div>
+            <div class="panel-body" >
+                <t4:block path="/News//NewsAsMenu/" mode="1"/>
+
+
+            </div>
+        </div><!--/panel-->
+    </div><!--/end left column-->
+
+
+
+    <!--mid column-->
+    <div class="col-md-9">
+        <div class="panel" >
+            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">ПОДАТЬ ОБЪЯВЛЕНИЕ</div>
+            <div id="message" class="panel-body">
+
+                <article id="breadcrambs" >
+                    {% if item.Pk == '' %}
+                    <h5 class="text-danger">Выберите рубрику</h5>
+                 {% else %}
+                <div style="border: 1px">
+                <h5 class="text-danger">в рубрику:</h5><br>
+                <ol class="breadcrumb">
+                    {% for topic in parenttopic %}
+                    <li><a >{{topic.title}}</a></li>
+                    {% endfor %}
+                    <li>{{item.topic.title
+                        }}</li>
+                </ol>
+                </div>
+                    {% endif %}
+                 </article>
+
+
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#panel1">Объявление </a></li>
+                    {% if item.Pk != ''  and item.nopaid==0 %}
+                    <li><a data-toggle="tab" href="#panel2">Фото обьявления</a></li>
+                    {% endif %}
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="panel1" class="tab-pane fade in active">
+                        <br><br>
+                        <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
+                            <input id="topicid" type="hidden" name="topic" value="{{bc.id}}">
+                            <input  type="hidden" name="id" value="{{item.Pk}}">
+
+                            {% if item.Pk == '' %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="nopaid" value="1"> Бесплатное объявление
+                                </label>
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label for="message">Текст объявления:</label>
+                                <textarea  class="form-control" name="text" rows="10" onfocus="textfocus()">{{item.text}} </textarea>
+                            </div>
+                             {% if item.Pk != ''  and item.nopaid==0 %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> VIP
+                                </label>
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i> </span>
+                                <input id="mobile" type="text" class="form-control" placeholder="телефон сотовый">
+                                    </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i> </span>
+                                    <input id="phone" type="text" class="form-control" placeholder="телефон городской">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-defult"  style="color: white;background-color: #77CCDD">Сохранить</button>
+                            {% if item.Pk != '' %}
+                            <button type="button" class="btn btn-default">Опубликовать</button>
+                            {% endif %}
+                            <button type="button" class="btn btn-default" onclick="location=('/')">Выход</button>
+                        </form>
+                    </div>
+                    <div id="panel2" class="tab-pane fade">
+                        <h3>Панель 2</h3>
+                        <p>Содержимое 2 панели...</p>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
