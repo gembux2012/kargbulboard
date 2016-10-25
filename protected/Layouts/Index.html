@@ -37,8 +37,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news//AddMessage?id=new"  data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
-                <li {% if not app.user %} class="disabled" {%endif%}><a href='' onclick="content()" data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
+                <li {% if not app.user %} class="disabled" {%endif%}><a href="#" onclick="addmessage('new')" data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
+                <li {% if not app.user %} class="disabled" {%endif%}><a href='#' onclick="content(1,1,{{app.user.Pk}})" data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels</a>
@@ -143,16 +143,24 @@
 {% block pagescript %} {% endblock %}
 <script type="text/javascript">
 
-       function content(id,page){
-           $('#message').empty();
-         $('#message').load('/news//PageForTopic?id='+id+'&page='+page);
+       function content(id,page,id_user){
+           if(id_user){
+               $('#content-header').empty();
+              $('#content-header').html('МОИ ОБЪЯВЛЕНИЯ');
+           }
+
+         $('#message').empty();
+
+         $('#message').load('/news//PageForTopic?id='+id+'&page='+page+'&id_user='+id_user);
+
 
        }
 
 ////  addmessage
         function addmessage(id) {
             $('#content').empty();
-            $('#content').load('/news//AddMessage?id='+id);
+            $('#content').load('/news//AddMessage?id='+id,function(){tree()});
+
         };
 
         function breadcrambs(id){
@@ -161,59 +169,66 @@
             $('#topicid').val(id);
         };
 
-        function call() {
+       function call() {
 
-            if (valid()) {
-                var msg = $('#form-add-msg').serialize();
-            }
+           if (valid()) {
+               var msg = $('#form-add-msg').serialize();
 
 
-            $.ajax({
-                type: 'POST',
-                url: '/news//Save.json',
-                data: msg,
-                success: function(data) {
-                    addmessage(data.id);
-                    //$('#breadcrambs').empty();
-                  //  breadcrambs(data.topicid);
-                },
-                error:  function(xhr, str){
-                    alert('Возникла ошибка: ' + xhr.responseCode);
-                }
-            })}
+               $.ajax({
+                   type: 'POST',
+                   url: '/news//Save.json',
+                   data: msg,
+                   success: function (data) {
+                       //alert(data.id);
+                       addmessage(data.id);
+
+
+                       //  breadcrambs(data.topicid);
+                   },
+                   error: function (xhr, str) {
+                       alert('Возникла ошибка: ' + xhr.responseCode);
+                   }
+               })
+           }
+       }
 
        function valid() {
            var erorr;
-           if ($('#topicid').val()=='') {
+           if ($('#topicid').val() == '') {
 
 
-               $('#breadcrambs ' ).html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
-               erorr=true;
+               $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
+               erorr = true;
            }
 
-           if($('textarea').val().length <= 1){
+           if ($('textarea').val().length <= 1) {
 
-               $('textarea').css('border-color','red');
-               erorr=true;
+               $('textarea').css('border-color', 'red');
+               erorr = true;
            }
 
-           if(erorr)
-            return false;
+           if (erorr)
+               return false;
            else
-           return true;
+               return true;
        }
 
        function  textfocus(){
            $('textarea').css('border-color','');
        }
 
+       function tree() {
+           $('#tree2').treed({openedClass: 'glyphicon-chevron-down', closedClass: 'glyphicon-chevron-right'});
+           $('#first').click();
+           $('#first').focus();
+       }
 
 
        $(document).ready(function($){
 
-           $('#tree2').treed({openedClass : 'glyphicon-chevron-down', closedClass : 'glyphicon-chevron-right'});
-           $('#first').click();
-           $('#first').focus();
+        tree();
+
            $("#mobile").mask("+7 999 999 9999");
 
            $('form').submit(function (e) {

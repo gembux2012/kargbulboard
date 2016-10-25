@@ -35,18 +35,22 @@ class Index
 
     public function  actionNewsAsMenu($mode=0)
     {
-
-        $this->data->items = Topic::findByPK(6)->findAllChildren(); //die;
+       // $this->data->items=Topic::findAllTree();
+         if(Topic::findByPK(1)->hasChildren()) {
+            $this->data->items = Topic::findByPK(1)->findAllChildren(); //die;
+        } else {
+            $this->data->items = Topic::findByPK(1);
+        }
         $this->data->mode=$mode;
         //var_dump($this->data->items);die;
 
 
     }
 
-    public function  actionPageForTopic($id = 6, $page = 1, $user_id = null)
+    public function  actionPageForTopic($id = 1, $page = 1, $user_id = null)
     {
         $item = Topic::findByPK($id);
-
+       // var_dump($item);die;
         $lft = $item->__lft;
         $rgt = $item->__rgt;
 
@@ -58,6 +62,7 @@ class Index
 
             $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+
         } else {
             $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt .' AND __user_id='.$user_id. ' ORDER BY __lft)')->count();
@@ -78,12 +83,14 @@ class Index
 
         if (null === $id || 'new' == $id) {
             $this->data->item = new Story();
+
         } else {
             $this->data->item = Story::findByPK($id);
             $topic=Story::findByPK($id)->topic;
             $this->data->parenttopic=$topic->findAllParents();
 
         }
+
     }
 
     public function actionSave()
@@ -100,11 +107,7 @@ class Index
         $item->save();
         $this->data->id=$item->Pk;
         $this->data->topicid=$item->topic->Pk;
-        die();
 
-        //var_dump($this->data->id);die;
-        //$this->data->id=$item->Pk;
-        //$this->redirect('/news/addmessage/?id='.$last_item->__id.'&simple='.$last_item->simple);
     }
 
     public function actionBreadCrambs($id)

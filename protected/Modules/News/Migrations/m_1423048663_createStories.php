@@ -6,6 +6,7 @@ use T4\Orm\Migration;
 use App\Models\User;
 use App\Models\Role;
 
+
 class m_1423048663_createStories
     extends Migration
 {

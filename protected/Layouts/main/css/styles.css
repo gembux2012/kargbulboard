@@ -1,5 +1,15 @@
 /* bootstrap 3 helpers */
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #77CCDD;
+  border-color: #77CCDD;
+}
 
+ul.meta-post.glyphicon{
+  color: #111;
+}
 .navbar-form input, .form-inline input {
 	width:auto;
 }
@@ -14,6 +24,25 @@ header {
   	margin-bottom:5px;
 }
 
+#sidebar {
+  margin-left:30px;
+}
+
+#content {
+  padding-right:0px;
+}
+
+#sidebar.affix-top {
+  position: static;
+}
+
+#sidebar.affix {
+  position: fixed !important;
+  top: 50px;
+  width:262px;
+
+}
+
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
   #sidebar {
@@ -21,7 +50,7 @@ header {
   }
 
   #content {
- 	padding-right:15px;
+ 	padding-right:0px;
   }
 
   #sidebar.affix-top {
@@ -31,7 +60,8 @@ header {
   #sidebar.affix {
       position: fixed !important;
       top: 50px;
-      width:273px;
+      width:270px;
+    margin-left:0px;
 
   }
 /*

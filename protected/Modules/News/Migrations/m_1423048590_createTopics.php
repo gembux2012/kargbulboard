@@ -3,6 +3,7 @@
 namespace App\Modules\News\Migrations;
 
 use T4\Orm\Migration;
+use App\Modules\News\Models\Topic;
 
 class m_1423048590_createTopics
     extends Migration
@@ -17,6 +18,10 @@ class m_1423048590_createTopics
         ], [
             'tree'
         ]);
+
+        $topic=new Topic();
+        $topic->title='Все сообщения';
+        $topic->save();
     }
 
     public function down()
