@@ -144,4 +144,9 @@ trait TArrayAccess
         $this->storage = unserialize($serialized);
     }
 
+    public function jsonSerialize ()
+    {
+        return $this->storage;
+    }
+
 }

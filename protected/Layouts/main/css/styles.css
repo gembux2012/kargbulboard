@@ -17,7 +17,7 @@ header {
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
   #sidebar {
- 	margin-left:15px;
+ 	margin-left:0px;
   }
 
   #content {
@@ -47,9 +47,9 @@ header {
       position:fixed !important;
   	  top: 50px;
   	  width:577px;
-  }
+  }*/
 }
-*/
+
 .affix {
       position:static;
 }
@@ -251,6 +251,6 @@ footer {
   }
 
 
-}}
+}
 
 /* end custom theme */

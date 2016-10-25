@@ -30,15 +30,16 @@
 <nav class="navbar navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="http://www.bootply.com" target="ext"><b>Bootply</b></a>
+            <a class="navbar-brand" href="/" target="ext"><b>На главную</b></a>
             <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/news//AddMessage?id=new"  >Подать обьявление</a></li>
-                <li><a href="#">Link</a></li>
+                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news//AddMessage?id=new"  data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
+                <li {% if not app.user %} class="disabled" {%endif%}><a href='' onclick="content()" data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels</a>
                     <ul class="dropdown-menu">
@@ -61,12 +62,13 @@
                 </li>
                 {% if not app.user %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Войти на сайт <i class="glyphicon glyphicon-chevron-down"></i></a>
 
                     <ul class="dropdown-menu">
+                        <h3 class="text-center" style="color: black">Вход на сайт</h3>
+                        <section></section>
                         <form role="form" action="/user/login.html" method="post" style="padding: 15px">
                             <div class="form-group">
-                                <h5 style="color: black">Войти или зарегистрироваться</h5>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                                     <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
@@ -90,14 +92,13 @@
 
                 </li>
                 {% else %}
-                <li>
-                <p class="navbar-text">{{ app.user.email}}</p>
+                <li> <a href="/user/logout" data-toggle="tooltip" title="Выход">Вы: {{ name}}&nbsp<span class="glyphicon glyphicon-log-out"></span></a>
                 {% endif %}
                 </li>
             </ul>
         </div>
     </div>
-</nav><!-- /.navbar -->
+</nav>
 
 <header class="masthead">
     <div class="container">
@@ -116,7 +117,7 @@
 </header>
 
 <!-- Begin Body -->
-<div class="container">
+<div class="container" style="background-color: white">
 <article id="content">
 {% block content %} {% endblock %}
 </article>
@@ -160,10 +161,12 @@
             $('#topicid').val(id);
         };
 
-        function call(){
+        function call() {
 
-            if (valid()){
-            var msg   = $('#form-add-msg').serialize();
+            if (valid()) {
+                var msg = $('#form-add-msg').serialize();
+            }
+
 
             $.ajax({
                 type: 'POST',
@@ -177,8 +180,7 @@
                 error:  function(xhr, str){
                     alert('Возникла ошибка: ' + xhr.responseCode);
                 }
-            });}
-        }
+            })}
 
        function valid() {
            var erorr;
@@ -205,12 +207,41 @@
            $('textarea').css('border-color','');
        }
 
+
+
        $(document).ready(function($){
+
            $('#tree2').treed({openedClass : 'glyphicon-chevron-down', closedClass : 'glyphicon-chevron-right'});
            $('#first').click();
            $('#first').focus();
            $("#mobile").mask("+7 999 999 9999");
 
+           $('form').submit(function (e) {
+               e.preventDefault();
+               var data = $('form').serializeArray();
+               $.ajax({
+                   type: "POST",
+                   url: "/user/GetLogin.json",
+                   data: data,
+                   success: function (data) {
+                       $('section').empty();
+                       $('section').append('<div class="alert alert-danger" id="login">');
+
+
+                       if(data.errors) {
+                           $.each(data.errors, function (key, val) {
+
+                               $('#login').append(' <p>' + val + '</p')
+                           })
+                       }else{
+                           location.reload(true);
+
+                       }
+
+                   },
+                   dataType: 'json'
+               });
+           });
 
        });
 

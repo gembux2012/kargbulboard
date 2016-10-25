@@ -14,6 +14,8 @@ class Index
 
     public function actionDefault()
     {
+        if($this->app->user)
+        $this->data->name=stristr($this->app->user->email,'@',true);
     }
 
     public function actionLogin($login = null)

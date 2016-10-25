@@ -4,24 +4,37 @@ namespace App\Controllers;
 
 use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
+use T4\Core\Collection;
+use T4\Core;
+
 
 class User
     extends Controller
 {
 
-    public function actionLogin($login = null)
+    public function actionGetLogin($login = null)
     {
         if (null !== $login) {
             try {
                 $identity = new Identity();
                 $user = $identity->authenticate($login);
-                $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-                $this->redirect('/');
+                $this->data->login=true;
+          //      $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
+            //    $this->redirect('/');
             } catch (\App\Components\Auth\MultiException $e) {
-                $this->data->errors = $e;
+
+                $this->data->errors = new Collection();
+                foreach ($e as $subkey => $subvalue) {
+                     $this->data->errors[]=$e[$subkey]->getMessage();
+
+
+                    }
+
             }
             $this->data->email = $login->email;
+
         }
+
     }
 
     public function actionLogout()

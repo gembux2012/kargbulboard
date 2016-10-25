@@ -1,19 +1,38 @@
-{% if not app.user %}
-<form class="navbar-form navbar-left" role="form" action="/user/login.html" method="post">
+{% for error in errors %}
+<div class="alert alert-danger" role="alert">{{error.message}}</div>
+{% endfor %}
+<form role="form" action="/user/login.html" method="post" style="padding: 15px">
     <div class="form-group">
-        <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
+        <h5 style="color: black">Войти или зарегистрироваться</h5>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
+        </div>
+        <br>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" placeholder="Пароль" class="form-control input-sm" name="login[password]">
+        </div><br>
+        <div class="form-group">
+            <button type="submit" class="btn btn-theme-bg pull-right" style="background-color: #77CCDD"><i class="glyphicon glyphicon-share"></i> Войти
+            </button>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+
     </div>
-    <div class="form-group">
-        <input type="password" placeholder="Пароль" class="form-control input-sm" name="login[password]">
-    </div>
-    <div class="form-group"><button type="submit" class="btn btn-success">Войти</button></div>
 </form>
-{% else %}
-
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="/user/logout.html" class="navbar">Выход </a></li>
-</ul>
-<p class="navbar-text navbar-right" style="padding-right: 10px;">Здравствуйте, {{app.user.email}}!</p>
 
 
-{% endif %}
+<script type="text/javascript">
+$('form').submit(function (e) {
+e.preventDefault();
+var data = $('form').serializeArray();
+$.ajax({
+type: "POST",
+url:"/user/login.json",
+data: data,
+success: success,
+dataType: dataType});});
+</script>

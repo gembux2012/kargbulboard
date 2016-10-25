@@ -43,33 +43,39 @@ class Index
 
     }
 
-    public function  actionPageForTopic($id=6,$page=1)
+    public function  actionPageForTopic($id = 6, $page = 1, $user_id = null)
     {
-            $item = Topic::findByPK($id);
+        $item = Topic::findByPK($id);
 
-            $lft = $item->__lft;
-            $rgt = $item->__rgt;
+        $lft = $item->__lft;
+        $rgt = $item->__rgt;
 
-            $offset = ($page - 1) * self::PAGE_SIZE;
-            $limit = self::PAGE_SIZE;
+        $offset = ($page - 1) * self::PAGE_SIZE;
+        $limit = self::PAGE_SIZE;
+        if (null == $user_id) {
             $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)')->count();
 
             $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+        } else {
+            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt .' AND __user_id='.$user_id. ' ORDER BY __lft)')->count();
+
+            $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' AND __user_id=' . $user_id . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+        }
 
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
-        $this->data->topic=$id;
+        $this->data->topic = $id;
 
     }
 
     public function actionAddMessage($id = null )
     {
 
-        if(!$this->app->user){
-            $this->redirect('/user/LoginRegister ');
-        }
+
         if (null === $id || 'new' == $id) {
             $this->data->item = new Story();
         } else {
