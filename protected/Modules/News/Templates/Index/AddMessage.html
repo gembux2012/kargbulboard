@@ -17,7 +17,9 @@
     <!--mid column-->
     <div class="col-md-9">
         <div class="panel" >
-            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">ПОДАТЬ ОБЪЯВЛЕНИЕ</div>
+            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">{% if item.Pk == '' %}ПОДАТЬ ОБЪЯВЛЕНИЕ
+            {% else%} МОИ ОБЪЯВЛЕНИЯ -> редактирование объявления {% endif %}
+            </div>
             <div id="message" class="panel-body">
 
                 <article id="breadcrambs" >

@@ -28,7 +28,7 @@
 
 <body style="padding-top: 80px">
 <nav class="navbar navbar-fixed-top">
-    <div class="container">
+    <div class="container" >
         <div class="navbar-header">
             <a class="navbar-brand" href="/" target="ext"><b>На главную</b></a>
             <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -36,9 +36,9 @@
             </a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li {% if not app.user %} class="disabled" {%endif%}><a href="#" onclick="addmessage('new')" data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
-                <li {% if not app.user %} class="disabled" {%endif%}><a href='#' onclick="content(1,1,{{app.user.Pk}})" data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
+            <ul id="nav" class="nav navbar-nav">
+                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/AddMessage"  data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
+                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/MyMessage"  data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels</a>
@@ -117,10 +117,10 @@
 </header>
 
 <!-- Begin Body -->
-<div class="container" style="background-color: white">
-<article id="content">
+<div class="container"  id="body" style="background-color: white">
+
 {% block content %} {% endblock %}
-</article>
+
  </div>
 <footer>
     <div class="container">
@@ -143,125 +143,181 @@
 {% block pagescript %} {% endblock %}
 <script type="text/javascript">
 
-       function content(id,page,id_user){
-           if(id_user){
-               $('#content-header').empty();
-              $('#content-header').html('МОИ ОБЪЯВЛЕНИЯ');
-           }
+    function content(id, page, id_user) {
 
-         $('#message').empty();
+        $('#message').empty();
 
-         $('#message').load('/news//PageForTopic?id='+id+'&page='+page+'&id_user='+id_user);
+        $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user);
 
+    }
 
-       }
-
-////  addmessage
-        function addmessage(id) {
-            $('#content').empty();
-            $('#content').load('/news//AddMessage?id='+id,function(){tree()});
-
-        };
-
-        function breadcrambs(id){
-            $('#breadcrambs').empty();
-            $('#breadcrambs').load('/news//BreadCrambs?id='+id);
-            $('#topicid').val(id);
-        };
-
-       function call() {
-
-           if (valid()) {
-               var msg = $('#form-add-msg').serialize();
+    ////  addmessage
+    function addmessage(id) {
+        div = $('#content');
+        sc = div.scrollTop();
+        $('#content').empty();
+        $('#content').load('/news//AddMessage?id=' + id, function () {
+            tree();
+          div.scrollTop(sc);
+            //alert()
+        });
 
 
-               $.ajax({
-                   type: 'POST',
-                   url: '/news//Save.json',
-                   data: msg,
-                   success: function (data) {
-                       //alert(data.id);
-                       addmessage(data.id);
+
+    };
+
+    function mymessage() {
+       // div = $('body');
+        //sc = div.scrollTop();
+        //alert(sc);
+        $('#content').empty();
+        $('#content').load('/news//MyMessage', function (response) {
+                    //alert(response);
+                     tree();
+
+                    alert();
+                }
+        );
+
+    }
+
+    function breadcrambs(id) {
+        div = $('body');
+        sc = div.scrollTop();
+        $('#breadcrambs').empty();
+        $('#breadcrambs').load('/news//BreadCrambs?id=' + id, function () {
+            div.scrollTop(sc)
+        });
+        $('#topicid').val(id);
+    }
+    ;
+
+    function call() {
+
+        if (valid()) {
+            var msg = $('#form-add-msg').serialize();
 
 
-                       //  breadcrambs(data.topicid);
-                   },
-                   error: function (xhr, str) {
-                       alert('Возникла ошибка: ' + xhr.responseCode);
-                   }
-               })
-           }
-       }
-
-       function valid() {
-           var erorr;
-           if ($('#topicid').val() == '') {
+            $.ajax({
+                type: 'POST',
+                url: '/news//Save.json',
+                data: msg,
+                success: function (data) {
+                    //alert(data.id);
+                    addmessage(data.id);
 
 
-               $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
-               erorr = true;
-           }
+                    //  breadcrambs(data.topicid);
+                },
+                error: function (xhr, str) {
+                    alert('Возникла ошибка: ' + xhr.responseCode);
+                }
+            })
+        }
+    }
 
-           if ($('textarea').val().length <= 1) {
-
-               $('textarea').css('border-color', 'red');
-               erorr = true;
-           }
-
-           if (erorr)
-               return false;
-           else
-               return true;
-       }
-
-       function  textfocus(){
-           $('textarea').css('border-color','');
-       }
-
-       function tree() {
-           $('#tree2').treed({openedClass: 'glyphicon-chevron-down', closedClass: 'glyphicon-chevron-right'});
-           $('#first').click();
-           $('#first').focus();
-       }
+    function valid() {
+        var erorr;
+        if ($('#topicid').val() == '') {
 
 
-       $(document).ready(function($){
+            $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
+            erorr = true;
+        }
+
+        if ($('textarea').val().length <= 1) {
+
+            $('textarea').css('border-color', 'red');
+            erorr = true;
+        }
+
+        if (erorr)
+            return false;
+        else
+            return true;
+    }
+
+    function textfocus() {
+        $('textarea').css('border-color', '');
+    }
+
+    function tree() {
+        $('#tree2').treed({openedClass: 'glyphicon-chevron-down', closedClass: 'glyphicon-chevron-right'});
+
+    }
+
+    function on_load(){
+        $('#nav li a').click(function(){
+
+            var toLoad = $(this).attr('href');
+            loadContent();
+
+
+            function loadContent() {
+
+                $('#body').load(
+                        toLoad,'',showNewContent());
+
+
+            }
+            function showNewContent() {
+                $('#body').show('normal',hideLoader());
+
+            }
+            function hideLoader() {
+                $('#load').fadeOut('normal');
+
+            }
+
+            return false;
+        });
+
+    }
+
+
+    $(document).ready(function ($) {
 
         tree();
 
-           $("#mobile").mask("+7 999 999 9999");
+        $('#first').click();
+        $('#first').focus();
 
-           $('form').submit(function (e) {
-               e.preventDefault();
-               var data = $('form').serializeArray();
-               $.ajax({
-                   type: "POST",
-                   url: "/user/GetLogin.json",
-                   data: data,
-                   success: function (data) {
-                       $('section').empty();
-                       $('section').append('<div class="alert alert-danger" id="login">');
+       on_load();
+
+        $("#mobile").mask("+7 999 999 9999");
+
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var data = $('form').serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/user/GetLogin.json",
+                data: data,
+                success: function (data) {
+                    $('section').empty();
+                    $('section').append('<div class="alert alert-danger" id="login">');
 
 
-                       if(data.errors) {
-                           $.each(data.errors, function (key, val) {
+                    if (data.errors) {
+                        $.each(data.errors, function (key, val) {
 
-                               $('#login').append(' <p>' + val + '</p')
-                           })
-                       }else{
-                           location.reload(true);
+                            $('#login').append(' <p>' + val + '</p')
+                        })
+                    } else {
+                        location.reload(true);
 
-                       }
+                    }
 
-                   },
-                   dataType: 'json'
-               });
-           });
+                },
+                dataType: 'json'
+            });
+        });
 
-       });
+    });
+
+
 
     ///// end addmessage
-
 
 
 </script>

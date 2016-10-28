@@ -39,49 +39,48 @@ header {
 #sidebar.affix {
   position: fixed !important;
   top: 50px;
-  width:262px;
+  width:292.5px;
 
 }
 
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
   #sidebar {
- 	margin-left:0px;
+    margin-left: 0px;
   }
 
   #content {
- 	padding-right:0px;
+    padding-right: 0px;
   }
 
   #sidebar.affix-top {
-      position: static;
+    position: static;
   }
-  
+
   #sidebar.affix {
-      position: fixed !important;
-      top: 50px;
-      width:270px;
-    margin-left:0px;
+    position: fixed !important;
+    top: 50px;
+    width: 292.5px;
 
   }
-/*
-  #midCol.affix-top {
-      position: static;
+
+  /*
+    #midCol.affix-top {
+        position: static;
+    }
+
+    #midCol.affix-bottom {
+        padding-top:0;
+    }
+
+    #midCol.affix {
+        position:fixed !important;
+          top: 50px;
+          width:577px;
+    }*/
+  .affix {
+    position: static;
   }
-
-  #midCol.affix-bottom {
-      padding-top:0;
-  }
-
-  #midCol.affix {
-      position:fixed !important;
-  	  top: 50px;
-  	  width:577px;
-  }*/
-}
-
-.affix {
-      position:static;
 }
 body {
   font-family: 'Open Sans',Arial,Helvetica,Sans-Serif;
@@ -195,48 +194,60 @@ footer {
     padding-left: 0;
     padding-right: 0;
   }
+
   .no-gutter.row > .col-md-12 {
     width: 99.99999999999999%;
     *width: 99.93055555555554%;
   }
+
   .no-gutter.row .col-md-11 {
     width: 91.66666666666666%;
     *width: 91.59722222222221%;
   }
+
   .no-gutter.row > .col-md-10 {
     width: 83.33333333333331%;
     *width: 83.26388888888887%;
   }
+
   .no-gutter.row > .col-md-9 {
     width: 74.99999999999999%;
     *width: 74.93055555555554%;
   }
+
   .no-gutter.row > .col-md-8 {
     width: 66.66666666666666%;
     *width: 66.59722222222221%;
   }
+
   .no-gutter.row > .col-md-7 {
     width: 58.33333333333333%;
     *width: 58.263888888888886%;
   }
+
   .no-gutter.row > .col-md-6 {
     width: 49.99999999999999%;
   }
+
   .no-gutter.row > .col-md-4 {
     width: 33.33333333333333%;
   }
+
   .no-gutter.row > .col-md-3 {
     width: 24.999999999999996%;
     *width: 24.930555555555554%;
   }
+
   .no-gutter.row > .col-md-2 {
     width: 16.666666666666664%;
     *width: 16.59722222222222%;
   }
+
   .no-gutter.row > .col-md-1 {
     width: 8.333333333333332%;
     *width: 8.263888888888888%;
   }
+}
   .colortext {
     color: red; /* Красный цвет выделения */
     font-weight: bold;
@@ -281,6 +292,6 @@ footer {
   }
 
 
-}
+
 
 /* end custom theme */

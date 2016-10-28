@@ -1,7 +1,7 @@
 
 
 
-    <ul id="tree2" class="disabled">
+    <ul id="tree2" >
         {% if mode==0 %}
         <li>
             <a href="#"  onclick="content(1,1)" id="first">Все рубрики</a>
@@ -30,8 +30,8 @@
         {% endif %}
 
         {% if mode==0 %}
-        <li>
-            <a href="#"  onclick="content({{item.Pk}},1)">{{item.title}}</a>
+        <li disabled="disabled">
+            <a href="#"    onclick="content({{item.Pk}},1)">{{item.title}}</a>
             {% else %}
         <li >
             <a href="#" {% if not item.hasChildren %}   onclick="breadcrambs({{item.Pk}})" {% endif %}>{{item.title}}</a>

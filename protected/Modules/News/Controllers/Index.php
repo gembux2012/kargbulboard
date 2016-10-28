@@ -93,6 +93,22 @@ class Index
 
     }
 
+    public function actionMyMessage($page=1){
+
+        if(Story::findAllBy__user_id($this->app->user->Pk)->count()==0){
+            $this->app->flash->message="У вас нет объявлений";
+        } else {
+            $this->data->itemsCount = Story::findAllBy__user_id($this->app->user->Pk)->count();
+            $this->data->pageSize = self::PAGE_SIZE;
+            $this->data->activePage = $page;
+            $this->data->items = Story::findAllBy__user_id($this->app->user->Pk,[
+                'order' => 'published DESC',
+                'offset'=> ($page-1)*self::PAGE_SIZE,
+                'limit'=> self::PAGE_SIZE
+            ]);
+        }
+    }
+
     public function actionSave()
     {
         if (!empty($this->app->request->post->id)) {
