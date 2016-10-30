@@ -1,5 +1,5 @@
-        <article>
 
+      <section id="long">
 
             {% for item in items %}
            <!-- <ol class="breadcrumb">
@@ -26,9 +26,10 @@
             {% endfor %}
 
 
-    </article>
+        <div class="container">
         <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}</div>
-
+        </div>
+</section>
 
 
 

@@ -56,26 +56,50 @@ class Index
 
         $offset = ($page - 1) * self::PAGE_SIZE;
         $limit = self::PAGE_SIZE;
-        if (null == $user_id) {
+
             $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)')->count();
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)AND nopaid<>1')->count();
 
             $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft) AND nopaid<>1 ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
 
-        } else {
-            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt .' AND __user_id='.$user_id. ' ORDER BY __lft)')->count();
 
-            $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' AND __user_id=' . $user_id . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
-        }
+
 
         $this->data->pageSize = self::PAGE_SIZE;
         $this->data->activePage = $page;
         $this->data->topic = $id;
 
     }
+
+    public function  actionShortPageForTopic($id = 1, $page = 1)
+    {
+        $item = Topic::findByPK($id);
+        // var_dump($item);die;
+        $lft = $item->__lft;
+        $rgt = $item->__rgt;
+
+        $offset = ($page - 1) * self::PAGE_SIZE;
+        $limit = self::PAGE_SIZE;
+
+
+        $this->data->shortitemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)AND nopaid=1')->count();
+
+        $this->data->shortitems = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft) AND nopaid=1 ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+
+
+
+
+
+        $this->data->pageSize = self::PAGE_SIZE;
+        $this->data->activePage = $page;
+        $this->data->topic = $id;
+
+    }
+
+
 
     public function actionAddMessage($id = null )
     {
@@ -97,6 +121,7 @@ class Index
 
         if(Story::findAllBy__user_id($this->app->user->Pk)->count()==0){
             $this->app->flash->message="У вас нет объявлений";
+
         } else {
             $this->data->itemsCount = Story::findAllBy__user_id($this->app->user->Pk)->count();
             $this->data->pageSize = self::PAGE_SIZE;
@@ -119,7 +144,9 @@ class Index
 
         $item->fill($this->app->request->post);
         $item->user=$this->app->user->Pk;
-
+        if(str_word_count($item->text) < 6){
+            $item->nopaid=1;
+        }
         $item->save();
         $this->data->id=$item->Pk;
         $this->data->topicid=$item->topic->Pk;
@@ -134,6 +161,11 @@ class Index
         $this->data->bc=$last_item;
         $this->data->topic_id=$id;
 
+    }
+
+    public function actionDelete($id){
+        $item=Story::findByPK($id);
+        $item->delete();
     }
 
 

@@ -1,4 +1,5 @@
-        
+<section id="long">
+            Этот
 
            {% for item in items %}
 
@@ -27,9 +28,45 @@
             {% endfor %}
 
 
-
+<div class="container">
         <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}</div>
+</div>
+</section>
 
+<section id="short">
+
+
+    {% for shortitem in shortitems %}
+
+    <!--  <ol class="breadcrumb">
+      {% for topic in item.topic.findAllParents %}
+       {% if loop.index >1 %}
+        <li><a >{{topic.title}}</a></li>
+          {% endif %}
+      {% endfor %}
+          <li>{{item.topic.title}}</li>
+          </ol>-->
+    {{shortitem.text|raw}}
+    <div class="bottom-article">
+
+
+
+        <ul class="meta-post">
+            <li><i class="glyphicon glyphicon-calendar"></i>{{shortitem.published|date("d.m.Y")}}</li>
+            <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
+
+
+
+        </ul>
+        <a href="#" class="pull-right">Читать дальше ...</i></a>
+    </div><br><br>
+    {% endfor %}
+
+
+    <div class="container">
+        <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}</div>
+    </div>
+</section>
 
 
 

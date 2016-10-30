@@ -5,7 +5,8 @@
         <div class="panel panel-default" id="sidebar">
             <div class="panel-heading text-center" style="background-image:none;background-color:#888;color:#fff;">РУБРИКИ</div>
             <div class="panel-body" >
-                <t4:block path="/News//NewsAsMenu/" mode="1"/>
+                <a href="/" >Все объявления</a>
+                <!--<t4:block path="/News//NewsAsMenu/" mode="1"/>-->
 
 
             </div>
@@ -20,10 +21,11 @@
             <div class="panel-heading text-center" style="background-color:#555;color:#eee;">МОИ ОБЪЯВЛЕНИЕ</div>
             <div id="message" class="panel-body">
                 <article>
+
+                    {% if itemsCount>0 %}
                     {% for item in items %}
 
                     {{item.text|raw}}
-
 
 
                     <div class="bottom-article">
@@ -34,12 +36,18 @@
                         <a href="#" onclick="addmessage({{item.Pk}})" class="pull-right">Редактировать</i></a>
                     </div><br><br>
                     {% endfor %}
+                    {% else %}
+                    <code>У вас нет объявлений</code>
+                    {% endif %}
+
 
 
 
                     <div class="row">
                         <div class="container">
-                        {{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}
+                            {% if itemsCount>0 %}
+                            {{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}
+                            {% endif %}
                             </div>
                     </div>
 
@@ -50,6 +58,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    tree();
+    $('#first').click();
+    $('#first').focus();
+
+</script>
 
 
 
