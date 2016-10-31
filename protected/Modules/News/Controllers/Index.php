@@ -168,6 +168,71 @@ class Index
         $item->delete();
     }
 
+    public function actionUpLoadImage()
+    {
+        $path = '/site/image/' .  $this->app->request->post->Pk . '/';
+
+        $realUploadPath = \T4\Fs\Helpers::getRealPath($path);
+        if (!is_dir($realUploadPath)) {
+            try {
+                \T4\Fs\Helpers::mkDir($realUploadPath);
+            } catch (\T4\Fs\Exception $e) {
+                throw new Exception($e->getMessage());
+            }
+        }
+        if (isset($_FILES["myfile"])) {
+            $ret = array();
+
+//	This is for custom errors;
+            /*$custom_error= array();
+             $custom_error['jquery-upload-file-error']="File already exists";
+             echo json_encode($custom_error);
+             die();
+            */
+            echo json_encode( $error = $_FILES["myfile"]["error"]);
+            //You need to handle  both cases
+            //If Any browser does not support serializing of multiple files using FormData()
+            //$subclass = $this->app->request->post->subclass;
+
+
+            if (!is_array($_FILES["myfile"]["name"])) //single file
+            {
+                $fileName = $_FILES["myfile"]["name"];
+                move_uploaded_file($_FILES["myfile"]["tmp_name"], $realUploadPath . $fileName);
+                $ret[] = $fileName;
+                $item = new Image();
+                $item->image = $path . $fileName;
+                                $item->save();
+            } else  //Multiple files, file[]
+            {
+                $fileCount = count($_FILES["myfile"]["name"]);
+                for ($i = 0; $i < $fileCount; $i++) {
+                    $fileName = $_FILES["myfile"]["name"][$i];
+                    move_uploaded_file($_FILES["myfile"]["tmp_name"][$i], $realUploadPath . $fileName);
+                    $ret[] = $fileName;
+
+                    $in_img=imagecreatefromjpeg($path.$fileName);
+                    $out_img=imagecreatetruecolor(500,500);
+                    var_dump(imagecopyresampled($out_img,$in_img,0,0,0,0,500,500,imagesx($in_img),imagesy($in_img)));
+
+                    var_dump(imagejpeg($out_img,$path.'tmp.jpg',NULL));die;
+                    imagedestroy($in_img);
+                    imagedestroy($out_img);
+
+                    $item = new Image();
+                    $item->image = $path . $fileName;
+                    $item->$subclass = $this->app->request->post->id;
+                    $item->save();
+
+                }
+
+            }
+          //  echo json_encode($ret);
+        }
+
+    }
+
+
 
 
 }

@@ -24,6 +24,7 @@ class m_1423048663_createStories
                 'fone' => ['type'=>'string'],
                 '__topic_id' => ['type' => 'link'],
                 '__user_id' => ['type' => 'link'],
+                '__photo_id' => ['type' => 'link'],
 
 
             ], [

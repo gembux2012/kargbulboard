@@ -54,7 +54,7 @@
                         <br><br>
                         <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{bc.id}}">
-                            <input  type="hidden" name="id" value="{{item.Pk}}">
+                            <input  type="hidden" name="Pk" value="{{item.Pk}}">
 
                             {% if item.Pk == '' %}
                             <div class="checkbox">
@@ -106,17 +106,17 @@
 
                         <div id="fileuploader">Upload</div>
                         <button id="extrabutton" class="btn btn-success">Загрузить</button>
-                        <p id="eventmessage">fgjh</p>
+                        <p id="eventmessage"></p>
 
 
 
                         <script type="text/javascript">
 
                                 var extraObj = $("#fileuploader").uploadFile({
-                                    url:"/LoadImg/UpLoadImage",
+                                    url:"/LoadImg/UpLoadImage.json",
                                     fileName:"myfile",
                                     dragDrop:false,
-                                    uploadStr:"Выберите файлы",
+                                    uploadStr:"Выберите файлы для загрузки",
                                     cancelStr:"Удалить",
                                     extErrorStr:"разрешено только  *",
                                     acceptFiles:"image/*",
@@ -124,8 +124,18 @@
                                     autoSubmit:false,
                                     showDone:true,
                                     returnType:"json",
+
                                     afterUploadAll:function(obj) {
                                         $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
+
+                                    },
+
+                                    onSuccess:function(files,data,xhr,pd)
+                                    {
+                                        alert('succes');
+                                        //files: list of files
+                                        console.log(data);
+                                        //xhr : jquer xhr object
                                     },
 
                                     extraHTML:function()
@@ -133,7 +143,8 @@
                                         var html='<input type="hidden" name="id" value="{{id}}">';
                                         html+='<input type="hidden" name="subclass" value="{{subclass}}">';
                                         return html;
-                                    }
+                                    },
+
 
                                 });
 
@@ -180,8 +191,9 @@
         </div>
     </div>
 
-
+    <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
     <script type="text/javascript">
+
         tree();
         $('#first').click();
         $('#first').focus();
@@ -197,7 +209,56 @@
 
         })
 
+        var extraObj = $("#fileuploader").uploadFile({
+            url:"/news/UpLoadImage.json", fileName: "myfile",
+            dragDrop:false,
+            uploadStr:"Выберите файлы для загрузки",
+            cancelStr:"Удалить",
+            extErrorStr:"разрешено только  *",
+            acceptFiles:"image/*",
+            showPreview:true,
+            autoSubmit:false,
+            showDone:true,
+            returnType:"json",
+
+            afterUploadAll:function(obj) {
+                $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
+
+            },
+
+           /* onSuccess:function(files,data,xhr,pd)
+            {
+               // alert('succes');
+                //files: list of files
+                console.log(data);
+                //xhr : jquer xhr object
+            },
+        */
+            extraHTML:function()
+            {
+                var html='<input type="hidden" name="id" value="{{id}}">';
+                html+='<input type="hidden" name="subclass" value="{{subclass}}">';
+                return html;
+            },
+
+
+        });
+
+        $("#extrabutton").click(function()
+        {
+
+            extraObj.startUpload();
+
+        });
+
+
+
+
+
+
     </script>
+
+
 
 
 
