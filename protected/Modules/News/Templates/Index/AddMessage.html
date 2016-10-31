@@ -127,22 +127,16 @@
 
                                     afterUploadAll:function(obj) {
                                         $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
+                                        onsole.log(obj);
 
                                     },
 
-                                    onSuccess:function(files,data,xhr,pd)
-                                    {
-                                        alert('succes');
-                                        //files: list of files
-                                        console.log(data);
-                                        //xhr : jquer xhr object
-                                    },
+
 
                                     extraHTML:function()
                                     {
-                                        var html='<input type="hidden" name="id" value="{{id}}">';
-                                        html+='<input type="hidden" name="subclass" value="{{subclass}}">';
-                                        return html;
+                                        var html='<input type="hidden" name="id" value="{{item.Pk}}">';
+                                         return html;
                                     },
 
 

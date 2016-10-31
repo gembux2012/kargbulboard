@@ -170,7 +170,8 @@ class Index
 
     public function actionUpLoadImage()
     {
-        $path = '/site/image/' .  $this->app->request->post->Pk . '/';
+        var_dump($this->app->request->post->id);die;
+        $path = '/site/image/' .  $this->app->request->post->id . '/';
 
         $realUploadPath = \T4\Fs\Helpers::getRealPath($path);
         if (!is_dir($realUploadPath)) {
@@ -189,7 +190,7 @@ class Index
              echo json_encode($custom_error);
              die();
             */
-            echo json_encode( $error = $_FILES["myfile"]["error"]);
+            $this->data->err= $_FILES["myfile"]["error"];
             //You need to handle  both cases
             //If Any browser does not support serializing of multiple files using FormData()
             //$subclass = $this->app->request->post->subclass;
@@ -221,13 +222,12 @@ class Index
 
                     $item = new Image();
                     $item->image = $path . $fileName;
-                    $item->$subclass = $this->app->request->post->id;
                     $item->save();
 
                 }
 
             }
-          //  echo json_encode($ret);
+          $this->data->ret= $ret;
         }
 
     }
