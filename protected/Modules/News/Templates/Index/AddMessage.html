@@ -100,7 +100,7 @@
 
 
                         <h3 class="text-center"> Загрузка изображений </h3>
-                        <button class="btn " onclick="history.back()">Назад на страницу</button><br><br>
+
                         <hr>
 
 
@@ -151,9 +151,8 @@
 
 
                         </script>
-                        <a class="btn btn-primary" href="/LoadImg/?name=Секция&id={{item.Pk}}&subclass=service"><i
-                                class="glyphicon glyphicon-plus-sign"></i> Добавить фото</a><br>
-                        <table class="table table-striped table-hover">
+
+                        <table id="photo" class="table table-striped table-hover">
 
                             <th class="col-sm-2">Фотография</th>
                             <th class="col-sm-2">Описание</th>
@@ -161,6 +160,7 @@
                             </tr>
 
                             <tr>
+                                {% for photo in item %}
                                 <td>
                                     <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.title }}"/>
                                 </td>
@@ -171,6 +171,7 @@
                                     <a class="btn btn-danger btn-sm" href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
                                             class="glyphicon glyphicon-remove"></i></a>
                                 </td>
+                                {% endfor %}
                             </tr>
 
                         </table>
@@ -230,8 +231,8 @@
         */
             extraHTML:function()
             {
-                var html='<input type="hidden" name="id" value="{{id}}">';
-                html+='<input type="hidden" name="subclass" value="{{subclass}}">';
+                var html='<input type="text" name="story" value="{{item.Pk}}">';
+
                 return html;
             },
 

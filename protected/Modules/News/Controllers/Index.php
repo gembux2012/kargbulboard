@@ -170,8 +170,8 @@ class Index
 
     public function actionUpLoadImage()
     {
-        var_dump($this->app->request->post->id);die;
-        $path = '/site/image/' .  $this->app->request->post->id . '/';
+       // var_dump($this->app->request->post->id);die;
+        $path = '/site/image/' .  $this->app->request->post->story . '/';
 
         $realUploadPath = \T4\Fs\Helpers::getRealPath($path);
         if (!is_dir($realUploadPath)) {
