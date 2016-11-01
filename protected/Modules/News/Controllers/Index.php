@@ -110,6 +110,7 @@ class Index
 
         } else {
             $this->data->item = Story::findByPK($id);
+            //var_dump($this->data->item->image->count);die;
             $topic=Story::findByPK($id)->topic;
             $this->data->parenttopic=$topic->findAllParents();
 
@@ -214,14 +215,16 @@ class Index
 
                     $in_img=imagecreatefromjpeg($path.$fileName);
                     $out_img=imagecreatetruecolor(500,500);
-                    var_dump(imagecopyresampled($out_img,$in_img,0,0,0,0,500,500,imagesx($in_img),imagesy($in_img)));
 
-                    var_dump(imagejpeg($out_img,$path.'tmp.jpg',NULL));die;
+
+
                     imagedestroy($in_img);
                     imagedestroy($out_img);
 
                     $item = new Image();
+                    $item->fill($this->app->request->post);
                     $item->image = $path . $fileName;
+                   // $item->__story_id=$this->app->request->post->story;
                     $item->save();
 
                 }
