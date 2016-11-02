@@ -169,6 +169,18 @@ class Index
         $item->delete();
     }
 
+    public function actionLoadImage($id){
+        $this->data->item=Story::findByPK($id);
+
+    }
+
+    public function actionSaveImageText(){
+        $item=Image::findByPK($this->app->request->post->id);
+        $item->tetx=$this->app->request->post->text;
+        $item->save();
+    }
+
+
     public function actionUpLoadImage()
     {
        // var_dump($this->app->request->post->id);die;
