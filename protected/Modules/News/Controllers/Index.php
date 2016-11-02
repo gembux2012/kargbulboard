@@ -203,8 +203,11 @@ class Index
                 move_uploaded_file($_FILES["myfile"]["tmp_name"], $realUploadPath . $fileName);
                 $ret[] = $fileName;
                 $item = new Image();
+                $item->fill($this->app->request->post);
                 $item->image = $path . $fileName;
-                                $item->save();
+                //$item->story=$this->app->request->post->story;
+                $item->save();
+
             } else  //Multiple files, file[]
             {
                 $fileCount = count($_FILES["myfile"]["name"]);
@@ -224,13 +227,13 @@ class Index
                     $item = new Image();
                     $item->fill($this->app->request->post);
                     $item->image = $path . $fileName;
-                   // $item->__story_id=$this->app->request->post->story;
+                    //$item->story=$this->app->request->post->story;
                     $item->save();
 
                 }
 
             }
-          $this->data->ret= $ret;
+            $this->data->ret= $ret;
         }
 
     }

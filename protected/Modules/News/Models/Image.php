@@ -17,7 +17,7 @@ class Image
     static protected $schema = [
         'columns' =>[
         'image' => ['type' => 'string'],
-        'tetx' => ['type' => 'string'],
+        'text' => ['type' => 'string'],
             ],
         'relations' =>[
             'story' => ['type'=>self::BELONGS_TO, 'model'=>Story::class],

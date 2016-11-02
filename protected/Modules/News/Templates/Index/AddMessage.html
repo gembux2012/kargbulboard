@@ -110,47 +110,6 @@
 
 
 
-                        <script type="text/javascript">
-
-                                var extraObj = $("#fileuploader").uploadFile({
-                                    url:"/LoadImg/UpLoadImage.json",
-                                    fileName:"myfile",
-                                    dragDrop:false,
-                                    uploadStr:"Выберите файлы для загрузки",
-                                    cancelStr:"Удалить",
-                                    extErrorStr:"разрешено только  *",
-                                    acceptFiles:"image/*",
-                                    showPreview:true,
-                                    autoSubmit:false,
-                                    showDone:true,
-                                    returnType:"json",
-
-                                    afterUploadAll:function(obj) {
-                                        $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
-                                        onsole.log(obj);
-
-                                    },
-
-
-
-                                    extraHTML:function()
-                                    {
-                                        var html='<input type="hidden" name="id" value="{{item.Pk}}">';
-                                         return html;
-                                    },
-
-
-                                });
-
-                                $("#extrabutton").click(function()
-                                {
-
-                                    extraObj.startUpload();
-
-                                });
-
-
-                        </script>
 
                         <table id="photo" class="table table-striped table-hover">
 
@@ -159,10 +118,11 @@
                             <th></th>
                             </tr>
 
+                            {% for photo in item.image %}
                             <tr>
-                                {% for photo in item %}
+
                                 <td>
-                                    <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.title }}"/>
+                                    <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
                                 </td>
                                 <td></td>
                                 <td style="white-space: nowrap">
@@ -171,9 +131,9 @@
                                     <a class="btn btn-danger btn-sm" href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
                                             class="glyphicon glyphicon-remove"></i></a>
                                 </td>
-                                {% endfor %}
-                            </tr>
 
+                            </tr>
+                            {% endfor %}
                         </table>
                     </div>
                     </div>
@@ -213,7 +173,8 @@
             acceptFiles:"image/*",
             showPreview:true,
             autoSubmit:false,
-            showDone:true,
+            showDone:false,
+            //onSuccess: alert("succes"),
             returnType:"json",
 
             afterUploadAll:function(obj) {
@@ -221,14 +182,14 @@
 
             },
 
-           /* onSuccess:function(files,data,xhr,pd)
+            onSuccess:function(files,data,xhr,pd)
             {
-               // alert('succes');
+                //$('.ajax-file-upload-green').click();
                 //files: list of files
                 console.log(data);
                 //xhr : jquer xhr object
             },
-        */
+
             extraHTML:function()
             {
                 var html='<input type="text" name="story" value="{{item.Pk}}">';
