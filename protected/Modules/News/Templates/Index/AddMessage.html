@@ -1,8 +1,9 @@
 
-<div class="no-gutter row">
+<div  class="no-gutter row">
     <!-- left side column -->
+
     <div class="col-md-3">
-        <div class="panel panel-default" id="sidebar">
+        <div class="panel panel-default"  data-spy="affix" data-offset-top="20" >
             <div class="panel-heading text-center" style="background-image:none;background-color:#888;color:#fff;">РУБРИКИ</div>
             <div class="panel-body" >
                 <t4:block path="/News//NewsAsMenu/" mode="1"/>
@@ -39,7 +40,7 @@
                     {% endif %}
                  </article>
 
-
+                <h5>Объявление УН {{item.Pk}}</h5>
 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#panel1">Объявление </a></li>
@@ -119,12 +120,13 @@
                             </tr>
 
                             {% for photo in item.image %}
+                            <form>
                             <tr>
 
                                 <td>
                                     <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
                                 </td>
-                                <td><textarea class="image"  tabindex="{{loop.index}}"  >{{photo.text}}</textarea></td>
+                                <td><textarea  class="image" onblur="saveImageText(this)" tabindex="{{loop.index}}"  >{{photo.text}}</textarea></td>
                                 <td style="white-space: nowrap">
                                     <a class="btn btn-primary btn-sm" href="/admin/site/PhotoEdit/?id={{photo.Pk}}"><i
                                             class="glyphicon glyphicon-edit"></i></a>
@@ -134,6 +136,7 @@
 
                             </tr>
                             {% endfor %}
+                                </form>
                         </table>
                       </section>
                     </div>
@@ -207,20 +210,20 @@
 
         });
 
-        function saveImageText(){
-            alert(this.value());
+        function saveImageText(el){
+           // alert($(this).html());
             console.log(el);
            // $.post('/news/SaveImageText',{id:"{{item.Pk}}",text:$(this).val()});
         }
 
+        /*
+        $('.image').each($(this).blur(function() { alert('blur');
+            //$.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
+            //console.log($(this));
+            //alert($(this).val());
+        }));
 
-        $('.image').onblur=function() { alert('!!!');
-            $.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
-            console.log($(this));
-            alert($(this).val());
-        };
-
-
+        */
 
 
 
