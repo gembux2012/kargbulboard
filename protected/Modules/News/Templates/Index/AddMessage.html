@@ -124,7 +124,7 @@
                                 <td>
                                     <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
                                 </td>
-                                <td><textarea class="image"  >{{photo.text}}</textarea></td>
+                                <td><textarea class="image"  tabindex="{{loop.index}}"  >{{photo.text}}</textarea></td>
                                 <td style="white-space: nowrap">
                                     <a class="btn btn-primary btn-sm" href="/admin/site/PhotoEdit/?id={{photo.Pk}}"><i
                                             class="glyphicon glyphicon-edit"></i></a>
@@ -207,14 +207,18 @@
 
         });
 
-        function saveImageText(el){
-            $.post('/news/SaveImageText',{id:"{{item.Pk}}",text:$(this).html()});
+        function saveImageText(){
+            alert(this.value());
+            console.log(el);
+           // $.post('/news/SaveImageText',{id:"{{item.Pk}}",text:$(this).val()});
         }
 
-        $('.image').blur(function() { alert('!!!');
-            $.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).html()});
-            alert($(this).html());
-        });
+
+        $('.image').onblur=function() { alert('!!!');
+            $.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
+            console.log($(this));
+            alert($(this).val());
+        };
 
 
 
