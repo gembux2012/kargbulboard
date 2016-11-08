@@ -1,22 +1,69 @@
-{% extends 'Index.html' %}
+<br>
+    <ul class="breadcrumb">
 
-{% block content %}
+        {% for topic in item.topic.findAllParents %}
+        <li><a href="/news/topics/{{topic.Pk}}.html">{{topic.title}}</a></li>
+        {% endfor %}
+        <li><a href="/news/topics/{{item.topic.Pk}}.html">{{item.topic.title}}</a></li>
+    </ul>
 
-<ul class="breadcrumb">
-    <li><a href="/">Главная страница</a></li>
-    <li><a href="/news/">Новости</a></li>
-    {% for topic in item.topic.findAllParents %}
-    <li><a href="/news/topics/{{topic.Pk}}.html">{{topic.title}}</a></li>
+    <h3 >Объявление #{{item.Pk}}</h3>
+    <hr>
+    {{item.text|raw}}
+    <hr>
+    {% for foto in item.image %}
+
+
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <a href="#" class="tumb"> <img src="{{foto.image}}" alt="..."></a>
+
+            <div class="caption">
+
+                <p style="height: 50px">{{foto.text}}</p>
+
+
+            </div>
+        </div>
+    </div>
     {% endfor %}
-    <li><a href="/news/topics/{{item.topic.Pk}}.html">{{item.topic.title}}</a></li>
-</ul>
-
-<h1 class="page-header">{{item.title}}</h1>
-<div class="clearfix">
-    <img src="{{item.image}}" class="pull-left img-responsive" style="max-width: 200px; max-height: 300px; margin-right: 10px !important;">
-    {{item.lead|raw}}
 </div>
-<hr>
-{{item.text|raw}}
 
-{% endblock %}
+<div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <div class="modal-title">Просмотр изображения</div>
+            </div>
+            <div class="modal-body">
+                <img class="img-responsive center-block" src="" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+// После загрузки DOM-дерева (страницы)
+$(function() {
+//при нажатии на ссылку, содержащую Thumbnail
+$('a.tumb').click(function(e) {
+//отменить стандартное действие браузера
+e.preventDefault();
+//присвоить атрибуту scr элемента img модального окна
+//значение атрибута scr изображения, которое обёрнуто
+//вокруг элемента a, на который нажал пользователь
+$('#image-modal .modal-body img').attr('src', $(this).find('img').attr('src'));
+//открыть модальное окно
+$("#image-modal").modal('show');
+});
+//при нажатию на изображение внутри модального окна
+//закрыть его (модальное окно)
+$('#image-modal .modal-body img').on('click', function() {
+$("#image-modal").modal('hide')
+});
+});
+</script>

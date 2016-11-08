@@ -58,10 +58,10 @@ class Index
         $limit = self::PAGE_SIZE;
 
             $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)AND nopaid<>1')->count();
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)')->count();
 
             $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft) AND nopaid<>1 ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
 
 
 
@@ -176,7 +176,7 @@ class Index
 
     public function actionSaveImageText(){
         $item=Image::findByPK($this->app->request->post->id);
-        $item->tetx=$this->app->request->post->text;
+        $item->text=$this->app->request->post->text;
         $item->save();
     }
 

@@ -1,50 +1,54 @@
-
-<div  class="no-gutter row">
+<div class="no-gutter row">
     <!-- left side column -->
 
     <div class="col-md-3">
-        <div class="panel panel-default"  data-spy="affix" data-offset-top="20" >
-            <div class="panel-heading text-center" style="background-image:none;background-color:#888;color:#fff;">РУБРИКИ</div>
-            <div class="panel-body" >
+        <div class="panel panel-default" data-spy="affix" data-offset-top="20">
+            <div class="panel-heading text-center" style="background-image:none;background-color:#888;color:#fff;">
+                РУБРИКИ
+            </div>
+            <div class="panel-body">
                 <t4:block path="/News//NewsAsMenu/" mode="1"/>
 
 
             </div>
-        </div><!--/panel-->
-    </div><!--/end left column-->
-
+        </div>
+        <!--/panel-->
+    </div>
+    <!--/end left column-->
 
 
     <!--mid column-->
     <div class="col-md-9">
-        <div class="panel" >
-            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">{% if item.Pk == '' %}ПОДАТЬ ОБЪЯВЛЕНИЕ
-            {% else%} МОИ ОБЪЯВЛЕНИЯ -> редактирование объявления {% endif %}
+        <div class="panel">
+            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">{% if item.Pk == ''
+                %}ПОДАТЬ ОБЪЯВЛЕНИЕ
+                {% else%} МОИ ОБЪЯВЛЕНИЯ -> редактирование объявления {% endif %}
             </div>
             <div id="message" class="panel-body">
 
-                <article id="breadcrambs" >
+                <article id="breadcrambs">
                     {% if item.Pk == '' %}
                     <h5 class="text-danger">Выберите рубрику</h5>
-                 {% else %}
-                <div style="border: 1px">
-                <h5 class="text-danger">в рубрику:</h5><br>
-                <ol class="breadcrumb">
-                    {% for topic in parenttopic %}
-                    <li><a >{{topic.title}}</a></li>
-                    {% endfor %}
-                    <li>{{item.topic.title
-                        }}</li>
-                </ol>
-                </div>
+                    {% else %}
+                    <div style="border: 1px">
+                        <h5 class="text-danger">в рубрику:</h5><br>
+                        <ol class="breadcrumb">
+                            {% for topic in parenttopic %}
+                            <li><a>{{topic.title}}</a></li>
+                            {% endfor %}
+                            <li>{{item.topic.title
+                                }}
+                            </li>
+                        </ol>
+                    </div>
                     {% endif %}
-                 </article>
+                </article>
 
                 <h5>Объявление УН {{item.Pk}}</h5>
 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#panel1">Объявление </a></li>
-                    {% if item.Pk != ''  and item.nopaid==0 %}
+                    {% if item.Pk != '' and item.nopaid==0 %}
                     <li><a data-toggle="tab" href="#panel2">Фото обьявления</a></li>
                     {% endif %}
 
@@ -53,9 +57,10 @@
                 <div class="tab-content">
                     <div id="panel1" class="tab-pane fade in active">
                         <br><br>
+
                         <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{bc.id}}">
-                            <input  type="hidden" name="Pk" value="{{item.Pk}}">
+                            <input type="hidden" name="Pk" value="{{item.Pk}}">
 
                             {% if item.Pk == '' %}
                             <div class="checkbox">
@@ -67,9 +72,10 @@
 
                             <div class="form-group">
                                 <label for="message">Текст объявления:</label>
-                                <textarea  class="form-control" name="text" rows="10" onfocus="textfocus()">{{item.text}} </textarea>
+                                <textarea class="form-control" name="text" rows="10"
+                                          onfocus="textfocus()">{{item.text}} </textarea>
                             </div>
-                             {% if item.Pk != ''  and item.nopaid==0 %}
+                            {% if item.Pk != '' and item.nopaid==0 %}
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"> VIP
@@ -78,16 +84,21 @@
                             {% endif %}
                             <div class="form-group">
                                 <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i> </span>
-                                <input id="mobile" type="text" class="form-control" placeholder="телефон сотовый">
-                                    </div><br>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i> </span>
+                                    <input id="mobile" type="text" class="form-control" placeholder="телефон сотовый">
+                                </div>
+                                <br>
+
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i> </span>
+                                    <span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-phone-alt"></i> </span>
                                     <input id="phone" type="text" class="form-control" placeholder="телефон городской">
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-defult"  style="color: white;background-color: #77CCDD">Сохранить</button>
+                            <button type="submit" class="btn btn-defult" style="color: white;background-color: #77CCDD">
+                                Сохранить
+                            </button>
                             {% if item.Pk != '' %}
                             <button type="button" class="btn btn-default">Опубликовать</button>
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
@@ -96,50 +107,61 @@
                         </form>
                     </div>
                     <div id="panel2" class="tab-pane fade" style="height: 451px">
-                        <<div class="col-sm-10">
+
+                        <div class="col-sm-10">
 
 
+                            <h3 class="text-center"> Загрузка изображений </h3>
 
-                        <h3 class="text-center"> Загрузка изображений </h3>
-
-                        <hr>
-
-
-                        <div id="fileuploader">Upload</div>
-                        <button id="extrabutton" class="btn btn-success">Загрузить</button>
-                        <p id="eventmessage"></p>
+                            <hr>
 
 
+                            <div id="fileuploader">Upload</div>
+                            <button id="extrabutton" class="btn btn-success">Загрузить</button>
+                            <p id="eventmessage"></p>
 
-                    <section id="image">
-                        <table id="photo" class="table table-striped table-hover">
 
-                            <th class="col-sm-2">Фотография</th>
-                            <th class="col-sm-2">Описание</th>
-                            <th></th>
-                            </tr>
+                            <section id="image">
+                                <table id="photo" class="table table-striped ">
 
-                            {% for photo in item.image %}
-                            <form>
-                            <tr>
+                                    <th >Фотография</th>
+                                    <th >Описание</th>
+                                    <th></th>
 
-                                <td>
-                                    <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
-                                </td>
-                                <td><textarea  class="image" onblur="saveImageText(this)" tabindex="{{loop.index}}"  >{{photo.text}}</textarea></td>
-                                <td style="white-space: nowrap">
-                                    <a class="btn btn-primary btn-sm" href="/admin/site/PhotoEdit/?id={{photo.Pk}}"><i
-                                            class="glyphicon glyphicon-edit"></i></a>
-                                    <a class="btn btn-danger btn-sm" href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
-                                            class="glyphicon glyphicon-remove"></i></a>
-                                </td>
 
-                            </tr>
-                            {% endfor %}
-                                </form>
-                        </table>
-                      </section>
-                    </div>
+                                    {% for photo in item.image %}
+
+                                    <tr>
+
+
+                                        <td>
+                                            <img class="img-responsive" src="{{ photo.image }}" width="80"
+                                                 alt="{{ photo.text }}"/>
+                                        </td>
+
+                                        <td>
+
+                                            <form id="form{{loop.index}}" class="form-horizontal">
+                                                <input type="hidden" name="id" value="{{photo.Pk}}">
+                                                <textarea class="image"  rows="6" name="text" onblur="$(this).submit()" style="width: 100%">{{photo.text}}</textarea>
+                                            </form>
+
+                                        </td>
+                                        <td style="white-space: nowrap">
+
+                                            <a class="btn btn-danger btn-sm"
+                                               href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
+                                                    class="glyphicon glyphicon-remove"></i></a>
+                                        </td>
+
+
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </table>
+                            </section>
+                        </div>
                     </div>
 
                 </div>
@@ -157,45 +179,43 @@
         $('#first').click();
         $('#first').focus();
 
-        $('#del').click(function(){
-           if(confirm('Вы уверены что хотите удалить обьявление?')){
-               console.log($(this).attr('href'));
-               $.get($(this).attr('href'));
-               mymessage();
+        $('#del').click(function () {
+            if (confirm('Вы уверены что хотите удалить обьявление?')) {
+                console.log($(this).attr('href'));
+                $.get($(this).attr('href'));
+                mymessage();
 
-           }
-          return false;
+            }
+            return false;
 
         })
 
         var extraObj = $("#fileuploader").uploadFile({
-            url:"/news/UpLoadImage.json", fileName: "myfile",
-            dragDrop:false,
-            uploadStr:"Выберите файлы для загрузки",
-            cancelStr:"Удалить",
-            extErrorStr:"разрешено только  *",
-            acceptFiles:"image/*",
-            showPreview:true,
-            autoSubmit:false,
-            showDone:true,
+            url: "/news/UpLoadImage.json", fileName: "myfile",
+            dragDrop: false,
+            uploadStr: "Выберите файлы для загрузки",
+            cancelStr: "Удалить",
+            extErrorStr: "разрешено только  *",
+            acceptFiles: "image/*",
+            showPreview: true,
+            autoSubmit: false,
+            showDone: true,
             //onSuccess: alert("succes"),
-            returnType:"json",
+            returnType: "json",
 
-            afterUploadAll:function(obj) {
+            afterUploadAll: function (obj) {
                 $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
 
             },
 
-            onSuccess:function(files,data,xhr,pd)
-            {
+            onSuccess: function (files, data, xhr, pd) {
                 $('.ajax-file-upload-statusbar').hide();
                 $('#image').load('/news/LoadImage?id={{item.Pk}}');
 
             },
 
-            extraHTML:function()
-            {
-                var html='<input type="text" name="story" value="{{item.Pk}}">';
+            extraHTML: function () {
+                var html = '<input type="text" name="story" value="{{item.Pk}}">';
 
                 return html;
             },
@@ -203,29 +223,32 @@
 
         });
 
-        $("#extrabutton").click(function()
-        {
+        $("#extrabutton").click(function () {
 
             extraObj.startUpload();
 
         });
 
-        function saveImageText(el){
-           // alert($(this).html());
-            console.log(el);
-           // $.post('/news/SaveImageText',{id:"{{item.Pk}}",text:$(this).val()});
-        }
+        $('form').submit(function () {
+            var formID = $(this).attr('id'); // Получение ID формы
+            var formNm = $('#' + formID);
+            $.ajax({
+                type: 'POST',
+                url: '/news/SaveImageText.json', // Обработчик формы отправки
+                data: formNm.serialize(),
+
+            });
+            return false;
+        });
 
         /*
-        $('.image').each($(this).blur(function() { alert('blur');
-            //$.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
-            //console.log($(this));
-            //alert($(this).val());
-        }));
+         $('.image').each($(this).blur(function() { alert('blur');
+         //$.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
+         //console.log($(this));
+         //alert($(this).val());
+         }));
 
-        */
-
-
+         */
 
 
     </script>

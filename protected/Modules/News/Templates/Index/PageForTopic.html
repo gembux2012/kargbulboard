@@ -11,25 +11,45 @@
                 <li>{{item.topic.title}}</li>
             </ol>-->
             {{ item.text|striptags|length > 250 ? (item.text|striptags|slice(0, 250)~'...')|raw : item.text|striptags|raw }}
-        <div class="bottom-article">
+          <div class="bottom-article">
 
 
-            <ul class="meta-post">
-                <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
-                <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
+              <ul class="meta-post">
+                  <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
+                  <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
+                  {% if item.image %}
+                  <li><a href="#"><img src="{{item.image[0].image}}" class="img-responsive"
+                                       style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;{{item.image.count}}
+                      фото
+                  </li>
+                  {% endif %}
+              </ul>
+              {% if item.text|striptags|length > 250 %}
+              <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Читать дальше ...</a>
+          </div>
+          <br><br>
+          {% endif %}
+          {% endfor %}
 
-
-
-            </ul>
-            <a href="#" class="pull-right">Читать дальше ...</i></a>
-        </div><br><br>
-            {% endfor %}
 
 
         <div class="container">
         <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}</div>
         </div>
 </section>
+
+      <script type="text/javascript">
+
+          $('.img ').click(function(){
+
+              var toLoad = $(this).attr('href');
+              $('#body').empty();
+              $('#body').load(toLoad);
+              return false;
+
+          });
+
+      </script>
 
 
 
