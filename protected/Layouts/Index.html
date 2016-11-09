@@ -200,9 +200,7 @@
 
         $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user );
 
-        $('#short').empty();
 
-        $('#short').load('/news//ShortPageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user);
 
     }
 
@@ -241,7 +239,7 @@
         $('#breadcrambs').load('/news//BreadCrambs?id=' + id, function () {
             div.scrollTop(sc)
         });
-        $('#topicid').val(id);
+        $('#idpk').val(id);
     }
     ;
 

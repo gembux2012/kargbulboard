@@ -60,7 +60,7 @@
 
                         <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{bc.id}}">
-                            <input type="hidden" name="Pk" value="{{item.Pk}}">
+                            <input id="idpk" type="hidden" name="Pk" value="{{item.Pk}}">
 
                             {% if item.Pk == '' %}
                             <div class="checkbox">
@@ -122,43 +122,29 @@
 
 
                             <section id="image">
-                                <table id="photo" class="table table-striped ">
+                                <table id="photo" class="table table-striped table-hover">
 
-                                    <th >Фотография</th>
-                                    <th >Описание</th>
+                                    <th class="col-sm-2">Фотография</th>
+                                    <th class="col-sm-2">Описание</th>
                                     <th></th>
-
+                                    </tr>
 
                                     {% for photo in item.image %}
-
                                     <tr>
 
-
                                         <td>
-                                            <img class="img-responsive" src="{{ photo.image }}" width="80"
-                                                 alt="{{ photo.text }}"/>
+                                            <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
                                         </td>
-
-                                        <td>
-
-                                            <form id="form{{loop.index}}" class="form-horizontal">
-                                                <input type="hidden" name="id" value="{{photo.Pk}}">
-                                                <textarea class="image"  rows="6" name="text" onblur="$(this).submit()" style="width: 100%">{{photo.text}}</textarea>
-                                            </form>
-
-                                        </td>
+                                        <td></td>
                                         <td style="white-space: nowrap">
-
-                                            <a class="btn btn-danger btn-sm"
-                                               href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
+                                            <a class="btn btn-primary btn-sm" href="/admin/site/PhotoEdit/?id={{photo.Pk}}"><i
+                                                    class="glyphicon glyphicon-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm" href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
                                                     class="glyphicon glyphicon-remove"></i></a>
                                         </td>
 
-
                                     </tr>
                                     {% endfor %}
-
-
                                 </table>
                             </section>
                         </div>

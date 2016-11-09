@@ -17,18 +17,19 @@
               <ul class="meta-post">
                   <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
                   <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
-                  {% if item.image %}
+                  {% if item.image.count>0 %}
                   <li><a href="#"><img src="{{item.image[0].image}}" class="img-responsive"
                                        style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;{{item.image.count}}
                       фото
                   </li>
                   {% endif %}
               </ul>
-              {% if item.text|striptags|length > 250 %}
+              {% if item.text|length > 250 %}
               <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Читать дальше ...</a>
+              {% endif %}
           </div>
           <br><br>
-          {% endif %}
+
           {% endfor %}
 
 
