@@ -59,8 +59,8 @@
                         <br><br>
 
                         <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
-                            <input id="topicid" type="hidden" name="topic" value="{{bc.id}}">
-                            <input id="idpk" type="hidden" name="Pk" value="{{item.Pk}}">
+                            <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
+                            <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
 
                             {% if item.Pk == '' %}
                             <div class="checkbox">

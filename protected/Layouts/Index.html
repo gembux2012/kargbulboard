@@ -233,13 +233,14 @@
     }
 
     function breadcrambs(id) {
-        div = $('body');
-        sc = div.scrollTop();
-        $('#breadcrambs').empty();
+        //div = $('body');
+        //sc = div.scrollTop();
+        //$('#breadcrambs').empty();
+        alert(id);
         $('#breadcrambs').load('/news//BreadCrambs?id=' + id, function () {
-            div.scrollTop(sc)
+          //  div.scrollTop(sc)
         });
-        $('#idpk').val(id);
+        $('#topicid').val(id);
     }
     ;
 
