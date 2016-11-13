@@ -22,16 +22,16 @@
         <div class="panel">
             <div class="panel-heading text-center" style="background-color:#555;color:#eee;">{% if item.Pk == ''
                 %}ПОДАТЬ ОБЪЯВЛЕНИЕ
-                {% else%} МОИ ОБЪЯВЛЕНИЯ -> редактирование объявления {% endif %}
+                {% else%} МОИ ОБЪЯВЛЕНИЯ  {% endif %}
             </div>
             <div id="message" class="panel-body">
 
                 <article id="breadcrambs">
                     {% if item.Pk == '' %}
-                    <h5 class="text-danger">Выберите рубрику</h5>
+                    <h4 class="text-danger">Выберите рубрику</h4>
                     {% else %}
                     <div style="border: 1px">
-                        <h5 class="text-danger">в рубрику:</h5><br>
+                        <h4 class="text-danger">в рубрику:</h4>
                         <ol class="breadcrumb">
                             {% for topic in parenttopic %}
                             <li><a>{{topic.title}}</a></li>
@@ -43,8 +43,9 @@
                     </div>
                     {% endif %}
                 </article>
-
-                <h5>Объявление УН {{item.Pk}}</h5>
+                {% if item.Pk!='' %}
+                <h5 class="text-center">Объявление УН {{item.Pk}}</h5>
+                {% endif %}
 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#panel1">Объявление </a></li>
@@ -62,39 +63,39 @@
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
                             <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
 
-                            {% if item.Pk == '' %}
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="nopaid" value="1"> Бесплатное объявление
-                                </label>
-                            </div>
-                            {% endif %}
+
 
                             <div class="form-group">
                                 <label for="message">Текст объявления:</label>
                                 <textarea class="form-control" name="text" rows="10"
                                           onfocus="textfocus()">{{item.text}} </textarea>
                             </div>
-                            {% if item.Pk != '' and item.nopaid==0 %}
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> VIP
-                                </label>
-                            </div>
-                            {% endif %}
+
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i> </span>
-                                    <input id="mobile" type="text" class="form-control" placeholder="телефон сотовый">
+                                    <input id="mobile" type="text" name="mfone" class="form-control" value="{{item.mfone}}" placeholder="телефон сотовый">
                                 </div>
                                 <br>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i
                                             class="glyphicon glyphicon-phone-alt"></i> </span>
-                                    <input id="phone" type="text" class="form-control" placeholder="телефон городской">
+                                    <input id="phone" type="text" name="fone" class="form-control" value="{{item.fone}}" placeholder="телефон городской">
                                 </div>
                             </div>
+
+                            {% if item.Pk != '' %}
+                            <div class="checkbox">
+                                <label>
+                                    {% if item.vip==1 %}
+                                    <input type="checkbox" name="vip"  checked value="1">  VIP статус
+                                    {% else %}
+                                    <input type="checkbox" name="vip"   value="1"> присвоить VIP статус
+                                    {% endif %}
+                                </label>
+                            </div>
+                            {% endif %}
 
                             <button type="submit" class="btn btn-defult" style="color: white;background-color: #77CCDD">
                                 Сохранить
@@ -122,30 +123,7 @@
 
 
                             <section id="image">
-                                <table id="photo" class="table table-striped table-hover">
 
-                                    <th class="col-sm-2">Фотография</th>
-                                    <th class="col-sm-2">Описание</th>
-                                    <th></th>
-                                    </tr>
-
-                                    {% for photo in item.image %}
-                                    <tr>
-
-                                        <td>
-                                            <img class="img-responsive" src="{{ photo.image }}" width="80" alt="{{ photo.text }}"/>
-                                        </td>
-                                        <td></td>
-                                        <td style="white-space: nowrap">
-                                            <a class="btn btn-primary btn-sm" href="/admin/site/PhotoEdit/?id={{photo.Pk}}"><i
-                                                    class="glyphicon glyphicon-edit"></i></a>
-                                            <a class="btn btn-danger btn-sm" href="/admin/site/PhotoDelete/?id={{photo.Pk}}"><i
-                                                    class="glyphicon glyphicon-remove"></i></a>
-                                        </td>
-
-                                    </tr>
-                                    {% endfor %}
-                                </table>
                             </section>
                         </div>
                     </div>
@@ -164,11 +142,12 @@
         tree();
         $('#first').click();
         $('#first').focus();
+        $('#image').load('/news/LoadImage?id={{item.Pk}}');
+        $("#mobile").mask("+7 999 999 9999");
 
         $('#del').click(function () {
             if (confirm('Вы уверены что хотите удалить обьявление?')) {
-                console.log($(this).attr('href'));
-                $.get($(this).attr('href'));
+                 $.get($(this).attr('href'));
                 mymessage();
 
             }
@@ -215,17 +194,7 @@
 
         });
 
-        $('form').submit(function () {
-            var formID = $(this).attr('id'); // Получение ID формы
-            var formNm = $('#' + formID);
-            $.ajax({
-                type: 'POST',
-                url: '/news/SaveImageText.json', // Обработчик формы отправки
-                data: formNm.serialize(),
 
-            });
-            return false;
-        });
 
         /*
          $('.image').each($(this).blur(function() { alert('blur');

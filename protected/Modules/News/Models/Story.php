@@ -15,18 +15,19 @@ class Story
     static protected $schema = [
         'table' => 'news_stories',
         'columns' => [
-            'title' => ['type'=>'string'],
-            'published' => ['type'=>'datetime'],
-            'text' => ['type'=>'text'],
-            'nopaid' => ['type'=>'integer'],
-            'mfone' => ['type'=>'string'],
-            'fone' => ['type'=>'string'],
+            'title' => ['type' => 'string'],
+            'published' => ['type' => 'datetime'],
+            'text' => ['type' => 'text'],
+            'nopaid' => ['type' => 'integer'],
+            'mfone' => ['type' => 'string'],
+            'fone' => ['type' => 'string'],
+            'vip' => ['type' => 'int'],
 
         ],
         'relations' => [
-            'topic' => ['type'=>self::BELONGS_TO, 'model'=>Topic::class],
-            'image' => ['type'=>self::HAS_MANY, 'model'=>Image::class],
-            'user' => ['type'=>self::BELONGS_TO, 'model'=>User::class],
+            'topic' => ['type' => self::BELONGS_TO, 'model' => Topic::class],
+            'image' => ['type' => self::HAS_MANY, 'model' => Image::class],
+            'user' => ['type' => self::BELONGS_TO, 'model' => User::class],
         ]
     ];
 
@@ -59,21 +60,19 @@ class Story
 
     public function beforeDelete()
     {
-        $this->deleteImage();
+        $this->removeDirectory('/site/image/'.$this->Pk);
         return parent::beforeDelete();
     }
 
-    public function deleteImage()
+    function removeDirectory($path)
     {
-        if ($this->image) {
-            try {
-                $this->image = '';
-                Helpers::removeFile(ROOT_PATH_PUBLIC . $this->image);
-            } catch (\T4\Fs\Exception $e) {
-                return false;
+        $dir=\T4\Fs\Helpers::getRealPath($path);
+        if ($objs = glob($dir . "/*")) {
+            foreach ($objs as $obj) {
+                is_dir($obj) ? removeDirectory($obj) : unlink($obj);
             }
         }
-        return true;
-    }
+        rmdir($dir);
 
+    }
 }

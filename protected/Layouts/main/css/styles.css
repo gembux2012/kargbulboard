@@ -38,7 +38,7 @@ header {
 
 #sidebar.affix {
   position: fixed !important;
-  top: 50px;
+  top: 100px;
   width:292.5px;
 
 }

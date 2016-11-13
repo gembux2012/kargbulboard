@@ -1,10 +1,8 @@
 <br>
     <ul class="breadcrumb">
-
-        {% for topic in item.topic.findAllParents %}
-        <li><a href="/news/topics/{{topic.Pk}}.html">{{topic.title}}</a></li>
-        {% endfor %}
-        <li><a href="/news/topics/{{item.topic.Pk}}.html">{{item.topic.title}}</a></li>
+        <li><a href="/">На главную</a></li>
+        <li><a href="#">Мои объявления</a></li>
+        <li>Объявление #{{item.Pk}}</li>
     </ul>
 
     <h3 >Объявление #{{item.Pk}}</h3>

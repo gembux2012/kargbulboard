@@ -148,6 +148,11 @@ class Index
         if(str_word_count($item->text) < 6){
             $item->nopaid=1;
         }
+        if (!isset($this->app->request->post->vip))
+            $item->vip='0';
+            else
+               $item->vip='1';
+
         $item->save();
         $this->data->id=$item->Pk;
         $this->data->topicid=$item->topic->Pk;
@@ -178,6 +183,14 @@ class Index
         $item=Image::findByPK($this->app->request->post->id);
         $item->text=$this->app->request->post->text;
         $item->save();
+    }
+
+    public function actionPhotoDelete($id){
+
+        $item=Image::findByPK($id);
+        $item->delete();
+
+
     }
 
 
@@ -212,13 +225,16 @@ class Index
             if (!is_array($_FILES["myfile"]["name"])) //single file
             {
                 $fileName = $_FILES["myfile"]["name"];
+                if(!file_exists($realUploadPath. $fileName)) {
                 move_uploaded_file($_FILES["myfile"]["tmp_name"], $realUploadPath . $fileName);
                 $ret[] = $fileName;
-                $item = new Image();
-                $item->fill($this->app->request->post);
-                $item->image = $path . $fileName;
-                //$item->story=$this->app->request->post->story;
-                $item->save();
+
+                    $item = new Image();
+                    $item->fill($this->app->request->post);
+                    $item->image = $path . $fileName;
+                    //$item->story=$this->app->request->post->story;
+                    $item->save();
+                }
 
             } else  //Multiple files, file[]
             {
@@ -235,12 +251,13 @@ class Index
 
                     imagedestroy($in_img);
                     imagedestroy($out_img);
-
-                    $item = new Image();
-                    $item->fill($this->app->request->post);
-                    $item->image = $path . $fileName;
-                    //$item->story=$this->app->request->post->story;
-                    $item->save();
+                    if(!file_exists($path . $fileName)) {
+                        $item = new Image();
+                        $item->fill($this->app->request->post);
+                        $item->image = $path . $fileName;
+                        //$item->story=$this->app->request->post->story;
+                        $item->save();
+                    }
 
                 }
 

@@ -26,6 +26,7 @@ return [
     ],
     'extensions' => [
         'jquery' => [
+            'location' => 'local',
         ],
         'bootstrap' => [
             'location' => 'local',
@@ -46,5 +47,6 @@ return [
             'register' => true,
             'message' => true,
         ],
+
     ],
 ];

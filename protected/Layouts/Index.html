@@ -91,12 +91,18 @@
                     {% endif %}
                 </li>
             </ul>
+            <form role="search" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" placeholder="Найти" class="form-control">
+                </div>
+            </form>
 
             <ul id="nav" class="nav navbar-right navbar-nav">
 
                 <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/AddMessage"  data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
                 <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/MyMessage"  data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
             </ul>
+
 
         </div>
     </div>
@@ -158,7 +164,12 @@
 
                 </ul>
             </div>
+
         </div>
+
+    </div>
+    <div class="container">
+
     </div>
 </header>
 
@@ -233,14 +244,12 @@
     }
 
     function breadcrambs(id) {
-        //div = $('body');
-        //sc = div.scrollTop();
-        //$('#breadcrambs').empty();
-        alert(id);
+
+        $('#topicid').val(id);
         $('#breadcrambs').load('/news//BreadCrambs?id=' + id, function () {
           //  div.scrollTop(sc)
         });
-        $('#topicid').val(id);
+
     }
     ;
 
@@ -343,6 +352,8 @@
             pauseOnHover: true,
             slideMargin:10,
             autoWidth:false,
+            controls: true,
+            pager: false,
 
             adaptiveHeight:true,
             onSliderLoad: function(el) {
@@ -353,7 +364,7 @@
             auto:true
 
         });
-        $("#mobile").mask("+7 999 999 9999");
+
 
         $('form').submit(function (e) {
             e.preventDefault();
