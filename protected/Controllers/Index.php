@@ -7,6 +7,7 @@ use T4\Mvc\Controller;
 use App\Models\User;
 use T4\Mail\Sender;
 use T4\Core\Session;
+use App\Modules\News\Models\Story;
 
 class Index
     extends Controller
@@ -16,6 +17,7 @@ class Index
     {
         if($this->app->user)
         $this->data->name=stristr($this->app->user->email,'@',true);
+        $this->data->vip=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
     }
 
     public function actionLogin($login = null)
