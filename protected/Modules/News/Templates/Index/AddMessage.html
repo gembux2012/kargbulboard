@@ -1,9 +1,10 @@
 <div class="no-gutter row">
-    <ul class="breadcrumb"  style="background-color: transparent; margin-bottom: 5px" >
+    <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
         <li><a href="/" onclick="content(1,1)">На главную</a></li>
 
-    </ul>  <!-- left side column -->
+    </ul>
+    <!-- left side column -->
 
     <div class="col-md-3">
         <div class="panel panel-default" data-spy="affix" data-offset-top="20">
@@ -26,7 +27,7 @@
         <div class="panel">
             <div class="panel-heading text-center" style="background-color:#555;color:#eee;">{% if item.Pk == ''
                 %}ПОДАТЬ ОБЪЯВЛЕНИЕ
-                {% else%} МОИ ОБЪЯВЛЕНИЯ  {% endif %}
+                {% else%} МОИ ОБЪЯВЛЕНИЯ {% endif %}
             </div>
             <div id="message" class="panel-body">
 
@@ -68,7 +69,6 @@
                             <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
 
 
-
                             <div class="form-group">
                                 <label for="message">Текст объявления:</label>
                                 <textarea class="form-control" name="text" rows="10"
@@ -78,14 +78,16 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i> </span>
-                                    <input id="mobile" type="text" name="mfone" class="form-control" value="{{item.mfone}}" placeholder="телефон сотовый">
+                                    <input id="mobile" type="text" name="mfone" class="form-control"
+                                           value="{{item.mfone}}" placeholder="телефон сотовый">
                                 </div>
                                 <br>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i
                                             class="glyphicon glyphicon-phone-alt"></i> </span>
-                                    <input id="phone" type="text" name="fone" class="form-control" value="{{item.fone}}" placeholder="телефон городской">
+                                    <input id="phone" type="text" name="fone" class="form-control" value="{{item.fone}}"
+                                           placeholder="телефон городской">
                                 </div>
                             </div>
 
@@ -93,9 +95,9 @@
                             <div class="checkbox">
                                 <label>
                                     {% if item.vip==1 %}
-                                    <input type="checkbox" name="vip"  checked value="1">  VIP статус
+                                    <input type="checkbox" name="vip" checked value="1"> VIP статус
                                     {% else %}
-                                    <input type="checkbox" name="vip"   value="1"> присвоить VIP статус
+                                    <input type="checkbox" name="vip" value="1"> присвоить VIP статус
                                     {% endif %}
                                 </label>
                             </div>
@@ -151,7 +153,7 @@
 
         $('#del').click(function () {
             if (confirm('Вы уверены что хотите удалить обьявление?')) {
-                 $.get($(this).attr('href'));
+                $.get($(this).attr('href'));
                 mymessage();
 
             }
@@ -197,7 +199,6 @@
             extraObj.startUpload();
 
         });
-
 
 
         /*

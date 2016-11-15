@@ -1,11 +1,9 @@
-
 <div class="no-gutter row">
-    <ul class="breadcrumb"  style="background-color: transparent; margin-bottom: 5px" >
+    <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
         <li><a href="/" onclick="content(1,1)">На главную</a></li>
         <li>мои объявления</a></li>
     </ul>
-
 
 
     <!--mid column-->
@@ -26,25 +24,26 @@
                             <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
                             <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
                             {% set endpublished=app.config.published %}
-                            <li>Будет удалено: {{item.published|date_modify("+"~ endpublished~" day")|date("d.m.Y")}}</li>
+                            <li>Будет удалено: {{item.published|date_modify("+"~ endpublished~" day")|date("d.m.Y")}}
+                            </li>
 
                         </ul>
                         <a href="#" onclick="addmessage({{item.Pk}})" class="pull-right">Редактировать</i></a>
-                    </div><br><br>
+                    </div>
+                    <br><br>
                     {% endfor %}
                     {% else %}
                     <code>У вас нет объявлений</code>
                     {% endif %}
 
 
-
-
                     <div class="row">
                         <div class="container">
                             {% if itemsCount>0 %}
-                            {{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage': topic, 'url': '/admin/news/?page=%d'})}}
+                            {{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage':
+                            topic, 'url': '/admin/news/?page=%d'})}}
                             {% endif %}
-                            </div>
+                        </div>
                     </div>
 
 

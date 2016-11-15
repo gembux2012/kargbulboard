@@ -1,37 +1,38 @@
 <br>
-    <ul class="breadcrumb">
-        <li><a href="/" onclick="content(1,1)">На главную</a></li>
-        <li><a href="#" onclick="mymessage()">Мои объявления</a></li>
-        <li>Объявление #{{item.Pk}}</li>
-    </ul>
+<ul class="breadcrumb">
+    <li><a href="/" onclick="content(1,1)">На главную</a></li>
+    <li><a href="#" onclick="mymessage()">Мои объявления</a></li>
+    <li>Объявление #{{item.Pk}}</li>
+</ul>
 
-    <h3 >Объявление #{{item.Pk}}</h3>
-    <hr>
-    {{item.text|raw}}
-    <hr>
-    {% for foto in item.image %}
-
-
-    <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-            <a href="#" class="tumb"> <img src="{{foto.image}}" alt="..."></a>
-
-            <div class="caption">
-
-                <p style="height: 50px">{{foto.text}}</p>
+<h3>Объявление #{{item.Pk}}</h3>
+<hr>
+{{item.text|raw}}
+<hr>
+{% for foto in item.image %}
 
 
-            </div>
+<div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+        <a href="#" class="tumb"> <img src="{{foto.image}}" alt="..."></a>
+
+        <div class="caption">
+
+            <p style="height: 50px">{{foto.text}}</p>
+
+
         </div>
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 </div>
 
 <div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
                 <div class="modal-title">Просмотр изображения</div>
             </div>
             <div class="modal-body">
@@ -44,24 +45,24 @@
     </div>
 
 
-<script type="text/javascript">
-// После загрузки DOM-дерева (страницы)
-$(function() {
+    <script type="text/javascript">
+        // После загрузки DOM-дерева (страницы)
+        $(function () {
 //при нажатии на ссылку, содержащую Thumbnail
-$('a.tumb').click(function(e) {
+            $('a.tumb').click(function (e) {
 //отменить стандартное действие браузера
-e.preventDefault();
+                e.preventDefault();
 //присвоить атрибуту scr элемента img модального окна
 //значение атрибута scr изображения, которое обёрнуто
 //вокруг элемента a, на который нажал пользователь
-$('#image-modal .modal-body img').attr('src', $(this).find('img').attr('src'));
+                $('#image-modal .modal-body img').attr('src', $(this).find('img').attr('src'));
 //открыть модальное окно
-$("#image-modal").modal('show');
-});
+                $("#image-modal").modal('show');
+            });
 //при нажатию на изображение внутри модального окна
 //закрыть его (модальное окно)
-$('#image-modal .modal-body img').on('click', function() {
-$("#image-modal").modal('hide')
-});
-});
-</script>
+            $('#image-modal .modal-body img').on('click', function () {
+                $("#image-modal").modal('hide')
+            });
+        });
+    </script>

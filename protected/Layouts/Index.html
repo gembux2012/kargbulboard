@@ -28,36 +28,39 @@
     <link href="{{ asset('/Layouts/slider/css/lightslider.css')}}" rel="stylesheet" type="text/css">
 
 
-
-
-
-    <link href="{{ asset('/Layouts/Admin/assets/bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/Layouts/Admin/assets/bower_components/font-awesome/css/font-awesome.min.css') }}"
+          rel="stylesheet" type="text/css">
 
 </head>
 
 <body style="padding-top: 80px">
 <nav class="navbar navbar-fixed-top">
-    <div class="container" >
-        <div class="navbar-header" >
-            <a class="navbar-brand" href="/" style="padding: 0"><img src="/protected/Layouts/main/12.jpg" style="float: left; height: 50px;width: 60px; padding: 0px 0px; margin-right: 10px;"></a>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" style="padding: 0"><img src="/protected/Layouts/main/12.jpg"
+                                                                     style="float: left; height: 50px;width: 60px; padding: 0px 0px; margin-right: 10px;"></a>
             <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
         </div>
         <div class="navbar-collapse collapse">
 
-            <ul  class="nav navbar-right navbar-nav">
+            <ul class="nav navbar-right navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                            class="glyphicon glyphicon-search"></i></a>
                     <ul class="dropdown-menu" style="padding:12px;">
-                        <form   class="form-inline">
-                            <button type="submit" class="btn btn-default pull-right"><i class="glyphicon glyphicon-search"></i></button><input type="text" class="form-control pull-left" placeholder="Search">
+                        <form class="form-inline">
+                            <button type="submit" class="btn btn-default pull-right"><i
+                                    class="glyphicon glyphicon-search"></i></button>
+                            <input type="text" class="form-control pull-left" placeholder="Search">
                         </form>
                     </ul>
                 </li>
                 {% if not app.user %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Войти на сайт <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Войти на сайт <i
+                            class="glyphicon glyphicon-chevron-down"></i></a>
 
                     <ul class="dropdown-menu">
                         <h3 class="text-center" style="color: black">Вход на сайт</h3>
@@ -66,22 +69,30 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                    <input type="text" placeholder="E-mail" class="form-control input-sm" name="login[email]">
+                                    <input type="text" placeholder="E-mail" class="form-control input-sm"
+                                           name="login[email]">
                                 </div>
                                 <br>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input type="password" placeholder="Пароль" class="form-control input-sm" name="login[password]">
-                                </div><br>
+                                    <input type="password" placeholder="Пароль" class="form-control input-sm"
+                                           name="login[password]">
+                                </div>
+                                <br>
+
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-theme-bg pull-right" style="background-color: #77CCDD"><i class="glyphicon glyphicon-share"></i> Войти
+                                    <button type="submit" class="btn btn-theme-bg pull-right"
+                                            style="background-color: #77CCDD"><i class="glyphicon glyphicon-share"></i>
+                                        Войти
                                     </button>
                                 </div>
                                 <a href="#" style="color: #9b0000; background-color: inherit">Забыли пароль?</a>
+
                                 <div class="clearfix"></div>
                                 <hr>
-                                <a style="color: #9b0000; background-color: inherit" href="/user/register">Регистрация</a>
+                                <a style="color: #9b0000; background-color: inherit"
+                                   href="/user/register">Регистрация</a>
 
                             </div>
                         </form>
@@ -89,7 +100,8 @@
 
                 </li>
                 {% else %}
-                <li> <a href="/user/logout" data-toggle="tooltip" title="Выход">Вы: {{ name}}&nbsp<span class="glyphicon glyphicon-log-out"></span></a>
+                <li><a href="/user/logout" data-toggle="tooltip" title="Выход">Вы: {{ name}}&nbsp<span
+                        class="glyphicon glyphicon-log-out"></span></a>
                     {% endif %}
                 </li>
             </ul>
@@ -101,9 +113,9 @@
 
             <ul id="nav" class="nav navbar-right navbar-nav">
 
-                {% if  app.user %}
-                <li  ><a href="/news/AddMessage"   >Подать обьявление</a></li>
-                <li  ><a href="/news/MyMessage"   >Мой обьявление</a></li>
+                {% if app.user %}
+                <li><a href="/news/AddMessage">Подать обьявление</a></li>
+                <li><a href="/news/MyMessage">Мой обьявление</a></li>
                 {% endif %}
             </ul>
 
@@ -118,57 +130,65 @@
             <div class="col-md-4">
 
                 <br>
+
                 <h2><a href="#" title="Scroll down for your viewing pleasure">ДОСКА ОБЪЯВЛЕНИЙ</a>
+
                     <p class="lead">КАРГАСОКСКОГО РАЙОНА</p></h2>
                 {% if not app.user %}
-                <p><em>Для того, что бы можно было публиковать объявление необходимо быть зарегестрированным пользователем.</em></p>
+                <p><em>Для того, что бы можно было публиковать объявление необходимо быть зарегестрированным
+                    пользователем.</em></p>
                 <a style="color: #9b0000; background-color: inherit" href="/user/register"><em>Зарегестрироваться?</em></a>
                 {% endif %}
             </div>
-            <div class="col-md-8" style=" padding:0 "  >
+            <div class="col-md-8" style=" padding:0 ">
                 <h4 class="text-center" style="margin: 0;color: #66BBCC;padding: 2px">VIP-объявления</h4>
                 <ul id="lightSlider" style="margin: 5px;visibility: hidden">
-                {% for item in vip %}
+                    {% for item in vip %}
                     <li>
-                        <div >
-                            <img class="img-responsive " src="{{item.image[0].image}}" />
+                        <div>
+                            <img class="img-responsive " src="{{item.image[0].image}}"/>
                             {{item.text|raw}}
                         </div>
                     </li>
                     {% endfor %}
                     <li>
                         <div class="myslide" style="background-color: white;padding: 10px;">
-                             <img class="img-responsive " src="/protected/Layouts/slider/SAM_1657.JPG" />
+                            <img class="img-responsive " src="/protected/Layouts/slider/SAM_1657.JPG"/>
                             <a href="#" style="color: black">Показать Aenean interdum quam nec faucibus ...</a>
                         </div>
                     </li>
                     <li>
-                        <div >
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg" />
+                        <div>
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+
                             <p>десь может быть ваше VIP объявление</p>
                         </div>
                     </li>
                     <li>
-                        <div >
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg" />
+                        <div>
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+
                             <p>Здесь может быть ваше VIP объявление</p>
                         </div>
                     </li>
                     <li>
-                        <div >
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg" />
+                        <div>
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+
                             <p>Здесь может быть ваше VIP объявление ...</p>
                         </div>
                     </li>
                     <li>
-                        <div >
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg" />
+                        <div>
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+
                             <p>Здесь может быть ваше VIP объявление.</p>
                         </div>
                     </li>
                     <li>
-                        <div >
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg" />
+                        <div>
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+
                             <p>Здесь может быть ваше VIP объявление.</p>
                         </div>
                     </li>
@@ -185,11 +205,11 @@
 </header>
 
 <!-- Begin Body -->
-<div class="container"  id="body" style="background-color: white">
+<div class="container" id="body" style="background-color: white">
 
-{% block content %} {% endblock %}
+    {% block content %} {% endblock %}
 
- </div>
+</div>
 <footer>
     <div class="container">
         <div class="row">
@@ -197,7 +217,6 @@
         </div>
     </div>
 </footer>
-
 
 
 {{ publishJs() }}
@@ -210,9 +229,6 @@
 <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
 
 
-
-
-
 {% block pagescript %} {% endblock %}
 <script type="text/javascript">
 
@@ -220,7 +236,7 @@
 
         $('#message').empty();
 
-        $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user );
+        $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user);
         return false;
 
 
@@ -234,16 +250,17 @@
 
         $('#body').load('/news//AddMessage?id=' + id, function () {
 
-          div.scrollTop(sc);
+            div.scrollTop(sc);
             //alert()
         });
         return false;
 
 
-    };
+    }
+    ;
 
     function mymessage() {
-       // div = $('body');
+        // div = $('body');
         //sc = div.scrollTop();
         //alert(sc);
         $('#body').empty();
@@ -258,10 +275,11 @@
 
         $('#topicid').val(id);
         $('#breadcrambs').load('/news//BreadCrambs?id=' + id, function () {
-          //  div.scrollTop(sc)
+            //  div.scrollTop(sc)
         });
         return false;
-    } ;
+    }
+    ;
 
     function call() {
 
@@ -317,8 +335,8 @@
 
     }
 
-    function on_load(){
-        $('#nav li a').click(function(){
+    function on_load() {
+        $('#nav li a').click(function () {
 
             var toLoad = $(this).attr('href');
             loadContent();
@@ -327,14 +345,16 @@
             function loadContent() {
 
                 $('#body').load(
-                        toLoad,'',showNewContent());
+                        toLoad, '', showNewContent());
 
 
             }
+
             function showNewContent() {
-                $('#body').show('normal',hideLoader());
+                $('#body').show('normal', hideLoader());
 
             }
+
             function hideLoader() {
                 $('#load').fadeOut('normal');
 
@@ -346,7 +366,6 @@
     }
 
 
-
     $(document).ready(function ($) {
 
         tree();
@@ -354,24 +373,24 @@
         $('#first').click();
         $('#first').focus();
 
-       on_load();
+        on_load();
         $('#lightSlider').lightSlider({
-            item:4,
-            slideMove:1,
-            speed:1000,
+            item: 4,
+            slideMove: 1,
+            speed: 1000,
             pauseOnHover: true,
-            slideMargin:10,
-            autoWidth:false,
+            slideMargin: 10,
+            autoWidth: false,
             controls: true,
             pager: false,
 
-            adaptiveHeight:true,
-            onSliderLoad: function(el) {
-                el.css('visibility',' visible' );
+            adaptiveHeight: true,
+            onSliderLoad: function (el) {
+                el.css('visibility', ' visible');
             },
-            loop:true,
-            rtl:true,
-            auto:true
+            loop: true,
+            rtl: true,
+            auto: true
 
         });
 
@@ -404,9 +423,7 @@
         });
 
 
-
     });
-
 
 
     ///// end addmessage
