@@ -22,6 +22,7 @@ class Story
             'mfone' => ['type' => 'string'],
             'fone' => ['type' => 'string'],
             'vip' => ['type' => 'int'],
+            'view' => ['type' => 'int'],
 
         ],
         'relations' => [

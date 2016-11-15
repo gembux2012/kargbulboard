@@ -27,10 +27,16 @@ class Index
 
     public function actionOne($id)
     {
-        $this->data->item = Story::findByPK($id);
-        if (empty($this->data->item)) {
+        $item = Story::findByPK($id);
+        if (empty($item)) {
             throw new E404Exception('Новость не найдена');
         }
+        $item->view=$item->view +1;
+        $item->save();
+        $this->data->item=$item;
+
+
+
     }
 
     public function  actionNewsAsMenu($mode=0)
@@ -132,6 +138,7 @@ class Index
                 'offset'=> ($page-1)*self::PAGE_SIZE,
                 'limit'=> self::PAGE_SIZE
             ]);
+
         }
     }
 

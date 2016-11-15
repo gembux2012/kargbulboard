@@ -7,7 +7,7 @@ return [
             'host' => 'localhost',
             'dbname' => 'standard',
             'user' => 'root',
-            'password' => '',
+            'password' => 'Password00',
         ]
     ],
     'auth' => [
@@ -49,4 +49,6 @@ return [
         ],
 
     ],
+
+    'published' =>'7'
 ];

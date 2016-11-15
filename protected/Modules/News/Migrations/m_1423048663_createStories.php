@@ -22,6 +22,7 @@ class m_1423048663_createStories
                 'vip' => ['type' => 'integer', 'default' => 0],
                 'mfone' => ['type'=>'string'],
                 'fone' => ['type'=>'string'],
+                'view' => ['type'=>'integer', 'default' =>0],
                 '__topic_id' => ['type' => 'link'],
                 '__user_id' => ['type' => 'link'],
                 '__photo_id' => ['type' => 'link'],

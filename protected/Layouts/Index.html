@@ -78,8 +78,10 @@
                                     <button type="submit" class="btn btn-theme-bg pull-right" style="background-color: #77CCDD"><i class="glyphicon glyphicon-share"></i> Войти
                                     </button>
                                 </div>
+                                <a href="#" style="color: #9b0000; background-color: inherit">Забыли пароль?</a>
                                 <div class="clearfix"></div>
                                 <hr>
+                                <a style="color: #9b0000; background-color: inherit" href="/user/register">Регистрация</a>
 
                             </div>
                         </form>
@@ -99,8 +101,10 @@
 
             <ul id="nav" class="nav navbar-right navbar-nav">
 
-                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/AddMessage"  data-toggle="tooltip" title="Для того, что бы подать объявление необходимо войти на сайт" >Подать обьявление</a></li>
-                <li {% if not app.user %} class="disabled" {%endif%}><a href="/news/MyMessage"  data-toggle="tooltip" title="Для того, что бы просматривать свой объявление необходимо войти на сайт"  >Мой обьявление</a></li>
+                {% if  app.user %}
+                <li  ><a href="/news/AddMessage"   >Подать обьявление</a></li>
+                <li  ><a href="/news/MyMessage"   >Мой обьявление</a></li>
+                {% endif %}
             </ul>
 
 
@@ -112,9 +116,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <br><br>
+
+                <br>
                 <h2><a href="#" title="Scroll down for your viewing pleasure">ДОСКА ОБЪЯВЛЕНИЙ</a>
                     <p class="lead">КАРГАСОКСКОГО РАЙОНА</p></h2>
+                {% if not app.user %}
+                <p><em>Для того, что бы можно было публиковать объявление необходимо быть зарегестрированным пользователем.</em></p>
+                <a style="color: #9b0000; background-color: inherit" href="/user/register"><em>Зарегестрироваться?</em></a>
+                {% endif %}
             </div>
             <div class="col-md-8" style=" padding:0 "  >
                 <h4 class="text-center" style="margin: 0;color: #66BBCC;padding: 2px">VIP-объявления</h4>
