@@ -78,11 +78,11 @@ class Identity
         if (empty($data->email)) {
             $errors->add('Не введен e-mail', self::ERROR_INVALID_EMAIL);
         }
-
+        /*
         if (0==preg_match_all('#([a-z0-9\-\.\_]+@[a-z0-9\-]+\.[a-z]+$)#isU', $_POST['email'], $matches)){
             $errors->add('Введен не e-mail', self::ERROR_INVALID_e_mail);
         }
-
+  */
         if (empty($data->password)) {
             $errors->add('Не введен пароль', self::ERROR_INVALID_PASSWORD);
         }

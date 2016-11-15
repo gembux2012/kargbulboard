@@ -19,8 +19,8 @@ class User
                 $identity = new Identity();
                 $user = $identity->authenticate($login);
                 $this->data->login=true;
-          //      $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-            //    $this->redirect('/');
+                //$this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
+               //$this->redirect('/');
             } catch (\App\Components\Auth\MultiException $e) {
 
                 $this->data->errors = new Collection();

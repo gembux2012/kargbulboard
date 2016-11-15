@@ -50,7 +50,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
                     <ul class="dropdown-menu" style="padding:12px;">
-                        <form class="form-inline">
+                        <form   class="form-inline">
                             <button type="submit" class="btn btn-default pull-right"><i class="glyphicon glyphicon-search"></i></button><input type="text" class="form-control pull-left" placeholder="Search">
                         </form>
                     </ul>
@@ -62,7 +62,7 @@
                     <ul class="dropdown-menu">
                         <h3 class="text-center" style="color: black">Вход на сайт</h3>
                         <section></section>
-                        <form role="form" action="/user/login.html" method="post" style="padding: 15px">
+                        <form role="form" id="login" action="/user/login.html" method="post" style="padding: 15px">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
@@ -367,7 +367,7 @@
         });
 
 
-        $('form').submit(function (e) {
+        $('#login').submit(function (e) {
             e.preventDefault();
             var data = $('form').serializeArray();
             $.ajax({
