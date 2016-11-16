@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Modules\Contact\Models\Contact;
 use App\Components\Auth\MultiException;
 use T4\Mvc\Controller;
+use T4\Mail\Sender;
 
 class Index
     extends Controller
@@ -63,6 +64,14 @@ class Index
         }
         if (!$errors->isEmpty())
             throw $errors;
+
+    }
+
+    public function actionSend()
+    {
+
+        $mail = new Sender();
+        $mail->sendMail($this->app->request->post->email, 1234, 1234);
 
     }
 

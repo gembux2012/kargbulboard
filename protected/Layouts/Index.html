@@ -32,7 +32,34 @@
           rel="stylesheet" type="text/css">
 
 </head>
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+
+            <div class="modal-body" id="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                <!-- Form itself -->
+                <form  name="sentMessage" class="form form-register1" id="resetlogin"  novalidate>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <input type="text" class="form-control" name="email" placeholder="Введите ваш e-mail"/>
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-lg btn-3d pull-right">Отправить</button><br />
+
+                </form>
+
+            </div><!-- End of Modal body -->
+        </div><!-- End of Modal content -->
+    </div><!-- End of Modal dialog -->
+</div><!-- End of Modal -->
 <body style="padding-top: 80px">
 <nav class="navbar navbar-fixed-top">
     <div class="container">
@@ -87,7 +114,7 @@
                                         Войти
                                     </button>
                                 </div>
-                                <a href="#" style="color: #9b0000; background-color: inherit">Забыли пароль?</a>
+                                <a href="#myModal" role="button" data-toggle="modal" style="color: #9b0000; background-color: inherit">Забыли пароль?</a>
 
                                 <div class="clearfix"></div>
                                 <hr>
@@ -414,6 +441,31 @@
                         })
                     } else {
                         location.reload(true);
+
+                    }
+
+                },
+                dataType: 'json'
+            });
+        });
+
+        $('#resetlogin').submit(function (e) {
+            e.preventDefault();
+            var data = $('form').serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/Contact/Send.json",
+                data: data,
+                success: function (data) {
+                    $('modal-body').empty();
+                    $('modal-body').append('На ваш e-mail отправлено с письмо с паролем');
+                    if (data.errors) {
+                        $.each(data.errors, function (key, val) {
+
+                            $('#login').append(' <p>' + val + '</p')
+                        })
+                    } else {
+                        ;
 
                     }
 
