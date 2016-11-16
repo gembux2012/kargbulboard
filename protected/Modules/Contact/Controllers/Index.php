@@ -71,7 +71,12 @@ class Index
     {
 
         $mail = new Sender();
-        $mail->sendMail($this->app->request->post->email, 1234, 1234);
+        try {
+            $mail->sendMail($this->app->request->post->email, 1234, 1234);
+        } catch (\phpmailerException $e){
+            $this->data->errors=$e;
+
+        }
 
     }
 

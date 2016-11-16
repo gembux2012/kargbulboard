@@ -7,7 +7,7 @@ return [
             'host' => 'localhost',
             'dbname' => 'standard',
             'user' => 'root',
-            'password' => '',
+            'password' => 'Password00',
         ]
     ],
     'auth' => [
@@ -17,8 +17,8 @@ return [
         'method' => 'smtp',
         'host' => 'smtp.gmail.com',
         'auth' => [
-            'username' => 'phpsendertesting@gmail.com',
-            'password' => 'vera1234567'
+            'username' => 'gembux2012@gmail.com',
+            'password' => 'Supervisor123'
         ],
         'sender' => 'Sender',
         'port' => '587',

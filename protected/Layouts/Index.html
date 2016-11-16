@@ -38,15 +38,16 @@
         <div class="modal-content">
 
 
-            <div class="modal-body" id="modal-body">
+            <div class="modal-body" >
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
-                <!-- Form itself -->
+                <section id="modal-body">
                 <form  name="sentMessage" class="form form-register1" id="resetlogin"  novalidate>
 
                     <div class="control-group">
                         <div class="controls">
-                            <input type="text" class="form-control" name="email" placeholder="Введите ваш e-mail"/>
+                            <p id="valid"> Введите ваш e-mail</p>
+                            <input type="text" class="form-control" id="mail" name="email" placeholder="e-mail"/>
                             <p class="help-block"></p>
                         </div>
                     </div>
@@ -55,6 +56,7 @@
                     <button type="submit" class="btn btn-lg btn-3d pull-right">Отправить</button><br />
 
                 </form>
+             </section>
 
             </div><!-- End of Modal body -->
         </div><!-- End of Modal content -->
@@ -78,6 +80,7 @@
                             class="glyphicon glyphicon-search"></i></a>
                     <ul class="dropdown-menu" style="padding:12px;">
                         <form class="form-inline">
+                            <p id=""></p>
                             <button type="submit" class="btn btn-default pull-right"><i
                                     class="glyphicon glyphicon-search"></i></button>
                             <input type="text" class="form-control pull-left" placeholder="Search">
@@ -162,7 +165,7 @@
 
                     <p class="lead">КАРГАСОКСКОГО РАЙОНА</p></h2>
                 {% if not app.user %}
-                <p><em>Для того, что бы можно было публиковать объявление необходимо быть зарегестрированным
+                <p><em>Для публикации объявление необходимо быть зарегестрированным
                     пользователем.</em></p>
                 <a style="color: #9b0000; background-color: inherit" href="/user/register"><em>Зарегестрироваться?</em></a>
                 {% endif %}
@@ -451,18 +454,40 @@
 
         $('#resetlogin').submit(function (e) {
             e.preventDefault();
+            var pattern = /^[a-z0-9_-]+@[a-z0-9-]+\.[a-z]{2,6}$/i;
+            var verorr=false;
+            var mail = $('#mail');
+
+                if(mail.val() != ''){
+                    if(mail.val().search(pattern) != 0){
+
+                        $('#valid').empty;
+                        $('#valid').html('Это не e-mail адрес')
+                        verorr=true;
+
+                    }
+                }else{
+                    $('#valid').empty;
+                    $('#valid').html('e-mail пуст')
+                    verorr=true;
+                }
+
+
+
+            if(!verorr){
             var data = $('form').serializeArray();
             $.ajax({
                 type: "POST",
                 url: "/Contact/Send.json",
                 data: data,
                 success: function (data) {
-                    $('modal-body').empty();
-                    $('modal-body').append('На ваш e-mail отправлено с письмо с паролем');
+
+                    $('#modal-body').empty();
+                    $('#modal-body').append('На ваш e-mail отправлено с письмо с паролем');
                     if (data.errors) {
                         $.each(data.errors, function (key, val) {
-
-                            $('#login').append(' <p>' + val + '</p')
+                            console.log(data);
+                            $('#modal-body').append(' <p>' + val + '</p')
                         })
                     } else {
                         ;
@@ -471,7 +496,7 @@
 
                 },
                 dataType: 'json'
-            });
+            });}
         });
 
 
