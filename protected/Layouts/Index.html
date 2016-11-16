@@ -36,8 +36,10 @@
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-
-
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title">Востановление пароля</h4>
+            </div>
             <div class="modal-body" >
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
@@ -97,16 +99,20 @@
                         <section></section>
                         <form role="form" id="login" action="/user/login.html" method="post" style="padding: 15px">
                             <div class="form-group">
+                                <p id="validemail" style="color: #9b0000"></p>
                                 <div class="input-group">
+
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                                     <input type="text" placeholder="E-mail" class="form-control input-sm"
-                                           name="login[email]">
+                                           name="login[email]" id="loginemail">
                                 </div>
                                 <br>
 
+                                <p id="validpassword" style="color: #9b0000"></p>
                                 <div class="input-group">
+
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                    <input type="password" placeholder="Пароль" class="form-control input-sm"
+                                    <input type="password"  id="loginpassword" placeholder="Пароль" class="form-control input-sm"
                                            name="login[password]">
                                 </div>
                                 <br>
@@ -427,34 +433,70 @@
 
         $('#login').submit(function (e) {
             e.preventDefault();
-            var data = $('form').serializeArray();
-            $.ajax({
-                type: "POST",
-                url: "/user/GetLogin.json",
-                data: data,
-                success: function (data) {
-                    $('section').empty();
-                    $('section').append('<div class="alert alert-danger" id="login">');
+            $('#validemail').empty();
+            $('#validpassword').empty();
+            var pattern = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
+            var verorr=false;
+            var mail = $('#loginemail');
+            var login=$('#loginpassword');
+
+            if(mail.val() != ''){
+                if(mail.val().search(pattern) != 0){
+
+                    $('#validemail').empty();
+                    $('#validemail').html('не e-mail адрес')
+                    verorr=true;
+
+                }
+            }else{
+                $('#validemail').empty();
+                $('#validemail').html('e-mail пуст');
+                verorr=true;
+            }
 
 
-                    if (data.errors) {
-                        $.each(data.errors, function (key, val) {
+            if(login.val()==''){
 
-                            $('#login').append(' <p>' + val + '</p')
-                        })
-                    } else {
-                        location.reload(true);
+                $('#validpassword').empty();
+                $('#validpassword').html('пароль пуст');
+                verorr=true;
+            }
 
-                    }
+            if (!verorr) {
+                var data = $('form').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    url: "/user/GetLogin.json",
+                    data: data,
+                    success: function (data) {
 
-                },
-                dataType: 'json'
-            });
+                        if (data.errors) {
+                            alert();
+                            console.log(data.errors)
+                            $('#validemail').empty();
+                            $('#validemail').html(data.errlogin);
+                            $('#validpassword').empty();
+                            $('#validpassword').html(data.errpassword);
+
+
+                        } else {
+                            location.reload(true);
+
+                        }
+
+                    },
+                    dataType: 'json'
+                });
+            }
+        });
+
+        $('#myModal').on('shown.bs.modal', function (event) {
+            $('#mail').val($('#loginemail').val());
         });
 
         $('#resetlogin').submit(function (e) {
             e.preventDefault();
-            var pattern = /^[a-z0-9_-]+@[a-z0-9-]+\.[a-z]{2,6}$/i;
+            var pattern = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
             var verorr=false;
             var mail = $('#mail');
 
@@ -482,15 +524,18 @@
                 data: data,
                 success: function (data) {
 
-                    $('#modal-body').empty();
-                    $('#modal-body').append('На ваш e-mail отправлено с письмо с паролем');
+
                     if (data.errors) {
+
+                        $('#valid').html( data.errors )
+
                         $.each(data.errors, function (key, val) {
                             console.log(data);
-                            $('#modal-body').append(' <p>' + val + '</p')
+                            $('#valid').append(' <p>' + val + '</p')
                         })
                     } else {
-                        ;
+                        $('#modal-body').empty();
+                        $('#modal-body').append('На ваш e-mail отправлено с письмо с паролем');
 
                     }
 

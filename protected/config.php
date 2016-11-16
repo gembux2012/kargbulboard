@@ -18,7 +18,7 @@ return [
         'host' => 'smtp.gmail.com',
         'auth' => [
             'username' => 'gembux2012@gmail.com',
-            'password' => 'Supervisor123'
+            'password' => 'sUPERVISOR456'
         ],
         'sender' => 'Sender',
         'port' => '587',

@@ -12,30 +12,49 @@ class User
     extends Controller
 {
 
-    public function actionGetLogin($login = null)
+    public function actiontLogin($login = null)
     {
         if (null !== $login) {
             try {
                 $identity = new Identity();
                 $user = $identity->authenticate($login);
                 $this->data->login=true;
-                //$this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-               //$this->redirect('/');
+                $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
+               $this->redirect('/');
             } catch (\App\Components\Auth\MultiException $e) {
-
-                $this->data->errors = new Collection();
-                foreach ($e as $subkey => $subvalue) {
-                     $this->data->errors[]=$e[$subkey]->getMessage();
 
 
                     }
 
             }
             $this->data->email = $login->email;
+    }
+
+    public function actionGetLogin($login = null)
+    {
+        $err=false;
+        if (null !== $login) {
+            $user = User::findByEmail($login->email);
+            if (empty($user)) {
+                $this->data->errlogin='Пользователь c таким e-mail не зарегестрирован! ';
+                $err=true;
+            } else  if (!\T4\Crypt\Helpers::checkPassword($login->password, $user->password)) {
+                $this->data->errpassword='Неверный пароль!';
+                $err=true;
+            }
+
+            if(!$err){
+                $this->login($user);
+                Application::getInstance()->user = $user;
+               // $this->redirect('/');
+            }
+
 
         }
 
     }
+
+
 
     public function actionLogout()
     {
