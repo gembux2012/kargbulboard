@@ -67,24 +67,6 @@ class Index
 
     }
 
-    public function actionSend()
-    {
-        $email=$this->app->request->post->email;
-        $user = User::findByEmail($email);
-        if (empty($user)) {
-            $this->data->errors="Пользователь с таки e-mail не зарегестрирован";
-        } else {
-            $newpassword=\T4\Crypt\Helpers::newPassword();
-            $user->password=\T4\Crypt\Helpers::hashPassword($newpassword);
-            $user->save();
-            $mail = new Sender();
-            try {
-                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту".ROOT_PATH.":". $newpassword);
-            } catch (\phpmailerException $e) {
-                $this->data->errors = $e;
 
-            }
-        }
-    }
 
 }
