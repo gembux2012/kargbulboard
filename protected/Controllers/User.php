@@ -6,6 +6,9 @@ use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
 use T4\Core\Collection;
 use T4\Core;
+use T4\Mail\Sender;
+
+
 
 
 class User
@@ -32,26 +35,24 @@ class User
 
     public function actionGetLogin($login = null)
     {
-        $err=false;
+        $err = false;
         if (null !== $login) {
-            $user = User::findByEmail($login->email);
+            $user = \App\Models\User::findByEmail($login->email);
             if (empty($user)) {
-                $this->data->errlogin='Пользователь c таким e-mail не зарегестрирован! ';
-                $err=true;
-            } else  if (!\T4\Crypt\Helpers::checkPassword($login->password, $user->password)) {
-                $this->data->errpassword='Неверный пароль!';
-                $err=true;
+                $this->data->errors = ['errlogin' => 'Пользователь c таким e-mail не зарегестрирован! '];
+                $err = true;
+            } else if (!\T4\Crypt\Helpers::checkPassword($login->password, $user->password)) {
+                $this->data->errors = ['errpassword' => 'Неверный пароль!'];
+                $err = true;
             }
 
-            if(!$err){
-                $this->login($user);
+            if (!$err) {
+                $identity = new Identity();
+                $identity->login($user);
                 Application::getInstance()->user = $user;
-               // $this->redirect('/');
+
             }
-
-
         }
-
     }
 
 
@@ -79,8 +80,24 @@ class User
         }
     }
 
-    public function  actionLoginRegister()
+    public function  actionRestorePassword()
     {
+        $email=$this->app->request->post->email;
+        $user = \App\Models\User::findByEmail($email);
+        if (empty($user)) {
+            $this->data->errors="Пользователь с таки e-mail не зарегестрирован";
+        } else {
+            $newpassword=\T4\Crypt\Helpers::newPassword();
+            $user->password=\T4\Crypt\Helpers::hashPassword($newpassword);
+            $user->save();
+            $mail = new  Sender();
+            try {
+                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту".ROOT_PATH.":". $newpassword);
+            } catch (\phpmailerException $e) {
+                $this->data->errors = $e;
+
+            }
+        }
 
     }
 
