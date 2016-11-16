@@ -17,8 +17,8 @@ return [
         'method' => 'smtp',
         'host' => 'smtp.gmail.com',
         'auth' => [
-            'username' => 'gembux2012@gmail.com',
-            'password' => 'sUPERVISOR456'
+            'username' => '2@gmail.com',
+            'password' => ''
         ],
         'sender' => 'Sender',
         'port' => '587',
