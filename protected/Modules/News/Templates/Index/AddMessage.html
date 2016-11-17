@@ -1,7 +1,8 @@
 <div class="no-gutter row">
     <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
-        <li><a href="/" onclick="content(1,1)">На главную</a></li>
+        <li><a href="#" onclick="return content(1,1)">На главную</a></li>
+        <li><a href="#" onclick="return mymessage()">Мои объявления</a></li>
 
     </ul>
     <!-- left side column -->
@@ -36,7 +37,7 @@
                     <h4 class="text-danger">Выберите рубрику</h4>
                     {% else %}
                     <div style="border: 1px">
-                        <h4 class="text-danger">в рубрику:</h4>
+                        <h4 class="text-danger">рубрика:</h4>
                         <ol class="breadcrumb">
                             {% for topic in parenttopic %}
                             <li><a>{{topic.title}}</a></li>
@@ -48,9 +49,21 @@
                     </div>
                     {% endif %}
                 </article>
-                <p >Стоимость:  <span id="prise"></span></p>
-                {% if item.Pk!='' %}
-                <h5 class="text-center">Объявление УН {{item.Pk}}</h5>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <b>Прайс</b>
+                    </div>
+                    <div class="panel-body">
+                      1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно; 1 фото {{app.config.prise.photo}}р.
+                    </div>
+                </div>
+
+                    {% if item.Pk!='' %}
+                <span style="color: #77CCDD;">Объявление УН {{item.Pk}}</span><span>&nbsp;&nbsp;Стоймость: текст: </span>
+                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>
+                <hr>
+                {% else %}
+                <p style="color: #77CCDD>Стоимость:  <span id="prise"></span></p>
                 {% endif %}
 
                 <ul class="nav nav-tabs">
@@ -201,11 +214,27 @@
 
         });
 
-        $('#text').keypress(function()
+        $('#text').keydown(function()
         {
             total_words=this.value.split(/[\s\.\?]+/).length;
-            $('#prise').html(total_words);
+            $('#prise').html(prise(total_words));
         });
+
+
+
+
+            total_words=$('#text').val().split(/[\s\.\?]+/).length;
+            $('#prise').html(prise(total_words));
+
+
+        function prise(total){
+            return (total-{{app.config.prise.nopaid}})*{{app.config.prise.word}};
+        }
+
+        function prisephoto(){
+            $('#prisephoto').html({{app.config.prise.photo}}*{{item.image.count}});
+        }
+        prisephoto();
 
 
         /*

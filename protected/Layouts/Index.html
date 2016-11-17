@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>T4 Site</title>
+    <title>kargbulboard</title>
 
     {{ publishCss() }}
     {{ publish('/Layouts/TreeMenu') }}
@@ -294,14 +294,9 @@
     ;
 
     function mymessage() {
-        // div = $('body');
-        //sc = div.scrollTop();
-        //alert(sc);
-        $('#body').empty();
-        $('#body').load('/news//MyMessage', function (response) {
 
-                }
-        );
+        $('#body').empty();
+        $('#body').load('/news//MyMessage');
         return false;
     }
 
@@ -485,9 +480,15 @@
                     dataType: 'json'
                 });
             }
-            if(!verorr){
-                setTimeout(function(){location.reload(true);},1000);
+            if (!verorr) {
 
+                setTimeout(function(){location.reload(true);},1000);
+               /* while (true) {
+                    if ('T4auth' == getCookie('T4auth')) {
+                        location.reload(true);
+                        break;
+                    }
+                }*/
             }
 
         });
@@ -545,6 +546,13 @@
                 dataType: 'json'
             });}
         });
+
+        function getCookie(name) {
+            var matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
 
 
     });

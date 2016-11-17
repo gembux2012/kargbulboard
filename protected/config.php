@@ -7,7 +7,7 @@ return [
             'host' => 'localhost',
             'dbname' => 'standard',
             'user' => 'root',
-            'password' => '',
+            'password' => 'Password00',
         ]
     ],
     'auth' => [
@@ -51,5 +51,11 @@ return [
     ],
 
     'published' =>'7',
-    'domain' => 'www.karbukboard.ru'
+    'domain' => 'www.karbukboard.ru',
+
+    'prise' => [
+        'nopaid' => '2',
+        'word' => '5',
+        'photo' => '100'
+    ]
 ];
