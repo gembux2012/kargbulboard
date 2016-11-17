@@ -50,5 +50,6 @@ return [
 
     ],
 
-    'published' =>'7'
+    'published' =>'7',
+    'domain' => 'www.karbukboard.ru'
 ];

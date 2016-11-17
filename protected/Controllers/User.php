@@ -92,7 +92,7 @@ class User
             $user->save();
             $mail = new  Sender();
             try {
-                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту".ROOT_PATH.":". $newpassword);
+                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту {{app.config.domain}}:". $newpassword);
             } catch (\phpmailerException $e) {
                 $this->data->errors = $e;
 

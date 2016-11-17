@@ -48,6 +48,7 @@
                     </div>
                     {% endif %}
                 </article>
+                <p >Стоимость:  <span id="prise"></span></p>
                 {% if item.Pk!='' %}
                 <h5 class="text-center">Объявление УН {{item.Pk}}</h5>
                 {% endif %}
@@ -71,7 +72,7 @@
 
                             <div class="form-group">
                                 <label for="message">Текст объявления:</label>
-                                <textarea class="form-control" name="text" rows="10"
+                                <textarea id="text" class="form-control" name="text" rows="10"
                                           onfocus="textfocus()">{{item.text}} </textarea>
                             </div>
 
@@ -198,6 +199,12 @@
 
             extraObj.startUpload();
 
+        });
+
+        $('#text').keypress(function()
+        {
+            total_words=this.value.split(/[\s\.\?]+/).length;
+            $('#prise').html(total_words);
         });
 
 
