@@ -114,9 +114,9 @@
                             <div class="checkbox">
                                 <label>
                                     {% if item.vip==1 %}
-                                    <input type="checkbox" name="vip" checked value="1"> VIP статус
+                                    <input type="checkbox" id="vip" name="vip" checked value="1"> VIP статус
                                     {% else %}
-                                    <input type="checkbox" name="vip" value="1"> присвоить VIP статус
+                                    <input type="checkbox"  id="vip" name="vip" value="1"> присвоить VIP статус
                                     {% endif %}
                                 </label>
                             </div>
@@ -241,11 +241,10 @@
         function priseall(imagecount){
 
             $('#prisephoto').html({{app.config.prise.photo}}*imagecount);
-        $('#prisevip').html(
-                {% if item.vip ==1 %}
-        {{app.config.prise.vip}}
-        {% endif %}
-        );
+        $('#prisevip').html(function(){
+                 if($('#vip').attr('checked')=='checked')
+                 {{app.config.prise.vip}}
+        });
         total=$('#text').val().split(/[\s\.\?]+/).length;
         $('#priseall').html((total-{{app.config.prise.nopaid}})*{{app.config.prise.word}}+{{app.config.prise.vip}}+{{app.config.prise.photo}}*{{item.image.count}});
         };
