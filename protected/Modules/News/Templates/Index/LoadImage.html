@@ -22,7 +22,7 @@
     </td>
     <td >
 
-        <a class="btn btn-danger btn-sm" href="/News/PhotoDelete/?id={{photo.Pk}}" id="delfoto"><i
+        <a class="btn btn-danger btn-sm delfoto" href="/News/PhotoDelete/?id={{photo.Pk}}" ><i
                 class="glyphicon glyphicon-remove"></i></a>
     </td>
 
@@ -31,12 +31,13 @@
 </table>
 
 <script type="text/javascript">
-    $('#delfoto').click(function () {
+    $('.delfoto').click(function () {
         if (confirm('Вы уверены что хотите удалить фото?')) {
             $.get($(this).attr('href'));
             $('#image').load('/news/LoadImage?id={{item.Pk}}');
 
         }
+
         return false;
 
     })
@@ -48,8 +49,13 @@
             type: 'POST',
             url: '/news/SaveImageText.json', // Обработчик формы отправки
             data: formNm.serialize(),
+            onSuccess: function(){
 
-        });
+        }});
+
         return false;
     });
+
+
+    priseall({{item.image.count}});
 </script>

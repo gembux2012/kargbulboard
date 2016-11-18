@@ -56,6 +56,7 @@ return [
     'prise' => [
         'nopaid' => '2',
         'word' => '5',
-        'photo' => '100'
+        'photo' => '100',
+        'vip'  => '50'
     ]
 ];

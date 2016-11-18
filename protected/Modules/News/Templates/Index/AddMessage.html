@@ -54,16 +54,21 @@
                         <b>Прайс</b>
                     </div>
                     <div class="panel-body">
-                      1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно; 1 фото {{app.config.prise.photo}}р.
+                      1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
+                        1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}
                     </div>
                 </div>
 
                     {% if item.Pk!='' %}
                 <span style="color: #77CCDD;">Объявление УН {{item.Pk}}</span><span>&nbsp;&nbsp;Стоймость: текст: </span>
-                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>
+                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
+                Итого: <span id="priseall"></span>р.
                 <hr>
                 {% else %}
-                <p style="color: #77CCDD>Стоимость:  <span id="prise"></span></p>
+                </span><span>&nbsp;&nbsp;Стоймость: текст: </span>
+                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
+                Итого: <span id="priseall"></span>р.
+                <hr>
                 {% endif %}
 
                 <ul class="nav nav-tabs">
@@ -218,6 +223,7 @@
         {
             total_words=this.value.split(/[\s\.\?]+/).length;
             $('#prise').html(prise(total_words));
+            priseall();
         });
 
 
@@ -228,14 +234,23 @@
 
 
         function prise(total){
+
             return (total-{{app.config.prise.nopaid}})*{{app.config.prise.word}};
         }
 
-        function prisephoto(){
-            $('#prisephoto').html({{app.config.prise.photo}}*{{item.image.count}});
-        }
-        prisephoto();
+        function priseall(imagecount){
 
+            $('#prisephoto').html({{app.config.prise.photo}}*imagecount);
+        $('#prisevip').html(
+                {% if item.vip ==1 %}
+        {{app.config.prise.vip}}
+        {% endif %}
+        );
+        total=$('#text').val().split(/[\s\.\?]+/).length;
+        $('#priseall').html((total-{{app.config.prise.nopaid}})*{{app.config.prise.word}}+{{app.config.prise.vip}}+{{app.config.prise.photo}}*{{item.image.count}});
+        };
+
+        priseall({{item.image.count}});
 
         /*
          $('.image').each($(this).blur(function() { alert('blur');
