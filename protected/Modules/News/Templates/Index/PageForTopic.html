@@ -15,9 +15,11 @@
 
         <ul class="meta-post">
             <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
+            {% if item.text|length > 250 %}
             <li><i class="glyphicon glyphicon-eye-open"></i>{{item.view}}</li>
+            {% endif %}
             {% if item.image.count>0 %}
-            <li><a href="#"><img src="{{item.image[0].image}}" class="img-responsive"
+            <li><a href="/news/One?id={{item.Pk}}" class="img"><img src="{{item.image[0].image}}" class="img-responsive"
                                  style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;&nbsp;{{item.image.count}}
                 фото
             </li>

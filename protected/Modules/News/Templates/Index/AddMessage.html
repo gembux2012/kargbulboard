@@ -55,7 +55,7 @@
                     </div>
                     <div class="panel-body">
                       1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
-                        1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}
+                        1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}р.
                     </div>
                 </div>
 
@@ -126,10 +126,10 @@
                                 Сохранить
                             </button>
                             {% if item.Pk != '' %}
-                            <button type="button" class="btn btn-default">Опубликовать</button>
+                            <button type="button" class="btn btn-default" onclick="return published()">Опубликовать</button>
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
                             {% endif %}
-                            <button type="button" class="btn btn-default" onclick="mymessage()">Выход</button>
+                            <button type="button" class="btn btn-default" onclick="return mymessage()">Выход</button>
                         </form>
                     </div>
                     <div id="panel2" class="tab-pane fade" style="height: 451px">
@@ -241,24 +241,36 @@
         function priseall(imagecount){
 
             $('#prisephoto').html({{app.config.prise.photo}}*imagecount);
-        $('#prisevip').html(function(){
-                 if($('#vip').attr('checked')=='checked')
-                 {{app.config.prise.vip}}
-        });
+        $('#prisevip').html(vip());
         total=$('#text').val().split(/[\s\.\?]+/).length;
         $('#priseall').html((total-{{app.config.prise.nopaid}})*{{app.config.prise.word}}+{{app.config.prise.vip}}+{{app.config.prise.photo}}*{{item.image.count}});
         };
 
         priseall({{item.image.count}});
 
-        /*
-         $('.image').each($(this).blur(function() { alert('blur');
+       function vip() {
+
+            if ($('#vip').attr('checked') == 'checked')
+                  $('#prisevip').html({{app.config.prise.vip}})
+                    else
+                    $('#prisevip').html('');
+
+            }
+
+        function published(){
+            call();
+            $.get('/News/Published.json?id={{item.Pk}}');
+            return false;
+        }
+
+
+        // $('.image').each($(this).blur(function() { alert('blur');
          //$.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
          //console.log($(this));
          //alert($(this).val());
-         }));
+        // }));
 
-         */
+
 
 
     </script>

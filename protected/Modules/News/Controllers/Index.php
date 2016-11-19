@@ -63,10 +63,10 @@ class Index
         $offset = ($page - 1) * self::PAGE_SIZE;
         $limit = self::PAGE_SIZE;
 
-            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE published IS NOT NULL AND __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)')->count();
 
-            $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
+            $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories   WHERE published IS NOT NULL AND __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
 
 
@@ -78,32 +78,6 @@ class Index
 
     }
 
-    public function  actionShortPageForTopic($id = 1, $page = 1)
-    {
-        $item = Topic::findByPK($id);
-        // var_dump($item);die;
-        $lft = $item->__lft;
-        $rgt = $item->__rgt;
-
-        $offset = ($page - 1) * self::PAGE_SIZE;
-        $limit = self::PAGE_SIZE;
-
-
-        $this->data->shortitemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)AND nopaid=1')->count();
-
-        $this->data->shortitems = Story::findAllByQuery('SELECT * FROM news_stories  WHERE __topic_id
-            IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft) AND nopaid=1 ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
-
-
-
-
-
-        $this->data->pageSize = self::PAGE_SIZE;
-        $this->data->activePage = $page;
-        $this->data->topic = $id;
-
-    }
 
 
 
@@ -152,9 +126,7 @@ class Index
 
         $item->fill($this->app->request->post);
         $item->user=$this->app->user->Pk;
-        if(str_word_count($item->text) < 6){
-            $item->nopaid=1;
-        }
+
         if (!isset($this->app->request->post->vip))
             $item->vip='0';
             else
@@ -165,10 +137,16 @@ class Index
         $this->data->topicid=$item->topic->Pk;
 
     }
+    public function actionPublished($id)
+    {
+        $item = Story::findByPK($id);
+        $item->published = date('Y-m-d H:i:s', time());
+        $item->save();
+    }
+
 
     public function actionBreadCrambs($id)
     {
-        //var_dump($id);die;
         $last_item=Topic::findByPK($id);
         $this->data->bcs=Topic::findByPK($id)->findAllParents();
         $this->data->bc=$last_item;

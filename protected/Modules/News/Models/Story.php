@@ -50,7 +50,7 @@ class Story
         }
         return $this;
     }
-
+    /*
     public function beforeSave()
     {
         if ($this->isNew()) {
@@ -58,7 +58,7 @@ class Story
         }
         return true;
     }
-
+  */
     public function beforeDelete()
     {
         $this->removeDirectory('/site/image/'.$this->Pk);
