@@ -14,6 +14,7 @@
     {{ publish('/Layouts/slider') }}
     {{ publish('/Layouts/upload') }}
     {{ publish('/Layouts/main') }}
+    {{ publish('/Layouts/Edit') }}
     <link href="{{ asset('/Layouts/upload/uploadfile.css') }}" rel="stylesheet">
     <link href="{{ asset('/Layouts/upload//uploadfile.custom.css') }}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -22,6 +23,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link href="{{ asset('/Layouts/main/css/styles.css')}}" rel="stylesheet" type="text/css">
+
 
 
     <link href="{{ asset('/Layouts/TreeMenu/css/tree.css')}}" rel="stylesheet" type="text/css">
@@ -261,6 +263,10 @@
 <script src="{{ asset('/Layouts/TreeMenu/js/tree.js')}}"></script>
 <script src="{{ asset('/Layouts/slider/js/lightslider.js')}}"></script>
 <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
+
+
+
+
 
 
 {% block pagescript %} {% endblock %}

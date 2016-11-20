@@ -1,3 +1,36 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                <h4 class="modal-title">Востановление пароля</h4>
+            </div>
+            <div class="modal-body" >
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                <section id="modal-body">
+                    <form  name="sentMessage" class="form form-register1" id="resetlogin"  novalidate>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <p id="valid"> Введите ваш e-mail</p>
+                                <input type="text" class="form-control" id="mail" name="email" placeholder="e-mail"/>
+                                <p class="help-block"></p>
+                            </div>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-lg btn-3d pull-right">Отправить</button><br />
+
+                    </form>
+                </section>
+
+            </div><!-- End of Modal body -->
+        </div><!-- End of Modal content -->
+    </div><!-- End of Modal dialog -->
+</div><!-- End of Modal -->
+
 <div class="no-gutter row">
     <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
@@ -162,6 +195,10 @@
     </div>
 
     <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
+    <script src="{{ asset('/Layouts/Edit/js/nicEdit.js')}}"></script>
+
+
+
     <script type="text/javascript">
 
         tree();
@@ -169,6 +206,10 @@
         $('#first').focus();
         $('#image').load('/news/LoadImage?id={{item.Pk}}');
         $("#mobile").mask("+7 999 999 9999");
+
+
+        new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','subscript',
+            'superscript','html','image']}).panelInstance('text');
 
         $('#del').click(function () {
             if (confirm('Вы уверены что хотите удалить обьявление?')) {
