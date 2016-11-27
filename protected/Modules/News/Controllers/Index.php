@@ -131,10 +131,17 @@ class Index
             $item->vip='0';
             else
                $item->vip='1';
+        try {
+            $item->save();
+            $this->data->words=str_word_count($item->count);
+            $this->data->id=$item->Pk;
+            $this->data->topicid=$item->topic->Pk;
 
-        $item->save();
-        $this->data->id=$item->Pk;
-        $this->data->topicid=$item->topic->Pk;
+
+        } catch (\T4\Orm\Exception $e){
+            $this->data->error=$e;
+        }
+
 
     }
     public function actionPublished($id)

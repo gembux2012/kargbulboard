@@ -229,8 +229,15 @@
             'customConfig': "{{ asset('/Layouts/Edit/js/ckeditconfig.js')}}"
         });
 
+        CKEDITOR.instances['text'].on('contentDom', function() {
+            this.document.on('click', function(event){
+
+                    $('#textmessage').css('color','black');
+                })}
+        );
+
         $('#del').click(function () {
-            if (confirm('Вы уверены что хотите удалить обьявление?')) {
+            if (confirm('Вы уверены что хотите удалить объявление?')) {
                 $.get($(this).attr('href'));
                 mymessage();
 
@@ -327,21 +334,26 @@
 
 
         function call() {
+            for ( instance in CKEDITOR.instances )
+                CKEDITOR.instances[instance].updateElement();
 
             if (valid()) {
 
                 var msg = $('#form-add-msg').serialize();
-                FormData=new FormData('');
-                FormData.set('text', Editor.nicInstances[0].getContent());
-                console.log(msg);
+
 
                 $.ajax({
                     type: 'POST',
                     url: '/news//Save.json',
                     data: msg,
                     success: function (data) {
-                        //alert(data.id);
-                        addmessage(data.id);
+                        console.log(data);
+                        if (data.error){
+
+                            $('#textmessage').css('color','red');
+                        } else {
+                            addmessage(data.id);
+                        }
 
 
                         //  breadcrambs(data.topicid);
@@ -362,11 +374,7 @@
                 erorr = true;
             }
 
-            if (Editor.nicInstances[0].getContent()==" ") {
 
-                $('#textmessage').css('color', 'red');
-                erorr = true;
-            }
 
             if (erorr)
                 return false;

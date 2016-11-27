@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Components\Auth\Identity;
 use T4\Mvc\Controller;
-use T4\Core\Collection;
+use T4\Orm\Exception;
 use T4\Core;
 use T4\Mail\Sender;
 

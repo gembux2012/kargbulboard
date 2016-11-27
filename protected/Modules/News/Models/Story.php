@@ -9,6 +9,7 @@ use T4\Http\Uploader;
 use T4\Mvc\Application;
 use T4\Orm\Model;
 
+
 class Story
     extends Model
 {
@@ -59,6 +60,18 @@ class Story
         return true;
     }
   */
+
+   public function validate()
+    {
+
+
+        if (null==preg_replace('/[\s\.\?]+/', $this->text)) {
+            throw new \T4\Orm\Exception('1');
+        }
+
+
+    }
+
     public function beforeDelete()
     {
         $this->removeDirectory('/site/image/'.$this->Pk);

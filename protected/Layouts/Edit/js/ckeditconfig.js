@@ -1,8 +1,10 @@
 CKEDITOR.editorConfig = function( config ) {
-    config.toolbar_Full = [
+    config.toolbar='MyConf';
+    config.toolbar_MyConf = [
         { name: 'document', items : [ 'Undo','Redo'] },
-        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Subscript','Superscript','Format' ] },
+        { name: 'basicstyles', items : [ 'Bold','Italic','Underline', ] },
         { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
-        { name: 'tools', items : [ 'Maximize','Source'] }
+
     ];
+    extraPlugins = 'сохранить' ;
 };
