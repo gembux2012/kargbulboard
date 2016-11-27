@@ -14,7 +14,7 @@
     {{ publish('/Layouts/slider') }}
     {{ publish('/Layouts/upload') }}
     {{ publish('/Layouts/main') }}
-    {{ publish('/Layouts/Edit/js/nicEditorIcons.gif') }}
+    {{ publish('/Layouts/Edit/js') }}
     <link href="{{ asset('/Layouts/upload/uploadfile.css') }}" rel="stylesheet">
     <link href="{{ asset('/Layouts/upload//uploadfile.custom.css') }}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -28,6 +28,7 @@
 
     <link href="{{ asset('/Layouts/TreeMenu/css/tree.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/Layouts/slider/css/lightslider.css')}}" rel="stylesheet" type="text/css">
+
 
 
     <link href="{{ asset('/Layouts/Admin/assets/bower_components/font-awesome/css/font-awesome.min.css') }}"
@@ -316,50 +317,7 @@
     }
     ;
 
-    function call() {
 
-        if (valid()) {
-            var msg = $('#form-add-msg').serialize();
-
-
-            $.ajax({
-                type: 'POST',
-                url: '/news//Save.json',
-                data: msg,
-                success: function (data) {
-                    //alert(data.id);
-                    addmessage(data.id);
-
-
-                    //  breadcrambs(data.topicid);
-                },
-                error: function (xhr, str) {
-                    alert('Возникла ошибка: ' + xhr.responseCode);
-                }
-            })
-        }
-    }
-
-    function valid() {
-        var erorr;
-        if ($('#topicid').val() == '') {
-
-
-            $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
-            erorr = true;
-        }
-
-        if ($('textarea').val().length <= 1) {
-
-            $('textarea').css('border-color', 'red');
-            erorr = true;
-        }
-
-        if (erorr)
-            return false;
-        else
-            return true;
-    }
 
     function textfocus() {
         $('textarea').css('border-color', '');

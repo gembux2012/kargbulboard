@@ -82,17 +82,29 @@
                     </div>
                     {% endif %}
                 </article>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <b>Прайс</b>
-                    </div>
-                    <div class="panel-body">
-                      1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
-                        1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}р.
+
+
+                <div class="panel-group" id="accordion">
+                    <!-- 1 панель -->
+                    <div class="panel panel-default">
+                        <!-- Заголовок 1 панели -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Прайс</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse ">
+                            <!-- Содержимое 1 панели -->
+                            <div class="panel-body">
+                                1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
+                                1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}р.
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                    {% if item.Pk!='' %}
+
+                {% if item.Pk!='' %}
                 <span style="color: #77CCDD;">Объявление УН {{item.Pk}}</span><span>&nbsp;&nbsp;Стоймость: текст: </span>
                 <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
                 Итого: <span id="priseall"></span>р.
@@ -116,15 +128,15 @@
                     <div id="panel1" class="tab-pane fade in active">
                         <br><br>
 
-                        <form method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
+                        <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
                             <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
 
 
                             <div class="form-group">
-                                <label for="message">Текст объявления:</label>
+                                <label for="message" id="textmessage">Текст объявления:</label>
                                 <textarea id="text" class="form-control" name="text" rows="10"
-                                          onfocus="textfocus()">{{item.text}} </textarea>
+                                          >{{item.text}} </textarea>
                             </div>
 
                             <div class="form-group">
@@ -195,7 +207,9 @@
     </div>
 
     <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
-    <script src="{{ asset('/Layouts/Edit/js/nicEdit.js')}}"></script>
+    <script src="{{ asset('/Layouts/Edit/js/ckeditconfig.js')}}"></script>
+
+
 
 
 
@@ -208,8 +222,12 @@
         $("#mobile").mask("+7 999 999 9999");
 
 
-        new nicEditor({buttonList : ['bold','italic','underline','strikeThrough','justify','ol','ul',
-            'left','center','right'],iconsPath :"{{ asset('/Layouts/Edit/js/nicEditorIcons.gif') }}" }).panelInstance('text');
+
+
+
+        CKEDITOR.replace( 'text',{
+            'customConfig': "{{ asset('/Layouts/Edit/js/ckeditconfig.js')}}"
+        });
 
         $('#del').click(function () {
             if (confirm('Вы уверены что хотите удалить обьявление?')) {
@@ -270,31 +288,34 @@
 
 
 
-            total_words=$('#text').val().split(/[\s\.\?]+/).length;
-            $('#prise').html(prise(total_words));
 
+        function priseall(){
 
-        function prise(total){
+        $('#prisephoto').html({{app.config.prise.photo}}*{{item.image.count}});
+        if(prisevip()){
+            $('#prisevip').html({{app.config.prise.vip}});
+            vip={{app.config.prise.vip}};
+        } else {
+            vip=0;
+            $('#prisevip').html('0р.');
 
-            return (total-{{app.config.prise.nopaid}})*{{app.config.prise.word}};
         }
 
-        function priseall(imagecount){
 
-            $('#prisephoto').html({{app.config.prise.photo}}*imagecount);
-        $('#prisevip').html(vip());
-        total=$('#text').val().split(/[\s\.\?]+/).length;
-        $('#priseall').html((total-{{app.config.prise.nopaid}})*{{app.config.prise.word}}+{{app.config.prise.vip}}+{{app.config.prise.photo}}*{{item.image.count}});
+        total=($('#text').val().split(/[\s\.\?]+/).length) -{{app.config.prise.nopaid}};
+        alert($('#text').val().split(/[\s\.\?]+/).length);
+        $('#prise').html(total*{{app.config.prise.word}});
+        $('#priseall').html(total*{{app.config.prise.word}}+{{app.config.prise.photo}}*{{item.image.count}}+vip);
         };
 
-        priseall({{item.image.count}});
+        priseall();
 
-       function vip() {
+       function prisevip() {
 
             if ($('#vip').attr('checked') == 'checked')
-                  $('#prisevip').html({{app.config.prise.vip}})
+                  return true;
                     else
-                    $('#prisevip').html('');
+                    return false;
 
             }
 
@@ -305,11 +326,54 @@
         }
 
 
-        // $('.image').each($(this).blur(function() { alert('blur');
-         //$.post('/news/SaveImageText', {id: "{{item.Pk}}", text: $(this).val()});
-         //console.log($(this));
-         //alert($(this).val());
-        // }));
+        function call() {
+
+            if (valid()) {
+
+                var msg = $('#form-add-msg').serialize();
+                FormData=new FormData('');
+                FormData.set('text', Editor.nicInstances[0].getContent());
+                console.log(msg);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/news//Save.json',
+                    data: msg,
+                    success: function (data) {
+                        //alert(data.id);
+                        addmessage(data.id);
+
+
+                        //  breadcrambs(data.topicid);
+                    },
+                    error: function (xhr, str) {
+                        alert('Возникла ошибка: ' + xhr.responseCode);
+                    }
+                })
+            }
+        }
+
+        function valid() {
+            var erorr;
+            if ($('#topicid').val() == '') {
+
+
+                $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
+                erorr = true;
+            }
+
+            if (Editor.nicInstances[0].getContent()==" ") {
+
+                $('#textmessage').css('color', 'red');
+                erorr = true;
+            }
+
+            if (erorr)
+                return false;
+            else
+                return true;
+        }
+
 
 
 
