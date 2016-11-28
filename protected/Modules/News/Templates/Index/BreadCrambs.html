@@ -1,9 +1,10 @@
 <div style="border: 1px">
-<h4 class="text-danger">в рубрику:</h4>
+
 <ol class="breadcrumb">
-    {% for item in bcs %}
+    <li> В рубрику:</li>
+    {% for item in bcs [1:]  %}
     <li><a >{{item.title}}</a></li>
     {% endfor %}
-    <li style="color: red">{{bc.title}}</li>
+    <li style="color: #a94442">{{bc.title}}</li>
 </ol>
 </div>

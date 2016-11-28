@@ -70,9 +70,9 @@
                     <h4 class="text-danger">Выберите рубрику</h4>
                     {% else %}
                     <div style="border: 1px">
-                        <h4 class="text-danger">рубрика:</h4>
-                        <ol class="breadcrumb">
-                            {% for topic in parenttopic %}
+                          <ol class="breadcrumb">
+                            <li>Рубрика:</li>
+                            {% for topic in parenttopic [1:] %}
                             <li><a>{{topic.title}}</a></li>
                             {% endfor %}
                             <li>{{item.topic.title
@@ -83,25 +83,6 @@
                     {% endif %}
                 </article>
 
-             <!--
-                <div class="panel-group" id="accordion">
-
-                    <div class="panel panel-default">
-
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Прайс</a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse ">
-
-                            <div class="panel-body">
-                                1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
-                                1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}р.
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
 
 
                 {% if item.Pk!='' %}
@@ -113,7 +94,7 @@
                 {% endif %}
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#panel1">Объявление UN {{item.Pk}}  </a></li>
+                    <li class="active"><a data-toggle="tab" href="#panel1">Объявление # {{item.Pk}}  </a></li>
                     {% if item.Pk != '' and item.nopaid==0 %}
                     <li><a data-toggle="tab" href="#panel2">Фото обьявления</a></li>
                     {% endif %}
@@ -122,7 +103,7 @@
 
                 <div class="tab-content">
                     <div id="panel1" class="tab-pane fade in active">
-                        <br><br>
+                        <br>
 
                         <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
@@ -159,6 +140,7 @@
                                     {% else %}
                                     <input type="checkbox"  id="vip" name="vip" value="1"> присвоить VIP статус
                                     {% endif %}
+                                    <span><a href="#">Показать</a> </span>
                                 </label>
                             </div>
                             {% endif %}
@@ -281,7 +263,6 @@
 
 
             function priseall(words) {
-                //alert(words);
 
                 total = words - {{app.config.prise.nopaid}};
                 $('#prisephoto').html({{app.config.prise.photo}} * {{item.image.count}});
@@ -297,13 +278,10 @@
 
                 }
 
-
-                alert(total);
-
                 $('#priseall').html(total * {{app.config.prise.word}} + {{app.config.prise.photo}} * {{item.image.count}} + vip);
             }
 
-
+            priseall({{words}});
 
             function prisevip() {
 
@@ -342,7 +320,7 @@
                                 $('#textmessage').css('color', 'red');
                             } else {
                                 addmessage(data.id);
-                                priseall(data.words);
+
                             }
 
                         }

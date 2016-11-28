@@ -1,4 +1,6 @@
 CKEDITOR.editorConfig = function( config ) {
+    config.disableNativeSpellChecker = false;
+    config.removePlugins = 'contextmenu';
     config.toolbar='MyConf';
     config.toolbar_MyConf = [
         { name: 'document', items : [ 'Undo','Redo'] },
@@ -7,4 +9,5 @@ CKEDITOR.editorConfig = function( config ) {
 
     ];
     extraPlugins = 'сохранить' ;
+
 };

@@ -91,10 +91,11 @@ class Index
             $this->data->item = new Story();
 
         } else {
-            $this->data->item = Story::findByPK($id);
-            //var_dump($this->data->item->image->count);die;
+            $item = Story::findByPK($id);
+            $this->data->item = $item;
             $topic=Story::findByPK($id)->topic;
             $this->data->parenttopic=$topic->findAllParents();
+            $this->data->words=str_word_count(str_replace("&nbsp;", '', strip_tags($item->text)),null,"0123456789АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
 
         }
 
@@ -136,7 +137,7 @@ class Index
 
         try {
             $item->save();
-            $this->data->words=str_word_count(str_replace("&nbsp;", '', strip_tags($item->text)),null,"АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
+
             $this->data->id=$item->Pk;
             $this->data->topicid=$item->topic->Pk;
 
