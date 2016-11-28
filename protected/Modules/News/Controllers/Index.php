@@ -5,6 +5,8 @@ namespace App\Modules\News\Controllers;
 use App\Modules\News\Models\Story;
 use App\Modules\News\Models\Topic;
 use App\Modules\News\Models\Image;
+use T4\Core\Collection;
+use T4\Core\Std;
 use T4\Http\E404Exception;
 use T4\Mvc\Controller;
 use T4\Orm\Migration;
@@ -139,7 +141,13 @@ class Index
 
 
         } catch (\T4\Orm\Exception $e){
-            $this->data->error=$e;
+
+            $error= new Collection();
+            foreach($e as $errors=>$value){
+              $error[]=$value;
+            }
+
+            $this->data->error=$error;
         }
 
 
