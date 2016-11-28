@@ -83,41 +83,37 @@
                     {% endif %}
                 </article>
 
-
+             <!--
                 <div class="panel-group" id="accordion">
-                    <!-- 1 панель -->
+
                     <div class="panel panel-default">
-                        <!-- Заголовок 1 панели -->
+
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Прайс</a>
                             </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse ">
-                            <!-- Содержимое 1 панели -->
+
                             <div class="panel-body">
                                 1 слово {{app.config.prise.word}}р. + {{app.config.prise.nopaid}}слова бесплатно;
                                 1 фото {{app.config.prise.photo}}р.; VIP статус {{app.config.prise.vip}}р.
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
                 {% if item.Pk!='' %}
-                <span style="color: #77CCDD;">Объявление УН {{item.Pk}}</span><span>&nbsp;&nbsp;Стоймость: текст: </span>
-                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
+                Стоймость: текст:
+                <span id="prise">0</span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
                 Итого: <span id="priseall"></span>р.
                 <hr>
-                {% else %}
-                </span><span>&nbsp;&nbsp;Стоймость: текст: </span>
-                <span id="prise"></span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
-                Итого: <span id="priseall"></span>р.
-                <hr>
+
                 {% endif %}
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#panel1">Объявление </a></li>
+                    <li class="active"><a data-toggle="tab" href="#panel1">Объявление UN {{item.Pk}}  </a></li>
                     {% if item.Pk != '' and item.nopaid==0 %}
                     <li><a data-toggle="tab" href="#panel2">Фото обьявления</a></li>
                     {% endif %}
@@ -215,172 +211,158 @@
 
     <script type="text/javascript">
 
-        tree();
-        $('#first').click();
-        $('#first').focus();
-        $('#image').load('/news/LoadImage?id={{item.Pk}}');
-        $("#mobile").mask("+7 999 999 9999");
+            tree();
+            $('#first').click();
+            $('#first').focus();
+            $('#image').load('/news/LoadImage?id={{item.Pk}}');
+            $("#mobile").mask("+7 999 999 9999");
 
 
+            CKEDITOR.replace('text', {
+                'customConfig': "{{ asset('/Layouts/Edit/js/ckeditconfig.js')}}"
+            });
+
+            CKEDITOR.instances['text'].on('contentDom', function () {
+                        this.document.on('click', function (event) {
+
+                            $('#textmessage').css('color', 'black');
+                        })
+                    }
+            );
+
+            $('#del').click(function () {
+                if (confirm('Вы уверены что хотите удалить объявление?')) {
+                    $.get($(this).attr('href'));
+                    mymessage();
+
+                }
+                return false;
+
+            })
+
+            var extraObj = $("#fileuploader").uploadFile({
+                url: "/news/UpLoadImage.json", fileName: "myfile",
+                dragDrop: false,
+                uploadStr: "Выберите файлы для загрузки",
+                cancelStr: "Удалить",
+                extErrorStr: "разрешено только  *",
+                acceptFiles: "image/*",
+                showPreview: true,
+                autoSubmit: false,
+                showDone: true,
+                //onSuccess: alert("succes"),
+                returnType: "json",
+
+                afterUploadAll: function (obj) {
+                    $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
+
+                },
+
+                onSuccess: function (files, data, xhr, pd) {
+                    $('.ajax-file-upload-statusbar').hide();
+                    $('#image').load('/news/LoadImage?id={{item.Pk}}');
+
+                },
+
+                extraHTML: function () {
+                    var html = '<input type="text" name="story" value="{{item.Pk}}">';
+
+                    return html;
+                },
 
 
+            });
 
-        CKEDITOR.replace( 'text',{
-            'customConfig': "{{ asset('/Layouts/Edit/js/ckeditconfig.js')}}"
-        });
+            $("#extrabutton").click(function () {
 
-        CKEDITOR.instances['text'].on('contentDom', function() {
-            this.document.on('click', function(event){
+                extraObj.startUpload();
 
-                    $('#textmessage').css('color','black');
-                })}
-        );
+            });
 
-        $('#del').click(function () {
-            if (confirm('Вы уверены что хотите удалить объявление?')) {
-                $.get($(this).attr('href'));
-                mymessage();
 
+            function priseall(words) {
+                //alert(words);
+
+                total = words - {{app.config.prise.nopaid}};
+                $('#prisephoto').html({{app.config.prise.photo}} * {{item.image.count}});
+                $('#prise').html(total * {{app.config.prise.word}});
+
+            if (prisevip()) {
+                    vip = {{app.config.prise.vip}};
+                    $('#prisevip').html(vip);
+
+                } else {
+                    vip = 0;
+                    $('#prisevip').html('0р.');
+
+                }
+
+
+                alert(total);
+
+                $('#priseall').html(total * {{app.config.prise.word}} + {{app.config.prise.photo}} * {{item.image.count}} + vip);
             }
-            return false;
-
-        })
-
-        var extraObj = $("#fileuploader").uploadFile({
-            url: "/news/UpLoadImage.json", fileName: "myfile",
-            dragDrop: false,
-            uploadStr: "Выберите файлы для загрузки",
-            cancelStr: "Удалить",
-            extErrorStr: "разрешено только  *",
-            acceptFiles: "image/*",
-            showPreview: true,
-            autoSubmit: false,
-            showDone: true,
-            //onSuccess: alert("succes"),
-            returnType: "json",
-
-            afterUploadAll: function (obj) {
-                $("#eventsmessage").html($("#eventsmessage").html() + "<br/>All files are uploaded");
-
-            },
-
-            onSuccess: function (files, data, xhr, pd) {
-                $('.ajax-file-upload-statusbar').hide();
-                $('#image').load('/news/LoadImage?id={{item.Pk}}');
-
-            },
-
-            extraHTML: function () {
-                var html = '<input type="text" name="story" value="{{item.Pk}}">';
-
-                return html;
-            },
-
-
-        });
-
-        $("#extrabutton").click(function () {
-
-            extraObj.startUpload();
-
-        });
-
-        $('#text').keydown(function()
-        {
-            total_words=this.value.split(/[\s\.\?]+/).length;
-            $('#prise').html(prise(total_words));
-            priseall();
-        });
 
 
 
+            function prisevip() {
 
 
-        function priseall(){
-
-        $('#prisephoto').html({{app.config.prise.photo}}*{{item.image.count}});
-        if(prisevip()){
-            $('#prisevip').html({{app.config.prise.vip}});
-            vip={{app.config.prise.vip}};
-        } else {
-            vip=0;
-            $('#prisevip').html('0р.');
-
-        }
-
-
-        total=($('#text').val().split(/[\s\.\?]+/).length) -{{app.config.prise.nopaid}};
-        alert($('#text').val().split(/[\s\.\?]+/).length);
-        $('#prise').html(total*{{app.config.prise.word}});
-        $('#priseall').html(total*{{app.config.prise.word}}+{{app.config.prise.photo}}*{{item.image.count}}+vip);
-        };
-
-        priseall();
-
-       function prisevip() {
-
-            if ($('#vip').attr('checked') == 'checked')
-                  return true;
-                    else
+                if ($('#vip').attr('checked') == 'checked')
+                    return true;
+                else
                     return false;
 
             }
 
-        function published(){
-            call();
-            $.get('/News/Published.json?id={{item.Pk}}');
-            return false;
-        }
+            function published() {
+                call();
+                $.get('/News/Published.json?id={{item.Pk}}');
+                return false;
+            }
 
 
-        function call() {
-            for ( instance in CKEDITOR.instances )
-                CKEDITOR.instances[instance].updateElement();
+            function call() {
+                for (instance in CKEDITOR.instances)
+                    CKEDITOR.instances[instance].updateElement();
 
-            if (valid()) {
+                if (valid()) {
 
-                var msg = $('#form-add-msg').serialize();
+                    var msg = $('#form-add-msg').serialize();
 
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/news//Save.json',
-                    data: msg,
-                    success: function (data) {
-                        console.log(data);
-                        if (data.error){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/news//Save.json',
+                        data: msg,
+                        success: function (data) {
 
-                            $('#textmessage').css('color','red');
-                        } else {
-                            addmessage(data.id);
+                            if (data.error) {
+
+                                $('#textmessage').css('color', 'red');
+                            } else {
+                                addmessage(data.id);
+                                priseall(data.words);
+                            }
+
                         }
 
-
-                        //  breadcrambs(data.topicid);
-                    },
-                    error: function (xhr, str) {
-                        alert('Возникла ошибка: ' + xhr.responseCode);
-                    }
-                })
+                    })
+                }
             }
-        }
 
-        function valid() {
-            var erorr;
-            if ($('#topicid').val() == '') {
+            function valid() {
 
-
-                $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
-                erorr = true;
+                if ($('#topicid').val() == '') {
+                    $('#breadcrambs ').html("<h4 style='color: #9b0000'>Выберите рубрику!!!</h4>");
+                    return  false;
+                } else {
+                    return true
+                }
             }
 
 
 
-            if (erorr)
-                return false;
-            else
-                return true;
-        }
 
 
 

@@ -61,15 +61,17 @@ class Story
     }
   */
 
-   public function validate()
+    public function validate()
     {
+         //var_dump(trim(str_replace("&nbsp;", '', strip_tags($this->text))));die;
+        if (strlen(trim(str_replace("&nbsp;", '', strip_tags($this->text)))) == 0) {
 
-
-        if (null==preg_replace('/[\s\.\?]+/', $this->text)) {
             throw new \T4\Orm\Exception('1');
+
+        } else {
+
+            return true;
         }
-
-
     }
 
     public function beforeDelete()

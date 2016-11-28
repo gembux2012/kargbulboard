@@ -133,25 +133,20 @@ class Index
             $item->vip='0';
             else
                $item->vip='1';
+
         try {
             $item->save();
-            $this->data->words=str_word_count($item->count);
+            $this->data->words=str_word_count(str_replace("&nbsp;", '', strip_tags($item->text)),null,"АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
             $this->data->id=$item->Pk;
             $this->data->topicid=$item->topic->Pk;
 
 
         } catch (\T4\Orm\Exception $e){
 
-            $error= new Collection();
-            foreach($e as $errors=>$value){
-              $error[]=$value;
+           $this->data->error= $e->getMessage();
             }
-
-            $this->data->error=$error;
-        }
-
-
     }
+
     public function actionPublished($id)
     {
         $item = Story::findByPK($id);
