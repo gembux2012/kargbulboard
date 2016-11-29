@@ -20,7 +20,7 @@ class m_1423048590_createTopics
         ]);
 
         $topic=new Topic();
-        $topic->title='Все сообщения';
+        $topic->title='Все объявления';
         $topic->save();
     }
 

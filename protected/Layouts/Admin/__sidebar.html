@@ -15,9 +15,11 @@
             <li>
                 <a href="/admin"><i class="glyphicon glyphicon-home"></i> Админ-панель</a>
             </li>
+           <!--
             <li>
                 <a href="/admin/blocks"><i class="glyphicon glyphicon-th-large"></i> Блоки</a>
             </li>
+            -->
             {% for module in app.modules %}
                 {% for item in module.adminMenu %}
                 {% if item.url %}

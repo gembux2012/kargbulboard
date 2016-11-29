@@ -3,7 +3,6 @@
 {% block breadcrumbs %}
 <ol class="breadcrumb">
     <li><a href="/admin/">Админ-панель</a></li>
-    <li><a href="/admin/news/">Новости</a></li>
     <li><a href="/admin/news/topics">Рубрики</a></li>
     <li>{% if item.isNew %}Добавление рубрики{% else %}Редактирование рубрики{% endif %}</li>
 </ol>
@@ -32,11 +31,9 @@
         <div class="form-group">
             <label for="parent" class="col-sm-2 control-label">Родительская рубрика</label>
             <div class="col-sm-10">
-                {% if item.isNew %}
-                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", 0, {"null":true}, {"name":"parent", "class": "form-control"}) }}
-                {% else %}
-                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
-                {% endif %}
+                <select name="parent" class="form-control">
+                    <option value="1" selected="selected"> Все рубрики</option>
+                </select>
                 <i></i>
             </div>
         </div>
