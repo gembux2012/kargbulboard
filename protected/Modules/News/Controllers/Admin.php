@@ -53,6 +53,7 @@ class Admin
             ->uploadImage('image')
             ->save();
         $this->redirect('/admin/news/');
+
     }
 
     public function actionDelete($id)

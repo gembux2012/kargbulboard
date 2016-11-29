@@ -79,19 +79,9 @@
         </div>
         <div class="navbar-collapse collapse">
 
+
             <ul class="nav navbar-right navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="glyphicon glyphicon-search"></i></a>
-                    <ul class="dropdown-menu" style="padding:12px;">
-                        <form class="form-inline">
-                            <p id=""></p>
-                            <button type="submit" class="btn btn-default pull-right"><i
-                                    class="glyphicon glyphicon-search"></i></button>
-                            <input type="text" class="form-control pull-left" placeholder="Search">
-                        </form>
-                    </ul>
-                </li>
+
                 {% if not app.user %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Войти на сайт </a>
@@ -142,19 +132,26 @@
                     {% endif %}
                 </li>
             </ul>
-            <form role="search" class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Найти" class="form-control">
-                </div>
-            </form>
 
             <ul id="nav" class="nav navbar-right navbar-nav">
 
                 {% if app.user %}
-                <li><a href="/news/AddMessage">Подать обьявление</a></li>
+                <li><a href="/news/AddMessage">Создать обьявление</a></li>
                 <li><a href="/news/MyMessage">Мой обьявление</a></li>
                 {% endif %}
             </ul>
+
+            <ul class="nav navbar-right navbar-nav">
+                <form name="find" id="find" class="navbar-form" role="search" action="javascript:void(null);" onsubmit="find()">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Найти объявления" name="q">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </ul>
+
 
 
         </div>
@@ -282,6 +279,9 @@
 
 
     }
+
+
+
 
     ////  addmessage
     function addmessage(id) {
@@ -517,6 +517,33 @@
             ));
             return matches ? decodeURIComponent(matches[1]) : undefined;
         }
+
+        function find() {
+
+
+                var msg = $('#find').serialize();
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/news//Find.json',
+                    data: msg,
+                    success: function (data) {
+
+                        if (data.error) {
+
+                            $('#textmessage').css('color', 'red');
+                        } else {
+                            addmessage(data.id);
+
+                        }
+
+                    }
+
+                })
+            }
+
+
 
 
     });

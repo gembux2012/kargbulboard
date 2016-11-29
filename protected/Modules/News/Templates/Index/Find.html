@@ -1,0 +1,56 @@
+<section id="long">
+
+    {% for item in items %}
+    <!-- <ol class="breadcrumb">
+         {% for topic in item.topic.findAllParents %}
+         {% if loop.index >1 %}
+         <li><a >{{topic.title}}</a></li>
+         {% endif %}
+         {% endfor %}
+         <li>{{item.topic.title}}</li>
+     </ol>-->
+    {{ item.text|striptags|length > 250 ? (item.text|slice(0, 250)~'...')|raw : item.text|raw }}
+    <div class="bottom-article">
+
+
+        <ul class="meta-post">
+            <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
+            {% if item.text|length > 250 %}
+            <li><i class="glyphicon glyphicon-eye-open"></i>{{item.view}}</li>
+            {% endif %}
+            {% if item.image.count>0 %}
+            <li><a href="/news/One?id={{item.Pk}}" class="img"><img src="{{item.image[0].image}}" class="img-responsive"
+                                                                    style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;&nbsp;{{item.image.count}}
+                фото
+            </li>
+            {% endif %}
+        </ul>
+        {% if item.text|length > 250 %}
+        <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать все ...</a>
+        {% endif %}
+    </div>
+    <br><br>
+
+    {% endfor %}
+
+
+    <div class="container">
+        <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage':
+            topic, 'url': '/admin/news/?page=%d'})}}
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    $('.img ').click(function () {
+
+        var toLoad = $(this).attr('href');
+        $('#body').empty();
+        $('#body').load(toLoad);
+        return false;
+
+    });
+
+</script>
+

@@ -241,13 +241,15 @@
                 },
 
                 onSuccess: function (files, data, xhr, pd) {
+                    console.log(data);
                     $('.ajax-file-upload-statusbar').hide();
                     $('#image').load('/news/LoadImage?id={{item.Pk}}');
+                    priseall(data.words,data.fotos);
 
                 },
 
                 extraHTML: function () {
-                    var html = '<input type="text" name="story" value="{{item.Pk}}">';
+                    var html = '<input type="hidden" name="story" value="{{item.Pk}}">';
 
                     return html;
                 },
@@ -262,10 +264,10 @@
             });
 
 
-            function priseall(words) {
+            function priseall(words,fotos) {
 
                 total = words - {{app.config.prise.nopaid}};
-                $('#prisephoto').html({{app.config.prise.photo}} * {{item.image.count}});
+                $('#prisephoto').html({{app.config.prise.photo}} * fotos);
                 $('#prise').html(total * {{app.config.prise.word}});
 
             if (prisevip()) {
@@ -278,10 +280,10 @@
 
                 }
 
-                $('#priseall').html(total * {{app.config.prise.word}} + {{app.config.prise.photo}} * {{item.image.count}} + vip);
+                $('#priseall').html(total * {{app.config.prise.word}} + {{app.config.prise.photo}} * fotos + vip);
             }
 
-            priseall({{words}});
+            priseall({{words}},{{item.image.count}});
 
             function prisevip() {
 
@@ -292,6 +294,8 @@
                     return false;
 
             }
+
+
 
             function published() {
                 call();

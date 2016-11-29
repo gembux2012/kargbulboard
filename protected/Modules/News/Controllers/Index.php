@@ -58,14 +58,13 @@ class Index
     public function  actionPageForTopic($id = 1, $page = 1, $user_id = null)
     {
         $item = Topic::findByPK($id);
-       // var_dump($item);die;
         $lft = $item->__lft;
         $rgt = $item->__rgt;
 
         $offset = ($page - 1) * self::PAGE_SIZE;
         $limit = self::PAGE_SIZE;
 
-            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE published IS NOT NULL AND __topic_id
+        $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  WHERE published IS NOT NULL AND __topic_id
             IN (SELECT __id FROM news_topics WHERE __lft >=' . $lft . ' AND __rgt <= ' . $rgt . ' ORDER BY __lft)')->count();
 
             $this->data->items = Story::findAllByQuery('SELECT * FROM news_stories   WHERE published IS NOT NULL AND __topic_id
@@ -78,6 +77,15 @@ class Index
         $this->data->activePage = $page;
         $this->data->topic = $id;
 
+    }
+
+    public function  actionFind($find,$page=1)
+    {
+        $offset = ($page - 1) * self::PAGE_SIZE;
+        $limit = self::PAGE_SIZE;
+
+        $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  LIKE % '.$find .'%')->count();
+        $this->data->items = Story::findALLByQuery('SELECT * FROM news_stories  LIKE % '.$find .'%  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
     }
 
 
@@ -95,7 +103,7 @@ class Index
             $this->data->item = $item;
             $topic=Story::findByPK($id)->topic;
             $this->data->parenttopic=$topic->findAllParents();
-            $this->data->words=str_word_count(str_replace("&nbsp;", '', strip_tags($item->text)),null,"0123456789АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
+            $this->data->words=Story::wordcount($item->text);
 
         }
 
@@ -185,6 +193,9 @@ class Index
 
         $item=Image::findByPK($id);
         $item->delete();
+        $this->data->fotos=$item->count();
+        $this->data->words=Story::wordcount($item->story->text);
+
 
 
     }
@@ -230,6 +241,9 @@ class Index
                     $item->image = $path . $fileName;
                     //$item->story=$this->app->request->post->story;
                     $item->save();
+                    $this->data->fotos=$item->count();
+                    $this->data->words=Story::wordcount($item->story->text);
+
                 }
 
             } else  //Multiple files, file[]
@@ -253,6 +267,10 @@ class Index
                         $item->image = $path . $fileName;
                         //$item->story=$this->app->request->post->story;
                         $item->save();
+                        $this->data->fotos=$item->count();
+                        $this->data->words=Story::wordcount($item->story->text);
+
+
                     }
 
                 }

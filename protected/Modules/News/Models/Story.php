@@ -74,6 +74,12 @@ class Story
         }
     }
 
+    public static function wordcount($text)
+    {
+        return str_word_count(str_replace("&nbsp;", '', strip_tags($text)),null,"0123456789АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
+
+    }
+
     public function beforeDelete()
     {
         $this->removeDirectory('/site/image/'.$this->Pk);
