@@ -518,30 +518,17 @@
             return matches ? decodeURIComponent(matches[1]) : undefined;
         }
 
+
         function find() {
+            search=$('#inputsearch').val();
+            return false;
+        }
 
+        function search(search,page){
+            $('#message').empty();
+            $('#message').load("/news/find.json?find=" + search +'&'+ page);
 
-                var msg = $('#find').serialize();
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/news//Find.json',
-                    data: msg,
-                    success: function (data) {
-
-                        if (data.error) {
-
-                            $('#textmessage').css('color', 'red');
-                        } else {
-                            addmessage(data.id);
-
-                        }
-
-                    }
-
-                })
-            }
+        }
 
 
 
