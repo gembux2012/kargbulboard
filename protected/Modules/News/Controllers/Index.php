@@ -84,8 +84,8 @@ class Index
         $offset = ($page - 1) * self::PAGE_SIZE;
         $limit = self::PAGE_SIZE;
 
-        $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  LIKE % '.$find .'%')->count();
-        $this->data->items = Story::findALLByQuery('SELECT * FROM news_stories  LIKE % '.$find .'%  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+        $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  LIKE "%'.$find .'%"')->count();
+        $this->data->items = Story::findALLByQuery('SELECT * FROM news_stories  LIKE "%'.$find .'%"  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
     }
 
 
