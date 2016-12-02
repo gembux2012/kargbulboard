@@ -80,6 +80,8 @@ class Story
 
     }
 
+
+
     public function beforeDelete()
     {
         $this->removeDirectory('/site/image/'.$this->Pk);

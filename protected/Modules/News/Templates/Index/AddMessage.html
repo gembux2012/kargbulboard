@@ -1,27 +1,25 @@
 <!-- Modal -->
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="publishModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                <h4 class="modal-title">Востановление пароля</h4>
+                <h4 class="modal-title">Внимание</h4>
             </div>
+
             <div class="modal-body" >
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
 
                 <section id="modal-body">
                     <form  name="sentMessage" class="form form-register1" id="resetlogin"  novalidate>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <p id="valid"> Введите ваш e-mail</p>
-                                <input type="text" class="form-control" id="mail" name="email" placeholder="e-mail"/>
-                                <p class="help-block"></p>
-                            </div>
-                        </div>
+                       <h5>Вы собираетесь опубликовать объявление</h5>
+                       <p> Перед публикацией  убедитесь, что в вашем объявление все правильно </p>
+                       <p>После публикации редактирование объявления будет невозможным!</p>
+                        <br>
 
 
-                        <button type="submit" class="btn btn-lg btn-3d pull-right">Отправить</button><br />
+                        <button  class="btn btn-lg " data-dismiss="modal" onclick="return published()">Опубликовать</button>
+                        <button  class="btn btn-lg " data-dismiss="modal" >Отказаться</button>
 
                     </form>
                 </section>
@@ -88,7 +86,7 @@
                 {% if item.Pk!='' %}
                 Стоймость: текст:
                 <span id="prise">0</span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
-                Итого: <span id="priseall"></span>р.
+                Итого: <span id="priseall"></span>р.<p id="test"></p>
                 <hr>
 
                 {% endif %}
@@ -149,7 +147,8 @@
                                 Сохранить
                             </button>
                             {% if item.Pk != '' %}
-                            <button type="button" class="btn btn-default" onclick="return published()">Опубликовать</button>
+                            <a href= "/news/One?id={{item.Pk}}" id="view"  class="btn btn-primary" >Просмотреть</a>
+                            <a href="#publishModal" class="btn btn-warning" role="button" data-toggle="modal" >Опубликовать</a>
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
                             {% endif %}
                             <button type="button" class="btn btn-default" onclick="return mymessage()">Выход</button>
@@ -244,7 +243,7 @@
                     console.log(data);
                     $('.ajax-file-upload-statusbar').hide();
                     $('#image').load('/news/LoadImage?id={{item.Pk}}');
-                    priseall(data.words,data.fotos);
+                   priseall();
 
                 },
 
@@ -264,36 +263,21 @@
             });
 
 
-            function priseall(words,fotos) {
+            function priseall() {
 
-                total = words - {{app.config.prise.nopaid}};
-                $('#prisephoto').html({{app.config.prise.photo}} * fotos);
-                $('#prise').html(total * {{app.config.prise.word}});
-
-            if (prisevip()) {
-                    vip = {{app.config.prise.vip}};
-                    $('#prisevip').html(vip);
-
-                } else {
-                    vip = 0;
-                    $('#prisevip').html('0р.');
-
-                }
-
-                $('#priseall').html(total * {{app.config.prise.word}} + {{app.config.prise.photo}} * fotos + vip);
-            }
-
-            priseall({{words}},{{item.image.count}});
-
-            function prisevip() {
-
-
-                if ($('#vip').attr('checked') == 'checked')
-                    return true;
-                else
-                    return false;
+                $.get('/news/Prise.json?id={{item.Pk}}', function (data) {
+                    console.log(data);
+                    total = data.words - data.prise.nopaid;
+                    $('#prisephoto').html(data.prise.photo * data.fotos);
+                    $('#prise').html(total * data.prise.word);
+                    $('#prisevip').html(data.vip);
+                    $('#priseall').html(total * data.prise.word + data.prise.photo * data.fotos + data.vip);
+                })
 
             }
+
+            priseall();
+
 
 
 
@@ -342,6 +326,16 @@
                     return true
                 }
             }
+
+            $('#view ').click(function () {
+
+                var toLoad = $(this).attr('href');
+                $('#body').empty();
+                $('#body').load(toLoad);
+                return false;
+
+            });
+
 
 
 

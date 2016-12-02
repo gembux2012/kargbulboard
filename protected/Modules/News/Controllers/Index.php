@@ -90,6 +90,16 @@ class Index
         }
     }
 
+    public function  actionPrise($id)
+    {
+        $item = Story::findByPK($id);
+        $this->data->prise=$this->app->config->prise;
+        $this->data->words=Story::wordcount($item->text);
+        $this->data->fotos=$item->image->count();
+        $item->vip ? $this->data->vip=$this->app->config->prise->vip : $this->data->vip=0;
+
+    }
+
 
 
 

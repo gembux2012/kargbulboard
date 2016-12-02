@@ -35,6 +35,7 @@
         if (confirm('Вы уверены что хотите удалить фото?')) {
             $.get($(this).attr('href'));
             $('#image').load('/news/LoadImage?id={{item.Pk}}' );
+            priseall();
 
         }
 
