@@ -142,13 +142,16 @@
                                 </label>
                             </div>
                             {% endif %}
-
+                            {% if  not item.published  %}
                             <button type="submit" class="btn btn-defult" style="color: white;background-color: #77CCDD">
                                 Сохранить
                             </button>
+                            {% endif %}
                             {% if item.Pk != '' %}
                             <a href= "/news/One?id={{item.Pk}}" id="view"  class="btn btn-primary" >Просмотреть</a>
+                            {% if  not item.published  %}
                             <a href="#publishModal" class="btn btn-warning" role="button" data-toggle="modal" >Опубликовать</a>
+                            {% endif %}
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
                             {% endif %}
                             <button type="button" class="btn btn-default" onclick="return mymessage()">Выход</button>
