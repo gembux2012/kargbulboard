@@ -81,11 +81,13 @@ class Index
 
     public function  actionFind($find,$page=1)
     {
-        $offset = ($page - 1) * self::PAGE_SIZE;
-        $limit = self::PAGE_SIZE;
+        if(!empty($find)) {
+            $offset = ($page - 1) * self::PAGE_SIZE;
+            $limit = self::PAGE_SIZE;                                                   // "%'.$search.'%"'
 
-        $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories  LIKE "%'.$find .'%"')->count();
-        $this->data->items = Story::findALLByQuery('SELECT * FROM news_stories  LIKE "%'.$find .'%"  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+            $this->data->itemsCount = Story::findALLByQuery('SELECT * FROM news_stories WHERE text  LIKE "%' . $find . '%"')->count();
+            $this->data->items = Story::findALLByQuery('SELECT * FROM news_stories WHERE text LIKE "%' . $find . '%"  ORDER BY published DESC LIMIT ' . $offset . ',' . $limit);
+        }
     }
 
 

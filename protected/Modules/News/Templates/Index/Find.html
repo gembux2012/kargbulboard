@@ -1,56 +1,64 @@
-<section id="long">
+<div class="no-gutter row">
+    <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
-    {% for item in items %}
-    <!-- <ol class="breadcrumb">
-         {% for topic in item.topic.findAllParents %}
-         {% if loop.index >1 %}
-         <li><a >{{topic.title}}</a></li>
-         {% endif %}
-         {% endfor %}
-         <li>{{item.topic.title}}</li>
-     </ol>-->
-    {{ item.text|striptags|length > 250 ? (item.text|slice(0, 250)~'...')|raw : item.text|raw }}
-    <div class="bottom-article">
+        <li><a href="/" onclick="content(1,1)">Все объявления</a></li>
+
+    </ul>
 
 
-        <ul class="meta-post">
-            <li><i class="glyphicon glyphicon-calendar"></i>{{item.published|date("d.m.Y")}}</li>
-            {% if item.text|length > 250 %}
-            <li><i class="glyphicon glyphicon-eye-open"></i>{{item.view}}</li>
-            {% endif %}
-            {% if item.image.count>0 %}
-            <li><a href="/news/One?id={{item.Pk}}" class="img"><img src="{{item.image[0].image}}" class="img-responsive"
-                                                                    style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;&nbsp;{{item.image.count}}
-                фото
-            </li>
-            {% endif %}
-        </ul>
-        {% if item.text|length > 250 %}
-        <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать все ...</a>
-        {% endif %}
-    </div>
-    <br><br>
+    <!--mid column-->
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel-heading text-center" style="background-color:#555;color:#eee;">НАЙДЕНЫЕ ОБЪЯВЛЕНИЯ</div>
+            <div id="message" class="panel-body">
+                <article>
 
-    {% endfor %}
+                    {% if itemsCount>0 %}
+                    {% for item in items %}
+
+                    {{item.text|raw}}
 
 
-    <div class="container">
-        <div class="row">{{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage':
-            topic, 'url': '/admin/news/?page=%d'})}}
+                    <div class="bottom-article">
+                        <ul class="meta-post">
+                            <li><i class="glyphicon glyphicon-calendar">
+
+                            </i>
+                                {% if not item.published %}
+                                Неопубликовано
+                                {% else %}
+                                {{item.published|date("d.m.Y")}}
+                                {% endif %}
+                            </li>
+                            <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
+                            {% set endpublished=app.config.published %}
+                            <li>Будет удалено: {{item.published|date_modify("+"~ endpublished~" day")|date("d.m.Y")}}
+                            </li>
+
+                        </ul>
+                        <a href="#" onclick="return addmessage({{item.Pk}})" class="pull-right">Редактировать</i></a>
+                    </div>
+                    <br><br>
+                    {% endfor %}
+                    {% else %}
+                    <code>У вас нет объявлений</code>
+                    {% endif %}
+
+
+                    <div class="row">
+                        <div class="container">
+                            {% if itemsCount>0 %}
+                            {{widget('mypager', {'total': itemsCount, 'size': pageSize, 'active': activePage,'myPage':
+                            topic, 'url': '/admin/news/?page=%d'})}}
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                </article>
+
+            </div>
         </div>
     </div>
-</section>
-
-<script type="text/javascript">
-
-    $('.img ').click(function () {
-
-        var toLoad = $(this).attr('href');
-        $('#body').empty();
-        $('#body').load(toLoad);
-        return false;
-
-    });
-
-</script>
+</div>
 

@@ -359,14 +359,16 @@
     }
 
     function findmessage() {
-        search($('#inputsearch').val(),1);
+
+       $('#inputsearch').val()  ? search($('#inputsearch').val(),1) :  false;
         return false;
+
     }
 
     function search(search,page){
 
-        $('#message').empty();
-        $('#message').load("/news/find.json?find=" + search +'&'+ page);
+        $('#body').empty();
+        $('#body').load("/news/find?find=" + search +'&'+ page);
 
     }
 
