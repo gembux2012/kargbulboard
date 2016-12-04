@@ -68,10 +68,19 @@ class Story
 
             throw new \T4\Orm\Exception('1');
 
-        } else {
+        }
+        if(Application::getInstance()->request->post->vip == 1) {
+            if (strlen(trim(str_replace("&nbsp;", '', strip_tags(Application::getInstance()->request->post->title)))) == 0
+                && strlen(trim(str_replace("&nbsp;", '', strip_tags($this->title)))) == 0
+            ) {
+
+                throw new \T4\Orm\Exception('2');
+
+            }
+        }
 
             return true;
-        }
+
     }
 
     public static function wordcount($text)

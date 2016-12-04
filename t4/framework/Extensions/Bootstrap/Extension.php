@@ -15,6 +15,7 @@ class Extension
             $assets->publish($this->assetsPath . '/lib');
 
             $assets->publishCssFile($this->assetsPath.'/lib/css/bootstrap.min.css');
+            //$assets->publishCssFile($this->assetsPath.'/lib/css/bootstrap-combined.min.css');
             //$assets->publishCssFile($this->assetsPath.'/lib/css/bootstrap-responsive.css');
 
             if (!empty($this->options->theme)) {

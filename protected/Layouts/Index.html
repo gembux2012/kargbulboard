@@ -28,6 +28,8 @@
 
     <link href="{{ asset('/Layouts/TreeMenu/css/tree.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/Layouts/slider/css/lightslider.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/Layouts/slider/css/myslide.css')}}" rel="stylesheet" type="text/css">
+
 
 
 
@@ -176,58 +178,113 @@
             </div>
             <div class="col-md-8" style=" padding:0 ">
                 <h4 class="text-center" style="margin: 0;color: #66BBCC;padding: 2px">VIP-объявления</h4>
-                <ul id="lightSlider" style="margin: 5px;visibility: hidden">
+
+                <div id="myCarousel" class="carousel slide">
+
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+
+                        <div class="item active">
+
+                            <div class="row-fluid">
+                                {% for item in vip [:3] %}
+                                <div class="col-md-4" >
+                                   {% if item.image[0]%}
+                                    <a href="#x" class="thumbnail"><img  src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
+                                    {% else %}
+                                    <a href="#x" class="thumbnail"><img  src="/protected/Layouts/slider/vip.jpg"/></a>
+                                    {% endif %}
+                                    <div class="carousel-caption">
+                                        <p><b>{{item.title}}</b></p>
+                                    </div>
+                                </div>
+                              {% endfor %}
+                            </div><!--/row-fluid-->
+
+                        </div><!--/item-->
+
+                        <div class="item">
+
+                            <div class="row-fluid">
+                                {% for item in vip [1:3] %}
+                                <div class="col-md-4">
+                                    {% if item.image[0]%}
+                                    <a href="#x" class="thumbnail"><img src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
+                                    {% else %}
+                                    <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+                                    {% endif %}
+                                    <div class="carousel-caption">
+                                        <p><b>{{item.title}}</b></p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div><!--/row-fluid-->
+
+                        </div><!--/item-->
+
+
+                    </div><!--/carousel-inner-->
+
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                </div><!--/myCarousel-->
+                    </div>
+
+                <!--  <div class="col-md-4" style="background-color: white; padding: 5px" >
+
+                          <img src="{{vip[0].image[0].image}}" class="pull-left img-responsive" style="max-width: 100px; max-height: 200px; margin-right: 10px !important;">
+                          {{(vip[0].text|slice(0, 150)~'...')|raw  }}
+
+
+                  </div>
+                  <div class="col-md-4">
+                      <div class="clearfix">
+                          <img src="{{vip[0].image[0].image}}" class="pull-left img-responsive" style="max-width: 100px; max-height: 200px; margin-right: 10px !important;">
+                          {{(vip[0].text|slice(0, 150)~'...')|raw  }}
+                      </div>
+
+                  </div>
+                  <div class="col-md-4">
+                      <div class="clearfix">
+                          <img src="{{vip[0].image[0].image}}" class="pull-left img-responsive" style="max-width: 100px; max-height: 200px; margin-right: 10px !important;">
+                          {{(vip[0].text|slice(0, 150)~'...')|raw  }}
+                      </div>
+
+                  </div>-->
+
+
+              <!--  <ul id="lightSlider" style="margin: 5px;visibility: hidden">
                     {% for item in vip %}
                     <li>
-                        <div>
-                            <img class="img-responsive " src="{{item.image[0].image}}"/>
-                            {{item.text|raw}}
+                        <div >
+                            {% if item.image[0] %}
+                            <div class="clearfix">
+                                <img src="{{item.image[0].image}}" class="pull-left img-responsive" style="max-width: 100px; max-height: 200px; margin-right: 10px !important;">
+                                {{item.text|raw}}
+                            </div>
+
+                            {% else %}
+                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
+                            {% endif %}
+                          {{(item.text|striptags|slice(0, 35)~'<a href="#"> &nbsp;...Показать все</a> ')|raw}}
                         </div>
+
+
                     </li>
                     {% endfor %}
+
                     <li>
-                        <div class="myslide" style="background-color: white;padding: 10px;">
-                            <img class="img-responsive " src="/protected/Layouts/slider/SAM_1657.JPG"/>
-                            <a href="#" style="color: black">Показать Aenean interdum quam nec faucibus ...</a>
-                        </div>
-                    </li>
-                    <li>
+
                         <div>
                             <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
-
-                            <p>десь может быть ваше VIP объявление</p>
+                            <a href="#">Здесь может быть ваше VIP объявление...</a>
                         </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
 
-                            <p>Здесь может быть ваше VIP объявление</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
 
-                            <p>Здесь может быть ваше VIP объявление ...</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
-
-                            <p>Здесь может быть ваше VIP объявление.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
-
-                            <p>Здесь может быть ваше VIP объявление.</p>
-                        </div>
                     </li>
 
                 </ul>
+                -->
             </div>
 
         </div>
@@ -300,10 +357,10 @@
     }
     ;
 
-    function mymessage() {
+    function mymessage(page) {
 
         $('#body').empty();
-        $('#body').load('/news//MyMessage');
+        $('#body').load('/news//MyMessage?page='+page);
         return false;
     }
 
@@ -381,6 +438,15 @@
         $('#first').click();
         $('#first').focus();
 
+        $('#myCarousel').carousel({
+            interval: 6000
+        })
+
+        /*
+        $.get('/news/Vip.json',function(data){
+            console.log(data);
+        });
+        */
         on_load();
         $('#lightSlider').lightSlider({
             item: 4,
@@ -392,7 +458,7 @@
             controls: true,
             pager: false,
 
-            adaptiveHeight: true,
+            adaptiveHeight:false,
             onSliderLoad: function (el) {
                 el.css('visibility', ' visible');
             },

@@ -19,14 +19,16 @@
         
         -protected/Layouts/main/css/styles.css - общие стили
         
-        -protected/Layouts/slider/css/lightslider.min.css - стили слайдера
+        -protected/Layouts/slider/css/myslide.css - стили слайдера
         
         -protected/Layouts/TreeMenu/css/tree.css - стили меню рубрик
+        
+        
+        
+        
 
 1. Добиться нормального отображения на всех мобильных устройствах.
 
-2. на главной странице доработать существующий слайдер( не могу добиться нормального текста под фото) или вставить другой.
-
-3. нормальное отображение в internet explorer.
+2. нормальное отображение в internet explorer.
 
 4. protected/Templates/Index/Default.html#L8  - поправить affix.

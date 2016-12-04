@@ -67,14 +67,16 @@ class Pager
                 }
                 ?>
                 <li<?php echo($this->options->active == $page ? ' class="active"' : ''); ?>>
-                    <a href="<?php printf($this->options->url, $page); ?>"><?php echo $page; ?></a>
+                    <a href="#"
+                       onclick="return mymessage(<?php echo $page?>)"><?php echo $page?></a>
                 </li>
                 <?php
                 $prev = $page;
             }
             ?>
-            <li<?php echo($this->options->active == $pagesCount ? ' class="disabled"' : ''); ?>><a
-                    href="<?php printf($this->options->url, $page); ?>">&raquo;</a>
+            <li<?php echo($this->options->active == $pagesCount ? ' class="disabled"' : ''); ?>>
+                <a href="#"
+                   onclick="return mymessage(<?php echo $page?>)">&raquo;</a>
             </li>
         </ul>
     <?php

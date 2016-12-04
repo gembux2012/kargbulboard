@@ -33,7 +33,7 @@
     <ul class="breadcrumb" style="background-color: transparent; margin-bottom: 5px">
 
         <li><a href="#" onclick="return content(1,1)">На главную</a></li>
-        <li><a href="#" onclick="return mymessage()">Мои объявления</a></li>
+        <li><a href="#" onclick="return mymessage(1)">Мои объявления</a></li>
 
     </ul>
     <!-- left side column -->
@@ -131,6 +131,7 @@
                             </div>
 
                             {% if item.Pk != '' %}
+
                             <div class="checkbox">
                                 <label>
                                     {% if item.vip==1 %}
@@ -138,15 +139,22 @@
                                     {% else %}
                                     <input type="checkbox"  id="vip" name="vip" value="1"> присвоить VIP статус
                                     {% endif %}
-                                    <span><a href="#">Показать</a> </span>
+
                                 </label>
                             </div>
+                            <div class="input-group" id="title">
+                                    <span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-exclamation-sign"></i> </span>
+                                <input  type="text"  name="title" class="form-control"
+                                        placeholder="Загловок VIP объявления (кратко 3-4 слова)"   value="{{item.title}}">
+                            </div><br>
+
                             {% endif %}
-                            {% if  not item.published  %}
+
                             <button type="submit" class="btn btn-defult" style="color: white;background-color: #77CCDD">
                                 Сохранить
                             </button>
-                            {% endif %}
+
                             {% if item.Pk != '' %}
                             <a href= "/news/One?id={{item.Pk}}" id="view"  class="btn btn-primary" >Просмотреть</a>
                             {% if  not item.published  %}
@@ -217,7 +225,7 @@
             $('#del').click(function () {
                 if (confirm('Вы уверены что хотите удалить объявление?')) {
                     $.get($(this).attr('href'));
-                    mymessage();
+                    mymessage(1);
 
                 }
                 return false;
@@ -285,10 +293,12 @@
 
 
             function published() {
-                call();
-                $.get('/News/Published.json?id={{item.Pk}}');
-                return false;
-            }
+                $('#publishModal').modal('hide');
+                $('#publishModal').on('hidden.bs.modal', function() {
+                    call();
+                    $.get('/News/Published.json?id={{item.Pk}}');
+                    return false;
+            })}
 
 
             function call() {
@@ -305,14 +315,17 @@
                         url: '/news//Save.json',
                         data: msg,
                         success: function (data) {
-
-                            if (data.error) {
-
-                                $('#textmessage').css('color', 'red');
-                            } else {
-                                addmessage(data.id);
-
+                            console.log(data);
+                            switch (data.error){
+                                case '1' :  $('#textmessage').css('color', 'red');
+                                    break;
+                                case '2' :  $('#title').addClass('has-error');
+                                    break;
+                                default : addmessage(data.id);
                             }
+
+
+
 
                         }
 

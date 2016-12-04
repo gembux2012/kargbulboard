@@ -93,10 +93,23 @@ class Index
     public function  actionPrise($id)
     {
         $item = Story::findByPK($id);
-        $this->data->prise=$this->app->config->prise;
-        $this->data->words=Story::wordcount($item->text);
-        $this->data->fotos=$item->image->count();
-        $item->vip ? $this->data->vip=$this->app->config->prise->vip : $this->data->vip=0;
+        $this->data->prise = $this->app->config->prise;
+        $this->data->words = Story::wordcount($item->text);
+        $this->data->fotos = $item->image->count();
+        $item->vip ? $this->data->vip = $this->app->config->prise->vip : $this->data->vip = 0;
+
+    }
+
+    public function  actionVip()
+    {
+     $items=Story::findALLByQuery('SELECT * FROM news_stories WHERE vip=1  ORDER BY published');
+        $vip=[];
+        foreach($items as $key=>$item){
+            $vip[$key]['image'][]=$item->image[0]->image;
+            $vip[$key]['text'][]=$item->text;
+        }
+        $this->data->vip=$vip;
+
 
     }
 
