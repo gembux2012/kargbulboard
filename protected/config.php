@@ -7,7 +7,7 @@ return [
             'host' => 'localhost',
             'dbname' => 'standard',
             'user' => 'root',
-            'password' => '',
+            'password' => 'Password00',
         ]
     ],
     'auth' => [
@@ -18,7 +18,7 @@ return [
         'host' => 'smtp.gmail.com',
         'auth' => [
             'username' => '2@gmail.com',
-            'password' => ''
+            'password' => 'Password00'
         ],
         'sender' => 'Sender',
         'port' => '587',

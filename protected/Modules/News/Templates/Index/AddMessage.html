@@ -162,7 +162,7 @@
                             {% endif %}
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
                             {% endif %}
-                            <button type="button" class="btn btn-default" onclick="return mymessage()">Выход</button>
+                            <button type="button" class="btn btn-default" onclick="return mymessage(1)">Выход</button>
                         </form>
                     </div>
                     <div id="panel2" class="tab-pane fade" style="height: 451px">
@@ -256,6 +256,7 @@
                     $('#image').load('/news/LoadImage?id={{item.Pk}}');
                    priseall();
 
+
                 },
 
                 extraHTML: function () {
@@ -282,7 +283,7 @@
                     $('#prisephoto').html(data.prise.photo * data.fotos);
                     $('#prise').html(total * data.prise.word);
                     $('#prisevip').html(data.vip);
-                    $('#priseall').html(total * data.prise.word + data.prise.photo * data.fotos + data.vip);
+                    $('#priseall').html(total * data.prise.word + data.prise.photo * data.fotos + data.vip*1);
                 })
 
             }
@@ -322,6 +323,7 @@
                                 case '2' :  $('#title').addClass('has-error');
                                     break;
                                 default : addmessage(data.id);
+                                    slide();
                             }
 
 

@@ -31,7 +31,7 @@
     padding-bottom: 0px;
 }
 
-.thumbnail{
+.row-fluid > div .thumbnail{
     border: 3px solid #ff6163;
 }
 .row-fluid img {

@@ -33,7 +33,10 @@ class Index
         if (empty($item)) {
             throw new E404Exception('Новость не найдена');
         }
+
+        if($item->user->Pk!=$this->app->user->Pk)
         $item->view=$item->view +1;
+
         $item->save();
         $this->data->item=$item;
 
@@ -111,6 +114,30 @@ class Index
         $this->data->vip=$vip;
 
 
+    }
+
+    public function actionSlide()
+    {
+        //$itemsold=new Collection();
+        $itemsold=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
+       // $items=new Collection();
+        $items=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
+       // var_dump($itemsold);
+        $count=$items->count();
+        if($count>3) {
+            $i = 0;
+            foreach ($itemsold as $item) {
+                if ($i != 3 - $count % 3 && $count % 3 != 0) {
+                    $items->append($itemsold[$i]);
+
+                } else {
+                    break;
+                }
+                $i++;
+            }
+        }
+
+       $this->data->vip=$items;
     }
 
 

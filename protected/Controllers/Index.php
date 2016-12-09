@@ -17,7 +17,7 @@ class Index
     {
         if($this->app->user)
         $this->data->name=stristr($this->app->user->email,'@',true);
-        $this->data->vip=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
+
     }
 
     public function actionLogin($login = null)

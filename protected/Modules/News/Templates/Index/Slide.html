@@ -2,57 +2,31 @@
 
     <!-- Carousel items -->
     <div class="carousel-inner">
+        {% for column in vip|batch(3, null) %}
 
-        <div class="item active">
-
-            <div class="row-fluid">
-                {% for item in vip [:3] %}
+                {% if loop.index ==1 %}
+                <div class="item active">
+                    {% else %}
+                    <div class="item ">
+                        {% endif %}
+                        <div class="row-fluid">
+                 {% for item in column  %}
                 <div class="col-md-4" >
-                    {% if item.image[0]%}
-                    <a href="#x" class="thumbnail"><img  src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
+                    {% if item.image[0] %}
+                    <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img  src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
                     {% else %}
-                    <a href="#x" class="thumbnail"><img  src="/protected/Layouts/slider/vip.jpg"/></a>
+                    <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img  src="/protected/Layouts/slider/vip.jpg"/></a>
                     {% endif %}
                     <div class="carousel-caption">
                         <p><b>{{item.title}}</b></p>
                     </div>
                 </div>
-                {% endfor %}
+               {% endfor %}
             </div><!--/row-fluid-->
-
         </div><!--/item-->
 
-        {% if vip.count >3 %}
-        {% for item in vip [4:] %}
-        {% set range=0 %}
-        {% if loop.last %}
-        {% set range=loop.last %}
-        {% if loop.last <3 %}
-        {% set range=3-range %}
-        {% endif %}
-        {% endif %}
-
-        <div class="item">
-            <div class="row-fluid">
-                {% if range >0 %}
-                {% for item in vip [range:3] %}
-                <div class="col-md-4">
-                    {% if item.image[0]%}
-                    <a href="#x" class="thumbnail"><img src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
-                    {% else %}
-                    <img class="img-responsive " src="/protected/Layouts/slider/vip.jpg"/>
-                    {% endif %}
-                    <div class="carousel-caption">
-                        <p><b>{{item.title}}</b></p>
-                    </div>
-                </div>
-                {% endfor %}
-                {% endif %}
-            </div><!--/row-fluid-->
-
-        </div><!--/item-->
         {% endfor %}
-        {% endif %}
+
 
     </div><!--/carousel-inner-->
     {% if vip.count >3 %}
@@ -60,9 +34,22 @@
     <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
     {% endif %}
 </div><!--/myCarousel-->
+    </div>
 
 <script>
     $('#myCarousel').carousel({
-        interval: 3000
+        interval: 6000
     })
+
+
+            $('.one ').click(function () {
+
+                var toLoad = $(this).attr('href');
+                $('#body').empty();
+                $('#body').load(toLoad);
+                return false;
+
+            });
+
 </script>
+
