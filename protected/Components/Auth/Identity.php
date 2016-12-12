@@ -10,6 +10,7 @@ use T4\Core\Session;
 class Identity
     extends \T4\Auth\Identity
 {
+
     const  ERROR_INVALID_e_mail = 105;
     const  ERROR_INVALID_CAPTCHA = 102;
     const ERROR_INVALID_CODE = 103;
@@ -101,12 +102,11 @@ class Identity
             }
         }
 
-        if (!$errors->isEmpty())
-            throw $errors;
+
 
         $user = User::findByEmail($data->email);
         if (!empty($user)) {
-            $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_EMAIL);
+            $errors->add('Такой e-mail уже зарегистрирован', self::ERROR_INVALID_e_mail);
         }
 
         if (!$errors->isEmpty())

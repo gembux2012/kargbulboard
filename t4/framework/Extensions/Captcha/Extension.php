@@ -23,13 +23,13 @@ class Extension
     public function generateImage($config = null)
     {
         $captcha = new \KCAPTCHA();
-        Session::set(self::KEYSTRING_KEY, $captcha->getKeyString());
+        Session::set(self::KEYSTRING_KEY, strtolower($captcha->getKeyString()));
         die;
     }
 
     public function checkKeyString($string)
     {
-        return Session::get(self::KEYSTRING_KEY) == $string;
+        return Session::get(self::KEYSTRING_KEY) == strtolower($string);
     }
 
 }

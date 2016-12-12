@@ -12,22 +12,24 @@
             <div class="modal-body">
                 <p id="messageregister" class="text-center" style="color: #9b0000;"></p>
                 <!-- Форма для регистрации -->
-                <form id="myForm" method="post" role="form" name="myForm">
+                <form id="formregister" method="post" role="form" name="myForm">
                     <!-- Блок для ввода логина -->
                     <div id="email" class="form-group has-feedback">
                         <label for="email" class="control-label">Введите email:</label>
+                        <span class="message" style="color: red"></span></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input type="email" class="form-control"  required="required" name="register[email]" value="">
+                            <input type="email" id="emailinput" class="form-control"  required="required" name="register[email]" value="">
                         </div>
                         <span id="emailfeedback" class="glyphicon form-control-feedback"></span>
                     </div>
 
                     <div id="password" class="form-group has-feedback">
-                        <label for="login" class="control-label">Введите пароль(не менее 6 символов):</label>
+                        <label for="pass" class="control-label">Введите пароль(не менее 6 символов):
+                            <span class="message" style="color: red"></span></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="password" id="pass" class="form-control" required="required" name="register[password]" pattern="&#91;0-9A-Za-z&#93;{6,}" value="">
+                            <input type="password" id="pass" class="form-control" required="required" name="register[password]" pattern="&#91;0-9-A-Za-z&#93;{6,}" value="">
                         </div>
                         <span id="passfeedback" class="glyphicon form-control-feedback"></span>
                     </div>
@@ -37,7 +39,7 @@
 
 
                     <div id="password2" class="form-group has-feedback">
-                        <label for="login" class="control-label">Введите пароль еще раз:</label>
+                        <label for="pass2" class="control-label">Введите пароль еще раз:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input type="password" id="pass2" class="form-control" required="required" name="register[password2]" pattern="&#91;0-9A-Za-z&#93;{6,}" value="">
@@ -54,8 +56,9 @@
                     <!--Блок для ввода кода CAPTCHA-->
                     <div class="form-group has-feedback">
                         <label id="label-captcha" for="captcha" class="control-label">Пожалуйста, введите указанный на изображении код:</label>
-                        <input id="text-captcha" name="captcha" type="text" class="form-control" required="required" value="">
+                        <input id="text-captcha" name="register[captcha]" type="text" class="form-control" required="required" value="">
                         <span class="glyphicon form-control-feedback"></span>
+                        <span class="message" style="color: red"></span></label>
                     </div>
                 </form>
             </div>
@@ -70,18 +73,25 @@
 
 <script>
 
-    function  trigger(id,err){
+    function  trigger(id,err,warning){
+       // alert('err',err)
         var formGroup =id.parents('.form-group');
         var glyphicon = formGroup.find('.form-control-feedback');
-        if(!err){
+        var message=formGroup.find('.message');
+        if(err){
             formGroup.addClass('has-success').removeClass('has-error');
             glyphicon.addClass('glyphicon-ok').removeClass('glyphicon-remove');
+            message.html('');
+
         } else {
             formGroup.addClass('has-error').removeClass('has-success');
             glyphicon.addClass('glyphicon-remove').removeClass('glyphicon-ok');
+            message.html(warning);
+
 
         }
     }
+
 
     function validate() {
 
@@ -89,94 +99,70 @@
         var formValid = true;
         //перебирает все элементы управления input, кроме CAPTCHA
         $('input').each(function () {
-            //если текущий элемент CAPTCHA, то пропустить его
-            if ($(this).attr('id') == 'text-captcha') {
-                return true;
-            }
-            //найти предков, которые имеют класс .form-group, для установления success/error
-            var formGroup = $(this).parents('.form-group');
-            //найти glyphicon, который предназначен для показа иконки успеха или ошибки
-            var glyphicon = formGroup.find('.form-control-feedback');
-            //для валидации данных используем HTML5 функцию checkValidity
+
             if (this.checkValidity()) {
-                //добавить к formGroup класс .has-success, удалить has-error
-                formGroup.addClass('has-success').removeClass('has-error');
-                //добавить к glyphicon класс glyphicon-ok, удалить glyphicon-remove
-                glyphicon.addClass('glyphicon-ok').removeClass('glyphicon-remove');
+                trigger($(this),true);
+                formValid=true;
             } else {
-                //добавить к formGroup класс .has-error, удалить .has-success
-                formGroup.addClass('has-error').removeClass('has-success');
-                //добавить к glyphicon класс glyphicon-remove, удалить glyphicon-ok
-                glyphicon.addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                //отметить форму как не валидную
-                formValid = false;
+                trigger($(this),false);
+                formValid=false;
             }
         });
-        if(formValid) {
+
+        if(document.getElementById('pass').checkValidity()|| document.getElementById('pass2').checkValidity() ) {
             if ($('#pass').val() != $('#pass2').val()) {
-                $('#password').addClass('has-error').removeClass('has-success');
-                $('#passfeedback').addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                $('#password2').addClass('has-error').removeClass('has-success');
-                $('#pass2feedback').addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                $('#messageregister').html('Пароли не совпадают!')
+
+                trigger($('#pass'), false, 'Пароли не совпадают!');
+                trigger($('#pass2'), false);
                 formValid = false;
             } else {
-                $('#password').addClass('has-success').removeClass('has-error');
-                $('#passfeedback').addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                $('#password2').addClass('has-success').removeClass('has-error');
-                $('#pass2feedback').addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                $('#messageregister').html('')
+                trigger($('#pass'), true);
+                trigger($('#pass2'), true);
                 formValid = true;
             }
+        } else {
+            trigger($('#pass'), false,'');
+            trigger($('#pass2'), false);
+            formValid = false;
         }
-        //проверяем элемент input, в который пользователь вводит код CAPTCHA
-        //получаем значение элемента input, содержащего код CAPTCHA
-        var captcha = $("#text-captcha").val();
-        //если код CAPTCHA пустой, то сразу сообщаем, что он не правильный
-        if (captcha == '') {
-            inputCaptcha = $("#text-captcha");
-            formGroupCaptcha = inputCaptcha.parents('.form-group');
-            glyphiconCaptcha = formGroupCaptcha.find('.form-control-feedback');
-            formGroupCaptcha.addClass('has-error').removeClass('has-success');
-            glyphiconCaptcha.addClass('glyphicon-remove').removeClass('glyphicon-ok');
-        }
-        //иначе запрашиваем результат у сервера через ajax
-        else {
-            var dataString = 'captcha=' + captcha;
+
+
+
+
+        if (formValid) {
+
+            var data = $('#formregister').serializeArray();
             $.ajax({
                 type: "POST",
-                url: "verify.php",
-                data: dataString,
-                success: function (result) {
-                    inputCaptcha = $("#text-captcha");
-                    formGroupCaptcha = inputCaptcha.parents('.form-group');
-                    glyphiconCaptcha = formGroupCaptcha.find('.form-control-feedback');
-                    //если результат, который вернул сервер, равен true,
-                    //то отмечаем, что код валидный и изменяет цвет элементов на зелёный
-                    if (result === "true") {
-                        formGroupCaptcha.addClass('has-success').removeClass('has-error');
-                        glyphiconCaptcha.addClass('glyphicon-ok').removeClass('glyphicon-remove');
-                        //отметить, что код captcha введён правильно
-                        if (formValid) {
-                            //скрыть модальное окно
-                            $('#myModal').modal('hide');
-                            //отобразить сообщение об успехе
-                            $('#success-alert').removeClass('hidden');
-                            $('#success-alert').removeClass('hidden');
+                url: "/user/Register.json",
+                data: data,
+                    success: function (data) {
+
+                        if(data.error) {
+                            trigger($('#emailinput'),true,'');
+                            trigger($('#text-captcha'),true,'');
+
+                            data.error.forEach(function (item) {
+                                switch (item) {
+                                    case 105 :{trigger($('#emailinput'),false,'Пользователь с таким e_mail уже зарегестрирован!');break}
+                                    case 102 :{trigger($('#text-captcha'),false,'Неправильно введены символы с картинки!');break}
+                                }
+                            })
+                        } else {
+                            $('#register').hide();
+                            location.reload(true)
                         }
-                    }
-                    //иначе отмечает, что код не валидный и изменяет цвет элементов на красный
-                    else {
-                        formGroupCaptcha.addClass('has-error').removeClass('has-success');
-                        glyphiconCaptcha.addClass('glyphicon-remove').removeClass('glyphicon-ok');
-                    }
-                }
+
+                },
+                dataType: 'json',
+                async: false,
             });
         }
     };
+
     $(function() {
 //выводит новый код CAPTCHA при открытии модального окна  
-        $('#myModal').on('show.bs.modal', function () {
+        $('#register').on('show.bs.modal', function () {
             $('#img-captcha').attr('src', 'captcha.php?id=' + Math.random() + '');
         });
 //выводит новый код CAPTCHA при нажатии на кнопку Обновить

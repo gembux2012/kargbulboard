@@ -71,12 +71,17 @@ class User
                 $identity = new Identity();
                 $user = $identity->register($register);
                 $identity->login($user);
-                $this->app->flash->message = 'Добро пожаловать, ' . $user->email . '!';
-                $this->redirect('/');
+
             } catch (\App\Components\Auth\MultiException $e) {
-                $this->data->errors = $e;
+                foreach ($e as $message){
+
+                    $error[]=$message->getCode();
+
+                }
+                $this->data->error=$error;
+
             }
-            $this->data->email = $register->email;
+
         }
     }
 
