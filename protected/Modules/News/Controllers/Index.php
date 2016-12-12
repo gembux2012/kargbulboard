@@ -34,8 +34,13 @@ class Index
             throw new E404Exception('Новость не найдена');
         }
 
-        if($item->user->Pk!=$this->app->user->Pk)
-        $item->view=$item->view +1;
+        if($this->app->user) {
+          if($item->user->Pk != $this->app->user->Pk){
+              $item->view = $item->view + 1;
+          }
+        } else {
+            $item->view = $item->view + 1;
+        }
 
         $item->save();
         $this->data->item=$item;

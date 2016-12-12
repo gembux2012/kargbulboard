@@ -10,8 +10,13 @@ class Extension
 
     const KEYSTRING_KEY = 'captcha_keystring';
 
+
+
     public function init()
     {
+        $assets = $this->app->assets;
+        $assets->publish($this->assetsPath . '/src/fonts');
+
         require_once __DIR__ . DS . 'src' . DS . 'kcaptcha.php';
     }
 
