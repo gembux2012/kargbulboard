@@ -13,7 +13,7 @@
         <php returnProperty="build.time" function="date">
             <param value="Y-m-d-H-i-s" />
         </php>
-        <resolvepath propertyName="current.dir" file="/var/www/site/data/www/kargdush.ru/${build.branch}/${build.time}" />
+        <resolvepath propertyName="current.dir" file="/home/kargadmin/www/${build.branch}/${build.time}" />
         <echo msg="Current build dir is: ${current.dir}" />
         <resolvepath propertyName="t4.dir" file="${project.dir}/t4" />
         <echo msg="T4 dir is: ${t4.dir}" />
@@ -40,7 +40,7 @@
     <!-- ============================================  -->
     <!-- Target: composer                              -->
     <!-- ============================================  -->
-   <!-- <target name="composer">
+    <target name="composer">
         <echo msg="Install composer depedencies for T4 framework..." />
         <exec command="composer install" dir="${t4.dir}" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
         <if>
@@ -50,7 +50,7 @@
             </then>
         </if>
         <echo msg="${exec.output}" />
-    </target>-->
+    </target>
 
     <!-- ============================================  -->
     <!-- Target: migrate                               -->
@@ -90,9 +90,9 @@
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
     <target name="symlink">
-        <symlink target="${current.dir}" link="/var/www/site/data/www/kargdush.ru/${build.branch}/current" overwrite="true" />
+        <symlink target="${current.dir}" link="home/kargadmin/www/${build.branch}/current" overwrite="true" />
     </target>
 
-    <target name="build" depends="vars, copy, migrate, symlink" />
+    <target name="build" depends="vars, copy,composer, migrate, symlink" />
 
 </project>

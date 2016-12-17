@@ -17,9 +17,11 @@ class m_1423048663_createStories
             $this->createTable('news_stories', [
                 'title' => ['type' => 'string', 'length' => 1024],
                 'published' => ['type' => 'datetime'],
+                'create' => ['type' => 'datetime'],
                 'text' => ['type' => 'text'],
                 'nopaid' => ['type' => 'integer', 'default' => 0],
                 'vip' => ['type' => 'integer', 'default' => 0],
+                'price' => ['type' => 'integer', 'default' => 0],
                 'mfone' => ['type'=>'string'],
                 'fone' => ['type'=>'string'],
                 'view' => ['type'=>'integer', 'default' =>0],

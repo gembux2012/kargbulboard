@@ -18,8 +18,10 @@ class Story
         'columns' => [
             'title' => ['type' => 'string'],
             'published' => ['type' => 'datetime'],
+            'create' => ['type' => 'datetime'],
             'text' => ['type' => 'text'],
             'nopaid' => ['type' => 'integer'],
+            'price' => ['type' => 'integer'],
             'mfone' => ['type' => 'string'],
             'fone' => ['type' => 'string'],
             'vip' => ['type' => 'int'],
