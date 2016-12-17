@@ -40,6 +40,7 @@
     <!-- ============================================  -->
     <!-- Target: composer                              -->
     <!-- ============================================  -->
+   <!--
     <target name="composer">
         <echo msg="Install composer depedencies for T4 framework..." />
         <exec command="composer install" dir="${t4.dir}" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
@@ -51,7 +52,7 @@
         </if>
         <echo msg="${exec.output}" />
     </target>
-
+    -->
     <!-- ============================================  -->
     <!-- Target: migrate                               -->
     <!-- ============================================  -->
@@ -93,6 +94,6 @@
         <symlink target="${current.dir}" link="home/kargadmin/www/${build.branch}/current" overwrite="true" />
     </target>
 
-    <target name="build" depends="composer, vars, copy, migrate, symlink" />
+    <target name="build" depends=" vars, copy, migrate, symlink" />
 
 </project>
