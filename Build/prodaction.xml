@@ -93,6 +93,6 @@
         <symlink target="${current.dir}" link="home/kargadmin/www/${build.branch}/current" overwrite="true" />
     </target>
 
-    <target name="build" depends="vars, copy,composer, migrate, symlink" />
+    <target name="build" depends="composer, vars, copy, migrate, symlink" />
 
 </project>
