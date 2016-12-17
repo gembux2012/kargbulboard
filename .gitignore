@@ -1,4 +1,4 @@
-/protected/Cache
+/protected/Cache/Twig
 /.idea
 /public/Assets
 /t4/vendor
