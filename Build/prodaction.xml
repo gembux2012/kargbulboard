@@ -91,7 +91,7 @@
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
     <target name="symlink">
-        <symlink target="${current.dir}" link="home/kargadmin/www/${build.branch}/current" overwrite="true" />
+        <symlink target="${current.dir}" link="home/kargadmin/www/${buildbranch}/current" overwrite="true" />
     </target>
 
     <target name="build" depends=" vars, copy, migrate, symlink" />
