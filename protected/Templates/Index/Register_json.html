@@ -163,7 +163,7 @@
     $(function() {
 //выводит новый код CAPTCHA при открытии модального окна  
         $('#register').on('show.bs.modal', function () {
-            $('#img-captcha').attr('src', 'captcha.php?id=' + Math.random() + '');
+            $('#img-captcha').attr('src', '/captcha.php?id=' + Math.random() + '');
         });
 //выводит новый код CAPTCHA при нажатии на кнопку Обновить
         $("#reload-captcha").click(function () {
