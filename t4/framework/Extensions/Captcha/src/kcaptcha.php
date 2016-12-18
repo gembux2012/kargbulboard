@@ -6,6 +6,7 @@ class KCAPTCHA{
 
 	// generates keystring and image
 	function KCAPTCHA()
+		
 	{
 
 		//присваивает PHP переменной captchastring строку символов
