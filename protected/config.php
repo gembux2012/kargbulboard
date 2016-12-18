@@ -6,7 +6,7 @@ return [
             'driver' => 'mysql',
             'host' => 'localhost',
             'dbname' => 'kargvito',
-            'user' => 'kargadmin',
+            'user' => 'kargvito',
             'password' => 'Supervisor123',
         ]
     ],
