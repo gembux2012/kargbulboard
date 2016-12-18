@@ -8,7 +8,6 @@ return [
             'dbname' => 'kargvito',
             'user' => 'kargvito',
             'password' => 'Supervisor123',
-
         ]
     ],
     'auth' => [
