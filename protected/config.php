@@ -5,9 +5,9 @@ return [
         'default' => [
             'driver' => 'mysql',
             'host' => 'localhost',
-            'dbname' => 'kargbulboard',
-            'user' => 'root',
-            'password' => '',
+            'dbname' => 'kargvito',
+            'user' => 'kargadmin',
+            'password' => 'Supervisor123',
         ]
     ],
     'auth' => [

@@ -7,13 +7,13 @@
     <!-- ============================================  -->
     <target name="vars">
         <echo msg="Setting local variables..." />
-        <echo msg="Build branch is ${build.branch}" />
+        <echo msg="Build branch is ${buildbranch}" />
         <resolvepath propertyName="project.dir" file="${project.basedir}" />
         <echo msg="Project source dir is: ${project.dir}" />
         <php returnProperty="build.time" function="date">
             <param value="Y-m-d-H-i-s" />
         </php>
-        <resolvepath propertyName="current.dir" file="/home/kargadmin/www/${build.branch}/${build.time}" />
+        <resolvepath propertyName="current.dir" file="/home/kargadmin/www/${buildbranch}/${build.time}" />
         <echo msg="Current build dir is: ${current.dir}" />
         <resolvepath propertyName="t4.dir" file="${project.dir}/t4" />
         <echo msg="T4 dir is: ${t4.dir}" />
