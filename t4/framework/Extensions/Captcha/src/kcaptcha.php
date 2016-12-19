@@ -4,6 +4,8 @@
 
 class KCAPTCHA{
 
+	public $captchastring;
+
 	// generates keystring and image
 	function __constuct()
 
