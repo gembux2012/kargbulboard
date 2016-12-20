@@ -7,7 +7,7 @@ class Helpers
 
     static public function hashPassword($password)
     {
-        $salt = '$2a$8$' . substr(str_replace('+', '.', base64_encode(pack('N4', mt_rand(), mt_rand(), mt_rand(), mt_rand()))), 0, 22) . '$';
+        $salt = '$2a$07$' . substr(str_replace('+', '.', base64_encode(pack('N4', mt_rand(), mt_rand(), mt_rand(), mt_rand()))), 0, 22) . '$';
         return crypt($password, $salt);
     }
 
