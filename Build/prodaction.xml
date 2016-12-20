@@ -68,6 +68,8 @@
             </then>
         </if>
         <echo msg="${exec.output}" />
+        <echo msg="Migrations import..." />
+        <exec command="php protected/t4.php /migrate/import" dir="${current.dir}" checkreturn="true" passthru="true" />
         <echo msg="Migrations up..." />
         <exec command="php t4.php /migrate/up" dir="${current.dir}/t4/framework" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
         <if>
