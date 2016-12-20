@@ -11,17 +11,19 @@ class m_1423048590_createTopics
 
     public function up()
     {
-        $this->createTable('news_topics', [
-            'title' => ['type'=>'string']
-        ], [
+        if (!$this->existsTable('news_topic')) {
+            $this->createTable('news_topics', [
+                'title' => ['type' => 'string']
+            ], [
 
-        ], [
-            'tree'
-        ]);
+            ], [
+                'tree'
+            ]);
 
-        $topic=new Topic();
-        $topic->title='Все объявления';
-        $topic->save();
+            $topic = new Topic();
+            $topic->title = 'Все объявления';
+            $topic->save();
+        }
     }
 
     public function down()
