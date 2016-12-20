@@ -34,18 +34,18 @@ class m_1423048663_createStories
                 'topic' => ['columns' => ['__topic_id']]
             ]);
         }
+        if(!$this->existsTable('news_stories')) {
+            $role = new Role();
+            $role->name = 'admin';
+            $role->title = 'Администратор';
+            $role->save();
 
-        $role = new Role();
-        $role->name = 'admin';
-        $role->title = 'Администратор';
-        $role->save();
-
-        $user = new User();
-        $user->email = 'admin@t4.org';
-        $user->password = \T4\Crypt\Helpers::hashPassword('123456');
-        $user->roles->append($role);
-        $user->save();
-
+            $user = new User();
+            $user->email = 'admin@t4.org';
+            $user->password = \T4\Crypt\Helpers::hashPassword('123456');
+            $user->roles->append($role);
+            $user->save();
+        }
 
 
     }
