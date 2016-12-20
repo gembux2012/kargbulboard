@@ -10,18 +10,20 @@ class m_1421913302_createMaps
 
     public function up()
     {
-        $this->createTable('maps', [
-            'title' => ['type' => 'string'],
-            'latitude' => ['type' => 'float', 'dimension' => '11,8'],
-            'longitude' => ['type' => 'float', 'dimension' => '11,8'],
-            'width' => ['type' => 'integer'],
-            'height' => ['type' => 'integer'],
-            'zoom' => ['type' => 'integer'],
-            'layer' => ['type' => 'string', 'default' => 'map'],
-            'ptLatitude' => ['type' => 'float', 'dimension' => '11,8'],
-            'ptLongitude' => ['type' => 'float', 'dimension' => '11,8'],
-            'ptStyle' => ['type' => 'string', 'default' => 'flag'],
-        ]);
+        if(!$this->existsTable('maps')) {
+            $this->createTable('maps', [
+                'title' => ['type' => 'string'],
+                'latitude' => ['type' => 'float', 'dimension' => '11,8'],
+                'longitude' => ['type' => 'float', 'dimension' => '11,8'],
+                'width' => ['type' => 'integer'],
+                'height' => ['type' => 'integer'],
+                'zoom' => ['type' => 'integer'],
+                'layer' => ['type' => 'string', 'default' => 'map'],
+                'ptLatitude' => ['type' => 'float', 'dimension' => '11,8'],
+                'ptLongitude' => ['type' => 'float', 'dimension' => '11,8'],
+                'ptStyle' => ['type' => 'string', 'default' => 'flag'],
+            ]);
+        }
 
         $this->insert('maps', [
             'title' => 'Карта Москвы',
