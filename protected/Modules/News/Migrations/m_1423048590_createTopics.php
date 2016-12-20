@@ -11,7 +11,7 @@ class m_1423048590_createTopics
 
     public function up()
     {
-        if (!$this->existsTable('news_topic')) {
+        if (!$this->existsTable('news_topics')) {
             $this->createTable('news_topics', [
                 'title' => ['type' => 'string']
             ], [
