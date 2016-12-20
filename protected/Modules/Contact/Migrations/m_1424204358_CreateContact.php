@@ -10,19 +10,21 @@ class m_1424204358_CreateContact
 
     public function up()
     {
-        $this->createTable('contact', [
-            'q_datetime' => ['type' => 'datetime'],
-            'email' => ['type' => 'string'],
-            'name' => ['type' => 'string'],
-            'question' => ['type' => 'text'],
-            'a_datetime' => ['type' => 'datetime'],
-            'answer' => ['type' => 'text'],
-            '__user_id' => ['type' => 'link'],
-        ],
-            [
-                'user' => ['columns' => ['__user_id']],
-            ]
-        );
+        if(!$this->existsTable('contact')) {
+            $this->createTable('contact', [
+                'q_datetime' => ['type' => 'datetime'],
+                'email' => ['type' => 'string'],
+                'name' => ['type' => 'string'],
+                'question' => ['type' => 'text'],
+                'a_datetime' => ['type' => 'datetime'],
+                'answer' => ['type' => 'text'],
+                '__user_id' => ['type' => 'link'],
+            ],
+                [
+                    'user' => ['columns' => ['__user_id']],
+                ]
+            );
+        }
     }
 
     public function down()
