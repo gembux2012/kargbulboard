@@ -59,9 +59,30 @@
     <!-- ============================================  -->
     <target name="migrate">
         <echo msg="Migrations import..." />
-        <exec command="php t4/framework/t4.php /migrate/import" dir="${current.dir}" checkreturn="true" passthru="true" />
+        <exec command="
+        " dir="${current.dir}/t4/framework" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
+        <if>
+            <not><equals arg1="0" arg2="${exec.return}" /></not>
+            <then>
+                <fail message="${exec.output}" />
+            </then>
+        </if>
+        <echo msg="${exec.output}" />
+        <echo msg="Migrations import..." />
+        <exec command="php t4.php /migrate/import --module=all" dir="${current.dir}/t4/framework" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
         <echo msg="Migrations up..." />
-        <exec command="php t4/framework/t4.php /migrate/up" dir="${current.dir}" checkreturn="true" passthru="true" />
+        <exec command="php t4.php /migrate/up" dir="${current.dir}/t4/framework" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
+        <if>
+            <not><equals arg1="0" arg2="${exec.return}" /></not>
+            <then>
+                <fail message="${exec.output}" />
+                <echo message="${exec.output}" />
+            </then>
+        </if>
+        <echo msg="${exec.output}" />
+        <echo message="${exec.output}" />
+        <echo message="${exec.return}" />
+
     </target>
 
 
