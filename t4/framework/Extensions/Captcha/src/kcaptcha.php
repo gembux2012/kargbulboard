@@ -2,12 +2,12 @@
 
 
 
-class KCAPTCHA{
+class kcaptcha{
 
 	public $captchastring;
 
 	// generates keystring and image
-	function __constuct()
+	 function __construct()
 
 	{
 
@@ -37,7 +37,7 @@ class KCAPTCHA{
 		imagepng($image);
 	}
 	// returns keystring
-	function getKeyString(){
+	public function getKeyString(){
 		return $this->captchastring;
 	}
 }

@@ -22,7 +22,9 @@ class Extension
 
     public function generateImage($config = null)
     {
-        $captcha = new \KCAPTCHA();
+        $captcha = new \kcaptcha();
+
+
         Session::set(self::KEYSTRING_KEY, strtolower($captcha->getKeyString()));
         die;
     }
