@@ -290,17 +290,18 @@ class Index
             {
                 $fileName = $_FILES["myfile"]["name"];
                 if(!file_exists($realUploadPath. $fileName)) {
-                move_uploaded_file($_FILES["myfile"]["tmp_name"], $realUploadPath . $fileName);
-                $ret[] = $fileName;
+                    if (move_uploaded_file($_FILES["myfile"]["tmp_name"], $realUploadPath . $fileName)) {
+                        $ret[] = $fileName;
+                        $item = new Image();
+                        $item->fill($this->app->request->post);
+                        $item->image = $path . $fileName;
+                        $item->save();
+                      //  $this->data->fotos = $item->count();
+                       // $this->data->words = Story::wordcount($item->story->text);
 
-                    $item = new Image();
-                    $item->fill($this->app->request->post);
-                    $item->image = $path . $fileName;
-                    //$item->story=$this->app->request->post->story;
-                    $item->save();
-                    $this->data->fotos=$item->count();
-                    $this->data->words=Story::wordcount($item->story->text);
-
+                    } else{
+                        $this->data->err="Не удалось сохранить файл";
+                    }
                 }
 
             } else  //Multiple files, file[]

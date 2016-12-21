@@ -252,6 +252,9 @@
 
                 onSuccess: function (files, data, xhr, pd) {
                     console.log(data);
+                    if(data.err){
+                        $('.ajax-file-upload-statusbar').html(data.err);
+                    }
                     $('.ajax-file-upload-statusbar').hide();
                     $('#image').load('/news/LoadImage?id={{item.Pk}}');
                    priseall();
