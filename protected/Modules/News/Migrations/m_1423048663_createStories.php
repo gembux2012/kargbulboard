@@ -22,9 +22,9 @@ class m_1423048663_createStories
                 'nopaid' => ['type' => 'integer', 'default' => 0],
                 'vip' => ['type' => 'integer', 'default' => 0],
                 'price' => ['type' => 'integer', 'default' => 0],
-                'mfone' => ['type'=>'string'],
-                'fone' => ['type'=>'string'],
-                'view' => ['type'=>'integer', 'default' =>0],
+                'mfone' => ['type' => 'string'],
+                'fone' => ['type' => 'string'],
+                'view' => ['type' => 'integer', 'default' => 0],
                 '__topic_id' => ['type' => 'link'],
                 '__user_id' => ['type' => 'link'],
                 '__photo_id' => ['type' => 'link'],
@@ -33,8 +33,8 @@ class m_1423048663_createStories
             ], [
                 'topic' => ['columns' => ['__topic_id']]
             ]);
-        }
-        if(!$this->existsTable('news_stories')) {
+
+
             $role = new Role();
             $role->name = 'admin';
             $role->title = 'Администратор';
@@ -45,8 +45,8 @@ class m_1423048663_createStories
             $user->password = \T4\Crypt\Helpers::hashPassword('123456');
             $user->roles->append($role);
             $user->save();
-        }
 
+        }
 
     }
 
