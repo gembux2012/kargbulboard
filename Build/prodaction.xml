@@ -28,6 +28,7 @@
 
     <target name="copy">
         <if>
+            
             <available file="/home/kargadmin/www/${buildbranch}/current" type="dir" />
             <then>
                 <echo>Remove old build directory</echo>
