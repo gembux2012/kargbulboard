@@ -27,6 +27,13 @@
     <!-- ============================================  -->
 
     <target name="copy">
+        <if>
+            <available file="/home/kargadmin/www/${buildbranch}/current" type="dir" />
+            <then>
+                <echo>Remove old build directory</echo>
+                <symlink target="/home/kargadmin/www/${buildbranch}/current" link="/home/kargadmin/www/${buildbranch}/before" overwrite="true" />
+            </then>
+        </if>
         <mkdir dir="${current.dir}" />
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
