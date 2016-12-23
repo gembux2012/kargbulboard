@@ -29,6 +29,8 @@
 
     <target name="copy">
         <mkdir dir="${current.dir}" />
+        <mkdir dir="${home.dir}/site " />
+
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
             <fileset dir="${project.dir}" defaultexcludes="true">
@@ -74,7 +76,7 @@
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
     <target name="symlink">
-        <symlink target="${home.dir}/images" link="${current.dir}/public/site" overwrite="true" />
+        <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
         <symlink target="${current.dir}" link="/home/kargadmin/www/${buildbranch}/current" overwrite="true" />
     </target>
 
