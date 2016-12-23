@@ -13,7 +13,8 @@
         <php returnProperty="build.time" function="date">
             <param value="Y-m-d-H-i-s" />
         </php>
-        <resolvepath propertyName="current.dir" file="/home/kargadmin/www/${buildbranch}/${build.time}" />
+        <resolvepath propertyName="home.dir" file="/home/kargadmin/www" />
+        <resolvepath propertyName="current.dir" file="${home.dir}/${buildbranch}/${build.time}" />
         <echo msg="Current build dir is: ${current.dir}" />
         <resolvepath propertyName="t4.dir" file="${project.dir}/t4" />
         <echo msg="T4 dir is: ${t4.dir}" />
@@ -27,14 +28,6 @@
     <!-- ============================================  -->
 
     <target name="copy">
-        <if>
-
-            <available file="/home/kargadmin/www/${buildbranch}/current" type="symlink" />
-            <then>
-                <echo>Remove old build directory</echo>
-                <symlink target="/home/kargadmin/www/${buildbranch}/current" link="/home/kargadmin/www/${buildbranch}/before" overwrite="true" />
-            </then>
-        </if>
         <mkdir dir="${current.dir}" />
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
@@ -49,19 +42,19 @@
     <!-- ============================================  -->
     <!-- Target: composer                              -->
     <!-- ============================================  -->
-   <!--
-    <target name="composer">
-        <echo msg="Install composer depedencies for T4 framework..." />
-        <exec command="composer install" dir="${t4.dir}" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
-        <if>
-            <not><equals arg1="0" arg2="${exec.return}" /></not>
-            <then>
-                <fail message="${exec.output}" />
-            </then>
-        </if>
-        <echo msg="${exec.output}" />
-    </target>
-    -->
+    <!--
+     <target name="composer">
+         <echo msg="Install composer depedencies for T4 framework..." />
+         <exec command="composer install" dir="${t4.dir}" checkreturn="true" returnProperty="exec.return" outputProperty="exec.output" />
+         <if>
+             <not><equals arg1="0" arg2="${exec.return}" /></not>
+             <then>
+                 <fail message="${exec.output}" />
+             </then>
+         </if>
+         <echo msg="${exec.output}" />
+     </target>
+     -->
     <!-- ============================================  -->
     <!-- Target: migrate                               -->
     <!-- ============================================  -->
@@ -81,6 +74,7 @@
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
     <target name="symlink">
+        <symlink target="${home.dir}/images" link="${current.dir}/public/site" overwrite="true" />
         <symlink target="${current.dir}" link="/home/kargadmin/www/${buildbranch}/current" overwrite="true" />
     </target>
 
