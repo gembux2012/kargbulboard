@@ -29,7 +29,7 @@
 
     <target name="copy">
         <mkdir dir="${current.dir}" />
-        <mkdir dir="${home.dir}/site " />
+        <mkdir dir="${home.dir}/site " mode="0777" />
 
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
