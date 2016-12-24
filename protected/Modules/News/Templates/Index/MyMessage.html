@@ -28,7 +28,9 @@
                                 {% if not item.published %}
                                     Неопубликовано
                                 {% else %}
+                                Опубликовано
                                 {{item.published|date("d.m.Y")}}
+                                нельзя редактировать
                                 {% endif %}
                             </li>
                             <li><i class="glyphicon glyphicon-eye-open"></i><a href="#"> </a></li>
@@ -47,7 +49,7 @@
 
 
                         </ul>
-                        {% if not item.published %}
+                        {% if item.published == NULL %}
                         <a href="#" onclick="return addmessage({{item.Pk}})" class="pull-right">Редактировать</i></a>
                         {% else %}
                         <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать</a>
@@ -78,7 +80,14 @@
 </div>
 
 <script type="text/javascript">
+    $('.img ').click(function () {
 
+        var toLoad = $(this).attr('href');
+        $('#body').empty();
+        $('#body').load(toLoad);
+        return false;
+
+    });
 </script>
 
 
