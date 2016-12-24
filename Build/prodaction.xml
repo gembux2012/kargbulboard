@@ -28,8 +28,9 @@
     <!-- ============================================  -->
 
     <target name="copy">
+        <mkdir dir="${home.dir}/site"  />
         <mkdir dir="${current.dir}" />
-        <!--<mkdir dir="${home.dir}/site " mode="0777" />-->
+
 
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
@@ -78,7 +79,7 @@
     <target name="symlink">
         <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
         <symlink target="${current.dir}" link="${home.dir}/${buildbranch}/current" overwrite="true" />
-        <mkdir dir="${home.dir}/site " mode="0777" />
+
     </target>
 
     <target name="build" depends=" vars, copy, migrate, symlink" />
