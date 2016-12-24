@@ -39,7 +39,7 @@
             </fileset>
         </copy>
         <mkdir dir="${current.dir}/protected/Cache"/>
-        <exec command="sudo chown www.data ${current.dir}/protected/Cache" />
+        <!--<exec command="sudo chown www.data ${current.dir}/protected/Cache" />-->
         <chmod file="${current.dir}/public" mode="0777" />
         <!--<chmod file="${current.dir}/protected/Cache" mode="0777" />-->
     </target>
