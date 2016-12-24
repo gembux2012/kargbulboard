@@ -28,7 +28,7 @@
     <!-- ============================================  -->
 
     <target name="copy">
-        <mkdir dir="${home.dir}/site"  />
+        <mkdir dir="${home.dir}/site"  mode="777"/>
         <mkdir dir="${current.dir}" />
 
 
