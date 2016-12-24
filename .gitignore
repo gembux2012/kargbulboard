@@ -1,6 +1,7 @@
 /protected/Cache/Twig
 /.idea
 /public/Assets
+/protected/Cache
 
 
 # Created by .ignore support plugin (hsz.mobi)

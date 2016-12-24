@@ -47,7 +47,11 @@
 
 
                         </ul>
+                        {% if not item.published %}
                         <a href="#" onclick="return addmessage({{item.Pk}})" class="pull-right">Редактировать</i></a>
+                        {% else %}
+                        <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать</a>
+                        {% endif %}
                     </div>
                     <br><br>
                     {% endfor %}

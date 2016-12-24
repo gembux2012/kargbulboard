@@ -13,7 +13,7 @@ class m_1459994924_CreateImage
         if (!$this->existsTable('images')){
             $this->createTable('images', [
                 'image' => ['type' => 'string'],
-                'tetx' => ['type' => 'string'],
+                'text' => ['type' => 'string'],
                 '__story_id' => ['type' => 'link'],
 
             ]);
