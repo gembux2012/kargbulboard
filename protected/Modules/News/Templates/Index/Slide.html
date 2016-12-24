@@ -15,7 +15,7 @@
                     {% if item.image[0] %}
                     <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img  src="{{item.image[0].image}}" alt="Image" style="max-width:100%;" /></a>
                     {% else %}
-                    <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img  src="/protected/Layouts/slider/vip.jpg"/></a>
+                    <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img  src="{{asset('/protected/Layouts/slider/vip.jpg')}}"/></a>
                     {% endif %}
                     <div class="carousel-caption">
                         <p><b>{{item.title}}</b></p>
