@@ -34,7 +34,7 @@
                 {% if item.isNew %}
                 {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", 1, {"null":false}, {"name":"parent", "class": "form-control"}) }}
                 {% else %}
-                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
+                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.parent.Pk, {"null":false, 'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
                 {% endif %}
                 <i></i>
             </div>
