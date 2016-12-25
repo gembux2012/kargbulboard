@@ -190,13 +190,46 @@
         </div>
 
     </div>
+<!--
     <div class="container">
+        <div class="row">
+            <div id="myCarousel1" class="carousel slide">
 
-    </div>
+
+                <div class="carousel-inner">
+
+                    <div class="item active">
+
+                        <div class="row-fluid">
+                            {% for i in 0..5 %}
+                            <div class="col-md-2">
+                                <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img
+                                        src="{{asset('/Layouts/main/v.jpg')}}"/></a>
+
+                                <div class="carousel-caption">
+                                    <p>ООО Рога и копыта</p>
+                                </div>
+
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>-->
+
+
+
 </header>
 
 <!-- Begin Body -->
 <div class="container" id="body" style="background-color: white">
+
 
     {% block content %} {% endblock %}
 
@@ -343,7 +376,9 @@
         $('#first').focus();
 
          slide();
-
+        $('#myCarousel1').carousel({
+            interval: 6000
+        })
 
         /*
         $.get('/news/Vip.json',function(data){
