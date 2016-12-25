@@ -31,9 +31,11 @@
         <div class="form-group">
             <label for="parent" class="col-sm-2 control-label">Родительская рубрика</label>
             <div class="col-sm-10">
-                <select name="parent" class="form-control">
-                    <option value="1" selected="selected"> Все рубрики</option>
-                </select>
+                {% if item.isNew %}
+                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", 1, {"null":false}, {"name":"parent", "class": "form-control"}) }}
+                {% else %}
+                {{ selectTreeByModel("App\\Modules\\News\\Models\\Topic", item.parent.Pk, {"null":true, 'disabled':[item.Pk]}, {"name":"parent", "class": "form-control"}) }}
+                {% endif %}
                 <i></i>
             </div>
         </div>
