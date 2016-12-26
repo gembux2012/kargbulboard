@@ -204,7 +204,7 @@
                             {% for i in 0..5 %}
                             <div class="col-md-2">
                                 <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img
-                                        src="{{asset('/Layouts/main/v.jpg')}}"/></a>
+                                        src="{{asset('/Layouts/slider/vip.jpg')}}"/></a>
 
                                 <div class="carousel-caption">
                                     <p>ООО Рога и копыта</p>
@@ -376,9 +376,9 @@
         $('#first').focus();
 
          slide();
-        $('#myCarousel1').carousel({
-            interval: 6000
-        })
+      //  $('#myCarousel1').carousel({
+       //     interval: 6000
+       // })
 
         /*
         $.get('/news/Vip.json',function(data){
