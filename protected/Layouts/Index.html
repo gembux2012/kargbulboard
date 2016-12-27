@@ -261,11 +261,11 @@
 {% block pagescript %} {% endblock %}
 <script type="text/javascript">
 
-    function content(id, page, id_user) {
+    function content(id, page) {
 
         $('#message').empty();
 
-        $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page + '&id_user=' + id_user);
+        $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page );
         return false;
 
 
