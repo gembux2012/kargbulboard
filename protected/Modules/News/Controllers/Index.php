@@ -110,7 +110,7 @@ class Index
 
     public function  actionVip()
     {
-     $items=Story::findALLByQuery('SELECT * FROM news_stories WHERE vip=1  ORDER BY published');
+     $items=Story::findALLByQuery('SELECT * FROM news_stories WHERE vip=1 AND publiched IS NOT NULL ORDER BY published');
         $vip=[];
         foreach($items as $key=>$item){
             $vip[$key]['image'][]=$item->image[0]->image;
@@ -123,10 +123,10 @@ class Index
 
     public function actionSlide()
     {
-        //$itemsold=new Collection();
-        $itemsold=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
-       // $items=new Collection();
-        $items=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
+        $items=new Collection();
+        $itemsold=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1 AND published IS NOT NULL');
+       $items=$itemsold;
+       // $items=Story::findAllByQuery('SELECT * FROM news_stories  WHERE vip=1');
        // var_dump($itemsold);
         $count=$items->count();
         if($count>3) {

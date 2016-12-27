@@ -272,8 +272,13 @@
     }
 
     function slide(){
-        $('#slide').empty();
-        $('#slide').load('/news//Slide');
+       $('#slide').empty();
+       $('#slide').load('/news//Slide',function(){
+           $('#myCarousel').css({'visibility':'visible'});
+       });
+
+
+        return false;
     }
 
 
@@ -376,6 +381,10 @@
         $('#first').focus();
 
          slide();
+
+        $('#tree2').css({'visibility':'visible'});
+
+
       //  $('#myCarousel1').carousel({
        //     interval: 6000
        // })
