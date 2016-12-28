@@ -1,22 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
-    <input type="hidden" name="receiver" value="410013280521903">
-    <input type="hidden" name="label" value="7889">
-    <input type="hidden" name="quickpay-form" value="donate">
-    <input type="hidden" name="targets" value="транзакция {7889}">
-    <input type="hidden" name="sum" value="4568.25" data-type="number">
-    <input type="hidden" name="comment" value="За объявление">
+{% extends 'Index.html' %}
 
-    <label><input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label>
-    <label><input type="radio" name="paymentType" value="AC">Банковской картой</label>
-    <input type="submit" value="Перевести">
-</form>
+{% block content %}
+<div class="no-gutter row">
+    <div class="col-md-12">
+        <div class="panel ">
+            <div class="panel-heading text-center" id="content-header" style="background-color:#555;color:#eee;">Оплата
+                объявления #
+            </div>
+            <div class="panel-body">
+                <blockquote class="pull-left">
+                    <p>Сумма к оплате</p>
+                </blockquote>
+                <br><br><br>
+                <hr>
+                <form class="form-horizontal" method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
 
-</body>
-</html>
+                    <input type="hidden" name="receiver" value="410013280521903">
+                    <input type="hidden" name="label" value="7889">
+                    <input type="hidden" name="quickpay-form" value="donate">
+                    <input type="hidden" name="targets" value="транзакция {7889}">
+                    <input type="hidden" name="sum" value="4568.25" data-type="number">
+                    <input type="hidden" name="comment" value="За объявление">
+
+                    <div class="form-group">
+                        <label style="display: block">
+                            <div class="col-sm-1 text-center">
+                                <input type="radio" name="paymentType" id="paymentType_PC" value="PC"><span></span>
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                <div style="width: 32px; height: 32px; background: url({{asset('/Layouts/main/payment-icons.png')}}) -129px -64px no-repeat"></div>
+                            </div>
+                            <div class="col-sm-10">
+                                <h4>
+                                    Со счета в Яндекс.Деньгах
+                                    <br>
+                                    <small>Или с банковской карты, привязанной к счету в Яндекс.Деньгах. Нет счета? Не
+                                        беда, его можно открыть в процессе оплаты!
+                                    </small>
+                                </h4>
+                            </div>
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label style="display: block">
+                            <div class="col-sm-1 text-center">
+                                <div class=""
+                                <input type="radio" name="paymentType" id="paymentType_AC" value="AC" checked><span></span>
+                            </div>
+                            <div class="col-sm-1 text-center">
+                                <div style="width: 32px; height: 32px; background: url({{asset('/Layouts/main/payment-icons.png')}}) 0 -32px no-repeat"></div>
+                                <div style="width: 32px; height: 32px; background: url({{asset('/Layouts/main/payment-icons.png')}}) -96px 0 no-repeat"></div>
+                                <div style="width: 32px; height: 32px; background: url({{asset('/Layouts/main/payment-icons.png')}}) -32px -64px no-repeat"></div>
+                            </div>
+                            <div class="col-sm-10">
+                                <h4>
+                                    Банковской картой
+                                    <br>
+                                    <small>Принимаются карты Visa, Mastercard и Maestro</small>
+                                </h4>
+                            </div>
+                        </label>
+                    </div>
+
+                    <hr>
+                    <div class="col-md-offset-2">
+                    <div class="form-group ">
+                        <input type="submit" class="btn btn-default" value="Оплатить">
+                        <button type="button" class="btn btn-default" onclick="return mymessage(1)">Оказаться</button>
+                    </div>
+                        </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+    </div>
+
+
+{% endblock %}
+
+{% block pagescript %}
+<script type="text/javascript">
+    $('#cont').css({'visibility':'hidden'});
+</script>
+{% endblock %}
