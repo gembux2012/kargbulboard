@@ -15,6 +15,7 @@
     {{ publish('/Layouts/upload') }}
     {{ publish('/Layouts/main') }}
     {{ publish('/Layouts/Edit/js') }}
+    {{ publish('/Layouts/OwlCarousel') }}
     <link href="{{ asset('/Layouts/upload/uploadfile.css') }}" rel="stylesheet">
     <link href="{{ asset('/Layouts/upload//uploadfile.custom.css') }}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -29,6 +30,7 @@
     <link href="{{ asset('/Layouts/TreeMenu/css/tree.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/Layouts/slider/css/lightslider.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/Layouts/slider/css/myslide.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/Layouts/OwlCarousel/css/MyCarousel.css')}}" rel="stylesheet" type="text/css">
 
 
 
@@ -190,39 +192,6 @@
         </div>
 
     </div>
-<!--
-    <div class="container">
-        <div class="row">
-            <div id="myCarousel1" class="carousel slide">
-
-
-                <div class="carousel-inner">
-
-                    <div class="item active">
-
-                        <div class="row-fluid">
-                            {% for i in 0..5 %}
-                            <div class="col-md-2">
-                                <a href="/news/One?id={{item.Pk}}" class="thumbnail one"><img
-                                        src="{{asset('/Layouts/slider/vip.jpg')}}"/></a>
-
-                                <div class="carousel-caption">
-                                    <p>ООО Рога и копыта</p>
-                                </div>
-
-
-                            </div>
-                            {% endfor %}
-
-                        </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>-->
-
 
 
 </header>
@@ -252,6 +221,7 @@
 <script src="{{ asset('/Layouts/TreeMenu/js/tree.js')}}"></script>
 <script src="{{ asset('/Layouts/slider/js/lightslider.js')}}"></script>
 <script src="{{ asset('/Layouts/upload/jquery.uploadfile.min.js') }}"></script>
+<script src="{{ asset('/Layouts/OwlCarousel/js/owl.carousel.js') }}"></script>
 
 
 {% include 'Register_json.html' %}

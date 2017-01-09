@@ -19,14 +19,14 @@
             <li><i class="glyphicon glyphicon-eye-open"></i>{{item.view}}</li>
             {% endif %}
             {% if item.image.count>0 %}
-            <li><a href="/news/One?id={{item.Pk}}" class="img"><img src="{{item.image[0].image}}" class="img-responsive"
+            <li><a href="/news/One?id={{item.Pk}}" class="img"><img src="{{asset('/Layouts/main/images.png')}}" class="img-responsive"
                                  style="max-width: 20px; max-height: 30px;  !important;"></a> &nbsp;&nbsp;{{item.image.count}}
                 фото
             </li>
             {% endif %}
         </ul>
         {% if item.text|length > 250 %}
-        <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать все ...</a>
+        <a href="asset{{'/Layouts/iomages.png'}}" id="img" class=" img pull-right">Показать все ...</a>
         {% endif %}
     </div>
     <br><br>
