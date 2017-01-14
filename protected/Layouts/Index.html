@@ -216,6 +216,7 @@
 
 
 {{ publishJs() }}
+<script>CKEDITOR.env.isCompatible = true</script>
 
 <script src="{{ asset('/Layouts/main/js/scripts.js')}}"></script>
 <script src="{{ asset('/Layouts/main/js/maskinput.js')}}"></script>
@@ -349,6 +350,8 @@
 
 
     $(document).ready(function ($) {
+
+
 
         tree();
 

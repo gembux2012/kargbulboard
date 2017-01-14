@@ -2,7 +2,10 @@ CKEDITOR.editorConfig = function( config ) {
     config.disableNativeSpellChecker = false;
     config.removePlugins = 'liststyle,tabletools,scayt,contextmenu';
     config.removePlugins = 'elementspath';
+    config.allowedContent = true;
     config.resize_enabled = false;
+    config.jqueryOverrideVal = TRUE;
+    config.env.isCompatible = true;
     config.toolbar='MyConf';
     config.toolbar_MyConf = [
         { name: 'document', items : [ 'Undo','Redo'] },
