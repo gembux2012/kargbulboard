@@ -32,16 +32,9 @@ header {
   padding-right:0px;
 }
 
-#sidebar.affix-top {
-  position: static;
-}
 
-#sidebar.affix {
-  position: fixed !important;
-  top: 100px;
-  width:292.5px;
 
-}
+
 
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
@@ -59,25 +52,12 @@ header {
 
   #sidebar.affix {
     position: fixed !important;
-    top: 50px;
-    width: 292.5px;
+    top: 100px;
+    width:292.5px;
 
   }
 
-  /*
-    #midCol.affix-top {
-        position: static;
-    }
 
-    #midCol.affix-bottom {
-        padding-top:0;
-    }
-
-    #midCol.affix {
-        position:fixed !important;
-          top: 50px;
-          width:577px;
-    }*/
   .affix {
     position: static;
   }
