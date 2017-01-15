@@ -2,7 +2,7 @@
 <div id="owl-demo" class="owl-carousel owl-theme">
     {% for item in vip %}
     <div class="item"><img src={{item.image[0].image}} alt="Owl Image">
-    <p class="text-center" >{{item.title}}</p>
+    <a href="/news/One?id={{item.Pk}}" id="img" class="text-center" ><p>{{item.title}}</p></a>
     </div>
     {% endfor %}
 </div>
@@ -30,4 +30,14 @@
             }
         }
     })
+
+    $('#img ').click(function () {
+
+        var toLoad = $(this).attr('href');
+        $('#body').empty();
+        $('#body').load(toLoad);
+        return false;
+
+    });
+
 </script>
