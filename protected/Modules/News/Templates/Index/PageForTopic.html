@@ -24,6 +24,9 @@
                 фото
             </li>
             {% endif %}
+            <li>
+                <i class="glyphicon glyphicon-phone"></i><a href="tel:{{item.mfone}}">{{item.mfone}}</a>
+            </li>
         </ul>
         {% if item.text|length > 250 %}
         <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать все ...</a>
