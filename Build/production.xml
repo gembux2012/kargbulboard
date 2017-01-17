@@ -85,8 +85,9 @@
     <!-- ============================================  -->
     <target name="symlink">
         <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
+        <symlink target="${home.dir}/config.php" link="${current.dir}/protected/config.php" overwrite="true" />
         <symlink target="${current.dir}" link="${home.dir}/${buildbranch}/current" overwrite="true" />
-        <symlink target="${home.dir}/config.php" link="${home.dir}/${buildbranch}/current/protected/config.php" overwrite="true" />
+
 
     </target>
 
