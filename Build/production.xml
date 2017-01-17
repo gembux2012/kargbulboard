@@ -70,6 +70,7 @@
     <!-- ============================================  -->
    <target name="config">
        <symlink target="${home.dir}/config.php" link="${current.dir}/protected/config.php" overwrite="true" />
+
    </target>
     <target name="migrate">
         <echo msg="Migrations import..." />
