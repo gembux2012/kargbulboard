@@ -31,13 +31,19 @@
         <mkdir dir="${home.dir}/site"  mode="777"/>
         <mkdir dir="${current.dir}" />
 
-
         <echo msg="Mkdir ${current.dir}" />
         <copy todir="${current.dir}">
             <fileset dir="${project.dir}" defaultexcludes="true">
                 <include name="**" />
             </fileset>
         </copy>
+
+        <available file="${project.dir}/protected/config.php" type="file" property="file.Exists" />
+        <if>
+            <isset property="file.Exists">
+                <move file="${project.dir}/protected/config.php" tofile="${home.dir}/protected/config.php" overwrite="true"/>
+            </isset>
+        </if>
         <!--<mkdir dir="${current.dir}/protected/Cache"/>-->
         <!--<exec command="sudo chown www.data ${current.dir}/protected/Cache" />-->
         <chmod file="${current.dir}/public" mode="0777" />
@@ -81,6 +87,7 @@
     <target name="symlink">
         <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
         <symlink target="${current.dir}" link="${home.dir}/${buildbranch}/current" overwrite="true" />
+        <symlink target="${home.dir}/protected/config.php" link="${home.dir}/${buildbranch}/current/protected/config.php" overwrite="true" />
 
     </target>
 
