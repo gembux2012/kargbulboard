@@ -68,6 +68,9 @@
     <!-- ============================================  -->
     <!-- Target: migrate                               -->
     <!-- ============================================  -->
+   <target name="config">
+       <symlink target="${home.dir}/config.php" link="${current.dir}/protected/config.php" overwrite="true" />
+   </target>
     <target name="migrate">
         <echo msg="Migrations import..." />
         <exec command="php t4/framework/t4.php /migrate/import" dir="${current.dir}" checkreturn="true" passthru="true" />
@@ -83,15 +86,15 @@
     <!-- ============================================  -->
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
-    
+
     <target name="symlink">
         <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
-        <symlink target="${home.dir}/config.php" link="${current.dir}/protected/config.php" overwrite="true" />
+
         <symlink target="${current.dir}" link="${home.dir}/${buildbranch}/current" overwrite="true" />
 
 
     </target>
 
-    <target name="build" depends=" vars, copy, migrate, symlink" />
+    <target name="build" depends=" vars, copy, config, migrate, symlink" />
 
 </project>
