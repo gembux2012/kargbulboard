@@ -83,6 +83,7 @@
     <!-- ============================================  -->
     <!-- Target: symlink                                -->
     <!-- ============================================  -->
+    
     <target name="symlink">
         <symlink target="${home.dir}/site" link="${current.dir}/public/site" overwrite="true" />
         <symlink target="${home.dir}/config.php" link="${current.dir}/protected/config.php" overwrite="true" />
