@@ -17,6 +17,9 @@ class Index
 
    public function actionSetPaid()
    {
+      $item = Story::findByPK($this->app->request->post->label);
+      $item->published = date('Y-m-d H:i:s', time());
+      $item->save();
 
    }
 }
