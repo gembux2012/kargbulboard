@@ -169,4 +169,8 @@ class Helpers
         }, self::listDirRecursive($path)));
     }
 
+    static public function log($name){
+
+    }
+
 }
