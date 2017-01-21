@@ -19,10 +19,10 @@
                     <input type="hidden" name="receiver" value="410013652686519">
                     <input type="hidden" name="label" value="{{item.Pk}}">
                     <input type="hidden" name="quickpay-form" value="shop">
-                    <input type="hidden" name="targets" value="{{item.user.email}}">
+                    <input type="hidden" name="targets" value="За объявление #{{item.Pk}}">
                     <input type="hidden" name="sum" value="{{item.price}}" data-type="number">
                     <input type="hidden" name="successURL " value="http://karvito.ru">
-                    <input type="hidden" name="comment" value="За объявление #{{item.Pk}} от {{item.user.email}}">
+                    <input type="hidden" name="comment" value="{{item.user.email}}">
 
                     <div class="form-group">
                         <label style="display: block">
