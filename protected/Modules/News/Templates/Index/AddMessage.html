@@ -107,7 +107,7 @@
                         <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
                             <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
-
+                            <input id="priceall" type="hidden" name="price" value="{{item.price}}">
 
                             <div class="form-group">
                                 <label for="message" id="textmessage">Текст объявления:</label>
@@ -158,9 +158,9 @@
 
                             {% if item.Pk != '' %}
                             <a href= "/news/One?id={{item.Pk}}" id="view"  class="btn btn-primary" >Просмотреть</a>
-                            {% if  not item.published  %}
+
                             <a href="#publishModal" class="btn btn-warning" role="button" data-toggle="modal" >Опубликовать</a>
-                            {% endif %}
+
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
                             {% endif %}
                             <button type="button" class="btn btn-default" onclick="return mymessage(1)">Выход</button>
@@ -283,12 +283,14 @@
             function priseall() {
 
                 $.get('/news/Prise.json?id={{item.Pk}}', function (data) {
-                    console.log(data);
+                    //console.log(data);
                     total = data.words - data.prise.nopaid;
                     $('#prisephoto').html(data.prise.photo * data.fotos);
                     $('#prise').html(total * data.prise.word);
                     $('#prisevip').html(data.vip);
-                    $('#priseall').html(total * data.prise.word + data.prise.photo * data.fotos + data.vip*1);
+                    priceall=total * data.prise.word + data.prise.photo * data.fotos + data.vip*1;
+                    $('#priseall').html(priceall);
+                    $('#priceall').val(priceall);
                 })
 
             }
@@ -302,8 +304,10 @@
                 $('#publishModal').modal('hide');
                 $('#publishModal').on('hidden.bs.modal', function() {
                     call();
-                    $.get('/News/Published.json?id={{item.Pk}}');
-                    return false;
+                    //$.get('/News/Published.json?id={{item.Pk}}');
+                    //return false;
+
+                    setTimeout(function(){document.location.href = "/Payment?id={{item.Pk}}";},500);
             })}
 
 
@@ -314,6 +318,7 @@
                 if (valid()) {
 
                     var msg = $('#form-add-msg').serialize();
+
 
 
                     $.ajax({
