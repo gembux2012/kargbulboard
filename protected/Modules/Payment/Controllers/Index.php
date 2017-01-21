@@ -17,8 +17,11 @@ class Index
 
    public function actionSetPaid()
    {
+
       $f = fopen(ROOT_PATH_PUBLIC . DS ."/paid.log","a+");
-      $str = implode(" ",var_dump($this->app->request->post, TRUE));
+      $str = implode(" ",(array(var_export($this->app->request->post, TRUE))));
+      //var_dump($str);die;
+      fputs($f, $str);
       //$item = Story::findByPK($this->app->request->post->label);
       //$item->published = date('Y-m-d H:i:s', time());
      // $item->save();
