@@ -10,6 +10,7 @@
             <div class="panel-body">
                 <blockquote class="pull-left">
                     <p>Сумма к оплате: {{item.price}}</p>
+
                 </blockquote>
                 <br><br><br>
                 <hr>
@@ -20,7 +21,7 @@
                     <input type="hidden" name="quickpay-form" value="donate">
                     <input type="hidden" name="targets" value="транзакция {{item.Pk}}">
                     <input type="hidden" name="sum" value="{{item.price}}" data-type="number">
-                    <input type="hidden" name="comment" value="За объявление #{{item.Pk}}">
+                    <input type="hidden" name="comment" value="За объявление #{{item.Pk}} от {{item.user.email}}">
 
                     <div class="form-group">
                         <label style="display: block">
