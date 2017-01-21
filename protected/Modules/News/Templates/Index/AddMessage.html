@@ -106,7 +106,9 @@
 
                         <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
+                            {% if not item.isNew %}
                             <input id="idpk" type="text" name="id" value="{{item.Pk}}">
+                            {% endif %}
                             <input id="priceall" type="hidden" name="price" value="{{item.price}}">
 
                             <div class="form-group">
