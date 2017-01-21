@@ -1,7 +1,9 @@
 <br>
 <ul class="breadcrumb">
-    <li><a href="/" onclick="content(1,1)">На главную</a></li>
-    <li><a href="#" onclick="mymessage(1)">Мои объявления</a></li>
+    {% for item in item.topic.findAllParents() %}
+    <li><a href="/"   >{{item.title}}</a></li>
+    {% endfor %}
+    <li>{{item.topic.title}}</li>
     <li>Объявление #{{item.Pk}}</li>
 </ul>
 
@@ -46,8 +48,11 @@
 
 
     <script type="text/javascript">
-        // После загрузки DOM-дерева (страницы)
+                // После загрузки DOM-дерева (страницы)
         $(function () {
+
+
+
 //при нажатии на ссылку, содержащую Thumbnail
             $('a.tumb').click(function (e) {
 //отменить стандартное действие браузера

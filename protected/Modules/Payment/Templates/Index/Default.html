@@ -18,9 +18,10 @@
 
                     <input type="hidden" name="receiver" value="410013652686519">
                     <input type="hidden" name="label" value="{{item.Pk}}">
-                    <input type="hidden" name="quickpay-form" value="donate">
-                    <input type="hidden" name="targets" value="транзакция {{item.Pk}}">
+                    <input type="hidden" name="quickpay-form" value="shop">
+                    <input type="hidden" name="targets" value="{{item.user.email}}">
                     <input type="hidden" name="sum" value="{{item.price}}" data-type="number">
+                    <input type="hidden" name="successURL " value="http://karvito.ru">
                     <input type="hidden" name="comment" value="За объявление #{{item.Pk}} от {{item.user.email}}">
 
                     <div class="form-group">
@@ -68,7 +69,7 @@
                     <div class="col-md-offset-2">
                     <div class="form-group ">
                         <input type="submit" class="btn btn-default" value="Оплатить">
-                        <button type="button" class="btn btn-default" onclick="return mymessage(1)">Оказаться</button>
+                        <a href="/" type="button" class="btn btn-default" >Отказаться</a>
                     </div>
                         </div>
 

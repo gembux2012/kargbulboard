@@ -4,7 +4,7 @@
     <ul id="tree2" style="visibility: hidden">
         {% if mode==0 %}
         <li>
-            <a href="#"  onclick="content(1,1)" id="first">Все рубрики</a>
+            <a href="#"  onclick=" return content(1,1)" id="first">Все рубрики</a>
         <ul>
             {% endif %}
         {% set level = items[0].__lvl %}
@@ -31,7 +31,7 @@
 
         {% if mode==0 %}
         <li disabled="disabled">
-            <a href="#"    onclick="content({{item.Pk}},1)">{{item.title}}</a>
+            <a href="#"    onclick="return content({{item.Pk}},1)">{{item.title}}</a>
             {% else %}
         <li >
             <a href="#" {% if not item.hasChildren %}   onclick="breadcrambs({{item.Pk}})" {% endif %}>{{item.title}}</a>
