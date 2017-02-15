@@ -22,7 +22,7 @@
     </td>
     <td >
 
-        <a class="btn btn-danger btn-sm delfoto" href="/News/PhotoDelete/?id={{photo.Pk}}" ><i
+        <a class="btn btn-danger btn-sm delfoto" href="/News/PhotoDelete?id={{photo.Pk}}" ><i
                 class="glyphicon glyphicon-remove"></i></a>
     </td>
 
@@ -31,11 +31,16 @@
 </table>
 
 <script type="text/javascript">
+    $.ajaxSetup({
+        async: false,
+        dataType: 'json'
+
+    });
     $('.delfoto').click(function () {
         if (confirm('Вы уверены что хотите удалить фото?')) {
             $.get($(this).attr('href'));
             $('#image').load('/news/LoadImage?id={{item.Pk}}' );
-            priseall();
+            priceall();
 
         }
 

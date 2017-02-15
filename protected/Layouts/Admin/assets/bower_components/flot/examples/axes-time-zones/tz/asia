@@ -2105,7 +2105,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Paul Eggert (2007-09-20):
 # My understanding is that Gaza and the West Bank disagree even over when
 # the weekend is (Thursday+Friday versus Friday+Saturday), so I'd be a bit
-# surprised if they agreed about DST.  But for now, assume they agree.
+# surpriced if they agreed about DST.  But for now, assume they agree.
 # For lack of better information, predict that future changes will be
 # the 2nd Thursday of September at 02:00.
 

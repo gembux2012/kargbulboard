@@ -92,6 +92,26 @@ class Story
 
     }
 
+    public static function price($item)
+    {
+        $price = Application::getInstance()->config ->price;
+        $vip=$item->vip!=0 ? $price->vip : 0;
+        return $price = ['words' => (self::wordcount($item->text)-$price->nopaid) * $price->word,
+            'photos' => $item->image->count()* $price->photo,
+            'vip' => $vip,
+            'all' => (self::wordcount($item->text)-$price->nopaid) * $price->word + $item->image->count() * $price->photo + $vip,
+        ];
+    }
+
+    private static function priceWodrs($item){
+        $price = Application::getInstance()->config ->price;
+        $count=self::wordcount($item->text)-$price->nopaid;
+       /* if($count>0 && $count <=$price->word[0]) {
+            $price1 =$count*
+            }
+*/
+    }
+
 
 
     public function beforeDelete()

@@ -6726,7 +6726,7 @@
 	
 	_Api.prototype = /** @lends DataTables.Api */{
 		/**
-		 * Return a new Api instance, comprised of the data held in the current
+		 * Return a new Api instance, compticed of the data held in the current
 		 * instance, join with the other array(s) and/or value(s).
 		 *
 		 * An alias for `Array.prototype.concat`.

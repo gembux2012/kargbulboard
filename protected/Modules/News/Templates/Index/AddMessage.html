@@ -86,8 +86,8 @@
 
                 {% if item.Pk!='' %}
                 Стоймость: текст:
-                <span id="prise">0</span>р.; Фото:<span id="prisephoto"></span>р.; VIP: <span id="prisevip"></span>р.;
-                Итого: <span id="priseall"></span>р.<p id="test"></p>
+                <span id="price">0</span>р.; Фото:<span id="pricephoto"></span>р.; VIP: <span id="pricevip"></span>р.;
+                Итого: <span id="priceall"></span>р.<p id="test"></p>
                 <hr>
 
                 {% endif %}
@@ -104,7 +104,7 @@
                     <div id="panel1" class="tab-pane fade in active">
                         <br>
 
-                        <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call()">
+                        <form name="addmessage" method="POST" id="form-add-msg" action="javascript:void(null);" onsubmit="call(0)">
                             <input id="topicid" type="hidden" name="topic" value="{{item.topic.Pk}}">
                             {% if not item.isNew %}
                             <input id="idpk" type="hidden" name="id" value="{{item.Pk}}">
@@ -226,7 +226,9 @@
                     }
             );
 
-            $('#del').click(function () {
+            CKEDITOR.on ( 'change', function(e) { console.log(e) });
+
+                        $('#del').click(function () {
                 if (confirm('Вы уверены что хотите удалить объявление?')) {
                     $.get($(this).attr('href'));
                     mymessage(1);
@@ -262,7 +264,7 @@
                     }
                     $('.ajax-file-upload-statusbar').hide();
                     $('#image').load('/news/LoadImage?id={{item.Pk}}');
-                   priseall();
+                   priceall();
 
 
                 },
@@ -283,22 +285,24 @@
             });
 
 
-            function priseall() {
+            function priceall() {
 
-                $.get('/news/Prise.json?id={{item.Pk}}', function (data) {
-                    //console.log(data);
-                    total = data.words - data.prise.nopaid;
-                    $('#prisephoto').html(data.prise.photo * data.fotos);
-                    $('#prise').html(total * data.prise.word);
-                    $('#prisevip').html(data.vip);
-                    priceall=total * data.prise.word + data.prise.photo * data.fotos + data.vip*1;
-                    $('#priseall').html(priceall);
-                    $('#priceall').val(priceall);
+
+                $.get('/news/price.json?id={{item.Pk}}', function (data) {
+                    console.log(data.price);
+
+                    $('#pricephoto').html(data.price.photos );
+                    $('#price').html(data.price.words);
+                    $('#pricevip').html(data.price.vip);
+                    $('#priceall').html(data.price.all);
+
                 })
 
             }
 
-            priseall();
+            //$('#text').ckeditorGet().on('key', priceall());
+
+            priceall();
 
 
 
@@ -306,21 +310,28 @@
             function published() {
                 $('#publishModal').modal('hide');
                 $('#publishModal').on('hidden.bs.modal', function() {
-                    call();
-                    //$.get('/News/Published.json?id={{item.Pk}}');
-                    //return false;
+                  if(call(1)) {
+                      document.location.href = "/Payment?id={{item.Pk}}";
+                  }
+                    else {
+                      $.get('/news/Published?id={{item.Pk}}');
+                      document.location.href ="/";
 
-                    setTimeout(function(){document.location.href = "/Payment?id={{item.Pk}}";},500);
+                  }
             })}
 
 
-            function call() {
+            function call(publish) {
+                //alert(published);
+                //var ret;
                 for (instance in CKEDITOR.instances)
                     CKEDITOR.instances[instance].updateElement();
 
                 if (valid()) {
 
-                    var msg = $('#form-add-msg').serialize();
+                    var msg = $('#form-add-msg').serializeArray();
+
+                    msg.push({name: "publish", value: publish});
 
 
 
@@ -328,15 +339,25 @@
                         type: 'POST',
                         url: '/news//Save.json',
                         data: msg,
+                        async: false,
                         success: function (data) {
-                            console.log(data);
+                            console.log(data)
+                            if (data.error){
                             switch (data.error){
                                 case '1' :  $('#textmessage').css('color', 'red');
                                     break;
                                 case '2' :  $('#title').addClass('has-error');
-                                    break;
-                                default : addmessage(data.id);
-                                    slide();
+
+                            }} else {
+                                alert(data.published);
+                                if(data.published){
+                                    ret= true;
+                                } else {
+                                    ret= false;
+                                    addmessage(data.id);
+                                    //slide();
+                                }
+
                             }
 
 
@@ -346,6 +367,8 @@
 
                     })
                 }
+                alert ('1',ret);
+                return ret;
             }
 
             function valid() {

@@ -98,13 +98,14 @@ class Index
         }
     }
 
-    public function  actionPrise($id)
+    public function  actionPrice($id=null )
     {
-        $item = Story::findByPK($id);
-        $this->data->prise = $this->app->config->prise;
-        $this->data->words = Story::wordcount($item->text);
-        $this->data->fotos = $item->image->count();
-        $item->vip ? $this->data->vip = $this->app->config->prise->vip : $this->data->vip = 0;
+        if($id!=null) {
+            $item = Story::findByPK($id);
+
+            $this->data->price = Story::price($item);
+        }
+
 
     }
 
@@ -192,25 +193,42 @@ class Index
             $item = new Story();
         }
 
+
         $item->fill($this->app->request->post);
-        $item->user=$this->app->user->Pk;
+        $item->user = $this->app->user->Pk;
 
         if (!isset($this->app->request->post->vip))
-            $item->vip='0';
-            else
-               $item->vip='1';
+            $item->vip = '0';
+        else
+            $item->vip = '1';
+
+        $price = Story::price($item);
+        $item->price = $price['all'];
 
         try {
             $item->save();
 
-            $this->data->id=$item->Pk;
-            $this->data->topicid=$item->topic->Pk;
+            $this->data->id = $item->Pk;
+            $this->data->topicid = $item->topic->Pk;
+            $tmp=Story::countAll(['where' => 'published IS NOT NULL']);
+            $tmp1=$this->app->config->price->nopaidcount;
+            if (Story::countAll(['where' => 'published IS NOT NULL']) <= $this->app->config->price->nopaidcount || $item->price <= 0 ||
+                $item->user->role[0] == 'admin'
+            ) {
+                   $this->data->published = false;
+
+            } else  if($this->app->request->post->publish == 1) {
+                    $this->data->published = true;
+                } else {
+                    $this->data->published = false;
+                }
 
 
-        } catch (\T4\Orm\Exception $e){
 
-           $this->data->error= $e->getMessage();
-            }
+        } catch (\T4\Orm\Exception $e) {
+
+            $this->data->error = $e->getMessage();
+        }
     }
 
     public function actionPublished($id)
@@ -241,9 +259,11 @@ class Index
     }
 
     public function actionSaveImageText(){
-        $item=Image::findByPK($this->app->request->post->id);
-        $item->text=$this->app->request->post->text;
-        $item->save();
+        if(!isset($this->app->request->post->text)) {
+            $item = Image::findByPK($this->app->request->post->id);
+            $item->text = $this->app->request->post->text;
+            $item->save();
+        }
     }
 
     public function actionPhotoDelete($id){

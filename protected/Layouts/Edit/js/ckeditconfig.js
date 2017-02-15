@@ -11,7 +11,9 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
 
     ];
-    extraPlugins = 'сохранить' ;
+
+    //config.extraPlugins = 'onchange';
+   // config.minimumChangeMilliseconds = 100;
    // config.extraPlugins = 'autogrow';
 
 };
