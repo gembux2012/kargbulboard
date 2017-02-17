@@ -110,6 +110,14 @@ class Story
             $price1 =$count*
             }
 */
+        foreach($price->word as $key =>$value){
+            if ($count<=$key){
+                
+            }
+
+        }
+
+
     }
 
 
