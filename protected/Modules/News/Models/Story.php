@@ -104,6 +104,7 @@ class Story
     }
 
     private static function priceWodrs($item){
+        $words=0;
         $price = Application::getInstance()->config ->price;
         $count=self::wordcount($item->text)-$price->nopaid;
        /* if($count>0 && $count <=$price->word[0]) {
@@ -112,7 +113,9 @@ class Story
 */
         foreach($price->word as $key =>$value){
             if ($count<=$key){
-                
+                $words=$count*$value;
+            } else {
+                $words=$key*$value;
             }
 
         }
