@@ -96,7 +96,8 @@ class Story
     {
         $price = Application::getInstance()->config ->price;
         $vip=$item->vip!=0 ? $price->vip : 0;
-        return $price = ['words' => (self::wordcount($item->text)-$price->nopaid) * $price->word,
+        return $price = [//'words' => (self::wordcount($item->text)-$price->nopaid) * $price->word,
+            'words' => self::priceWodrs($item),
             'photos' => $item->image->count()* $price->photo,
             'vip' => $vip,
             'all' => (self::wordcount($item->text)-$price->nopaid) * $price->word + $item->image->count() * $price->photo + $vip,
@@ -107,18 +108,12 @@ class Story
         $words=0;
         $price = Application::getInstance()->config ->price;
         $count=self::wordcount($item->text)-$price->nopaid;
-       /* if($count>0 && $count <=$price->word[0]) {
-            $price1 =$count*
-            }
-*/
-        foreach($price->word as $key =>$value){
-            if ($count<=$key){
-                $words=$count*$value;
-            } else {
-                $words=$key*$value;
-            }
-
+        if ($count <= 10) {
+            $words = $count * $price->word1;
+        } else {
+            $words=10*$price->word1+($count-10)*$price->word2;
         }
+        return $words;
 
 
     }
