@@ -271,6 +271,26 @@ footer {
     font-weight:600;
   }
 
+.topbutton {
+  width:100px;
+  z-index: 10000;
+  border:2px solid #ff6163;
+  background:white;
+  text-align:center;
+  padding:10px;
+  position:fixed;
+  top:250px;
+  right:2px;
+  cursor:pointer;
+  color:black;
+  font-family:verdana;
+  font-size:12px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+}
+
 
 
 
