@@ -77,8 +77,8 @@
 <body style="padding-top: 80px">
 <div  class="topbutton">
 <p>Осталось</p>
-<p>{{</p>
-<p> бесплаьных объявлений</p>
+<p></p>
+<p> бесплатных объявлений</p>
 </div>
 <nav class="navbar navbar-fixed-top">
     <div class="container">
@@ -157,7 +157,7 @@
 
                 </li>
                 {% else %}
-                <li><a href="/user/logout" data-toggle="tooltip" title="Выход">Вы вошли как: {{ name}}&nbsp;&nbsp;<span
+                <li><a href="/user/logout" data-toggle="tooltip" title="Выход">Вы вошли как: {{ name }} &nbsp;&nbsp;<span
                         class="glyphicon glyphicon-log-out"></span></a>
                     {% endif %}
                 </li>
@@ -264,6 +264,7 @@
         $('#message').empty();
 
         $('#message').load('/news//PageForTopic?id=' + id + '&page=' + page );
+
         return false;
 
 
