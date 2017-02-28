@@ -75,11 +75,6 @@
     </div><!-- End of Modal dialog -->
 </div><!-- End of Modal -->
 <body style="padding-top: 80px">
-<div  class="topbutton">
-<p>Осталось</p>
-<p></p>
-<p> бесплатных объявлений</p>
-</div>
 <nav class="navbar navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -97,15 +92,20 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Прайс </a>
 
 
-                    <ul class="dropdown-menu" style="color: black;padding: 10px;border: 1px solid">
+                    <ul class="dropdown-menu" style="color: #333;padding: 20px;">
 
-                        <h4>Текст:</h4>
+                        <h4 >Текст:</h4>
                         <p>Два слова: бесплатно</p>
-                        <p>Первые 10 слов: {{app.config.price.word1}}р. за слово</p>
-                        <p> больше 10: {{app.config.price.word2}}р. за слово </p>
+                        <p>Первые 10 слов: <span style="color: red;">{{app.config.price.word1}}</span> р. за слово</p>
+                        <p> больше 10: <span style="color: red;">{{app.config.price.word2}}</span> р. за слово </p>
+                        <hr>
                         <h4>Фото:</h4>
-                        <p></p>
-                        <h4>Vip статус: {{app.config.price.vip}}р.</h4>
+                        <p>Первые 2 фото: <span style="color: red;">{{app.config.price.photo1}}</span> р. за фото</p>
+                        <p> больше 2 фото: <span style="color: red;">{{app.config.price.photo2}}</span> р. за фото </p>
+                        <hr>
+                        <h4>Vip статус:</h4>
+                        <p><span style="color: red;">{{app.config.price.vip}}</span> р.</p>
+                        <hr>
 
                     </ul>
 

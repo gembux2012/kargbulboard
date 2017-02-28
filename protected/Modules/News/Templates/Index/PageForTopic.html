@@ -1,3 +1,12 @@
+
+{% if app.config.price.nopaidcount-itemsCount >0 %}
+<div  class="topbutton">
+    <p>Первые <span style="color: red;">{{app.config.price.nopaidcount}}</span> объявлений бесплатно</p>
+    <p>Осталось <span style="color: red;">{{app.config.price.nopaidcount-itemsCount}}</span></p>
+
+</div>
+{% endif %}
+
 <section id="long">
 
     {% for item in items %}
@@ -24,9 +33,11 @@
                 фото
             </li>
             {% endif %}
+            {% if item.mfone %}
             <li>
                 <i class="glyphicon glyphicon-phone"></i><a href="tel:{{item.mfone}}">{{item.mfone}}</a>
             </li>
+            {% endif %}
         </ul>
         {% if item.text|length > 250 %}
         <a href="/news/One?id={{item.Pk}}" id="img" class=" img pull-right">Показать все ...</a>

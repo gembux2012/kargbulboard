@@ -289,7 +289,7 @@
 
 
                 $.get('/news/price.json?id={{item.Pk}}', function (data) {
-                    console.log(data.price);
+                    //console.log(data.price);
 
                     $('#pricephoto').html(data.price.photos );
                     $('#price').html(data.price.words);
@@ -349,7 +349,7 @@
                                 case '2' :  $('#title').addClass('has-error');
 
                             }} else {
-                                alert(data.published);
+                                //alert(data.published);
                                 if(data.published){
                                     ret= true;
                                 } else {
@@ -367,7 +367,7 @@
 
                     })
                 }
-                alert ('1',ret);
+                //alert ('1',ret);
                 return ret;
             }
 

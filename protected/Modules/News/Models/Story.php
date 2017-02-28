@@ -96,11 +96,15 @@ class Story
     {
         $price = Application::getInstance()->config ->price;
         $vip=$item->vip!=0 ? $price->vip : 0;
+        $words=self::priceWodrs($item);
+        $photos=self::pricePhoto($item);
         return $price = [//'words' => (self::wordcount($item->text)-$price->nopaid) * $price->word,
-            'words' => self::priceWodrs($item),
-            'photos' => $item->image->count()* $price->photo,
+            'words' => $words,
+            'photos' =>$photos,
+                //$item->image->count()* $price->photo,
             'vip' => $vip,
-            'all' => (self::wordcount($item->text)-$price->nopaid) * $price->word + $item->image->count() * $price->photo + $vip,
+            'all' =>$words+$photos+$vip,
+                //(self::wordcount($item->text)-$price->nopaid) * $price->word + $item->image->count() * $price->photo + $vip,
         ];
     }
 
@@ -114,8 +118,18 @@ class Story
             $words=10*$price->word1+($count-10)*$price->word2;
         }
         return $words;
+    }
 
-
+    private static function pricePhoto($item){
+        $photos=0;
+        $price = Application::getInstance()->config ->price;
+        $count=$item->image->count();
+        if ($count <= 2) {
+            $photos = $count * $price->photo1;
+        } else {
+            $photos=2*$price->photo1+($count-2)*$price->photo2;
+        }
+        return $photos;
     }
 
 
