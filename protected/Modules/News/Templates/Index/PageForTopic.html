@@ -1,5 +1,5 @@
 
-{% if app.config.price.nopaidcount-itemsCount >0 %}
+{% if app.config.price.nopaidcount-itemsCount >0 and app.user %}
 <div  class="topbutton">
     <p>Первые <span style="color: red;">{{app.config.price.nopaidcount}}</span> объявлений бесплатно</p>
     <p>Осталось <span style="color: red;">{{app.config.price.nopaidcount-itemsCount}}</span></p>

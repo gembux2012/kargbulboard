@@ -1,10 +1,18 @@
 <div class="span8">
 <div id="owl-demo" class="owl-carousel owl-theme">
     {% for item in vip %}
-    <div class="item"><img src={{item.image[0].image}} alt="Owl Image">
+    <div class="item"><img src={{item.image[0].image}} >
     <a href="/news/One?id={{item.Pk}}" id="img" class="text-center" ><p>{{item.title}}</p></a>
     </div>
     {% endfor %}
+
+    {% if vip.count() < 4 %}
+    {% for i in 1 ..4-vip.count() %}
+    <div class="item"><img src="{{asset('/Layouts/slider/vip2.jpg')}}" >
+    <p class="text-center">Здесь может быть ваше VIP объявление</p>
+    </div>
+    {% endfor %}
+    {%endif%}
 </div>
     </div>
 <script>

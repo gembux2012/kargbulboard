@@ -1,7 +1,7 @@
 #owl-demo .item{
     margin: 3px;
     background-color: white;
-    border: 3px solid #ff6163;
+    border: 3px solid #77CCDD;
     padding: 2px;
 }
 #owl-demo .item img{
@@ -13,5 +13,5 @@
 #owl-demo .item p{
     font-weight: 700;
     padding-top: 5px;
-    color: #ff6163;
+    color: black;
 }
