@@ -27,7 +27,7 @@ class Admin
             $role = Role::findByTitle($namerole);
             $user->roles->append($role);
             $user->save();
-            $this->redirect('/admin/users/RoleUser?id=' . $id);
+            $this->redirect('/admin/users/Roleuser?id=' . $id);
         }
     }
 
