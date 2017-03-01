@@ -29,7 +29,7 @@
         </tr>
         {% for item in items %}
         <tr>
-            <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.Pk}}</a></td>
+            <td>{{item.user.email}}</a></td>
             <td>{{item.topic.title}}</td>
             <td><a href="/admin/news/edit/?id={{item.Pk}}">{{item.title}}</a></td>
             <td>{% if item.image %}<i class="glyphicon glyphicon-picture"></i>{% endif %}</td>

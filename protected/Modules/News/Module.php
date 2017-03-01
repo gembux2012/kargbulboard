@@ -11,6 +11,7 @@ class Module
         return [
 
                 ['title' => 'Рубрики объявлений', 'url' => '/admin/news/topics'],
+            ['title' => 'Объявлений', 'url' => '/admin/news/'],
 
         ];
     }
