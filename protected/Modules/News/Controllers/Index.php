@@ -259,7 +259,7 @@ class Index
     }
 
     public function actionSaveImageText(){
-        if(!isset($this->app->request->post->text)) {
+        if(isset($this->app->request->post->text)) {
             $item = Image::findByPK($this->app->request->post->id);
             $item->text = $this->app->request->post->text;
             $item->save();

@@ -18,7 +18,7 @@ class Photo
         'table' => 'images',
         'columns' => [
             'image' => ['type' => 'string'],
-            'tetx' => ['type' => 'string'],
+            'text' => ['type' => 'string'],
         ]];
 
 }
