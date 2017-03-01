@@ -213,7 +213,7 @@ class Index
             $tmp=Story::countAll(['where' => 'published IS NOT NULL']);
             $tmp1=$this->app->config->price->nopaidcount;
             if (Story::countAll(['where' => 'published IS NOT NULL']) <= $this->app->config->price->nopaidcount || $item->price <= 0 ||
-                $item->user->roles[0] == 'admin'
+                $item->user->roles[0]->name == 'admin'
             ) {
                    $this->data->published = false;
 
