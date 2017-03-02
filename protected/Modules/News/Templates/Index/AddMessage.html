@@ -66,7 +66,9 @@
 
                 <article id="breadcrambs">
                     {% if item.Pk == '' %}
-                    <h4 class="text-danger">Выберите рубрику</h4>
+                    <h4 class="text-danger">Выберите рубрику&nbsp;&nbsp;<span style="color: black"><a href="javascript:void(0)" style="color: black" tabindex="0" class="popover-dismissible"  data-toggle="popover" data-trigger="focus"
+                                                                       data-content="Выберите рубрику в колонке слева. Введите тект объявления
+                                                                       и нажмите кнопку 'Сохранить'. После этого станут доступными дальнейшие действия с объявлением">?</a></span></h4>
                     {% else %}
                     <div style="border: 1px">
                           <ol class="breadcrumb">
@@ -165,8 +167,17 @@
                             <a href="#publishModal" class="btn btn-warning" role="button" data-toggle="modal" >Опубликовать</a>
 
                             <a href="/news/delete?id={{ item.Pk}}" id="del" class="btn btn-danger">Удалить</a>
+
                             {% endif %}
                             <button type="button" class="btn btn-default" onclick="return mymessage(1)">Выход</button>
+                            <a href="javascript:void(0)" style="color: black" tabindex="0" class="popover-dismissible"  data-toggle="popover" data-trigger="focus"
+                               data-content="Если вы изменяли текст объявления, меняли VIP статус, добавляли или удаляли фотографии - нажмите
+                               кнопку 'Сохранить', для уточнения стоимости.
+                               Объявление станет доступным для всех, после его публикации, для этого неоходимо нажать кнопку 'Опубликовать'.
+                               Помните, что после публикации редактирование объявления будет невозможным!
+
+                               ">?</a>
+
                         </form>
                     </div>
                     <div id="panel2" class="tab-pane fade" style="height: 451px">
@@ -394,7 +405,9 @@
 
 
 
-
+            $('.popover-dismissible').popover({
+                placement : 'top'
+            });
 
 
 

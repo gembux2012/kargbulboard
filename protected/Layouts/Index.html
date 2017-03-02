@@ -51,7 +51,6 @@
                 <h4 class="modal-title">Востановление пароля</h4>
             </div>
             <div class="modal-body" >
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
                 <section id="modal-body">
                 <form  name="sentMessage" class="form form-register1" id="resetlogin"  novalidate>
@@ -94,6 +93,9 @@
 
                     <ul class="dropdown-menu" style="color: #333;padding: 20px;">
 
+                        <p>После публикации Ваше объявление</p>
+                        <p>будет доступным <span style="color: red;">{{app.config.price.published}}</span> дней</p>
+                        <hr>
                         <h4 >Текст:</h4>
                         <p>Два слова: бесплатно</p>
                         <p>Первые 10 слов: <span style="color: red;">{{app.config.price.word1}}</span> р. за слово</p>
@@ -166,8 +168,8 @@
             <ul id="nav" class="nav navbar-right navbar-nav">
 
                 {% if app.user %}
-                <li><a href="/news/AddMessage">Создать обьявление</a></li>
-                <li><a href="/news/MyMessage">Мой обьявление</a></li>
+                <li><a href="/news/AddMessage">Создать объявление</a></li>
+                <li><a href="/news/MyMessage">Мой объявление</a></li>
                 {% endif %}
             </ul>
 
@@ -201,7 +203,7 @@
                 {% if not app.user %}
                 <p><em>Для публикации объявление необходимо быть зарегестрированным
                     пользователем.</em></p>
-                <a style="color: #9b0000; background-color: inherit" id="btn-modal" role="button"  data-toggle="modal" data-target="#register"><em>Зарегестрироваться?</em></a>
+                <a title="Регистрация необходима для того, что бы вы могли управлять своими объявлениями" style="color: #9b0000; background-color: inherit" id="btn-modal" role="button"  data-toggle="modal" data-target="#register"><em>Зарегестрироваться?</em></a>
                 {% endif %}
             </div>
             <div class="col-md-8" style=" padding:0 ">
