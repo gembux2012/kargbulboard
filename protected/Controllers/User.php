@@ -97,7 +97,7 @@ class User
             $user->save();
             $mail = new  Sender();
             try {
-                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту {{app.config.domain}}:". $newpassword);
+                $mail->sendMail($email, 'Восстановление пароля', "Ваш пароль для доступа к сайту ".$this->app->config->domain.": ". $newpassword);
             } catch (\phpmailerException $e) {
                 $this->data->errors = $e;
 
