@@ -18,7 +18,7 @@
          {% endfor %}
          <li>{{item.topic.title}}</li>
      </ol>-->
-    {{ item.text|striptags|length > 250 ? (item.text|slice(0, 550)~'...')|raw : item.text|raw }}
+    {{ item.text|striptags|length > 250 ? (item.text|striptags|slice(0, 250)~'...')|raw : item.text|raw }}
     <div class="bottom-article">
 
 
