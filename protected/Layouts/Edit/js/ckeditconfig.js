@@ -5,6 +5,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.allowedContent = true;
     config.resize_enabled = false;
     config.toolbar='MyConf';
+    config.enterMode = CKEDITOR.ENTER_BR;
     config.toolbar_MyConf = [
         { name: 'document', items : [ 'Undo','Redo'] },
         { name: 'basicstyles', items : [ 'Bold','Italic','Underline', ] },
